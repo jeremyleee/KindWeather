@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tragicfruit.weatherapp.model.WeatherAlert
 import io.realm.Realm
 import io.realm.RealmResults
+import io.realm.Sort
 import io.realm.kotlin.where
 
 class AlertListAdapter : RecyclerView.Adapter<AlertViewHolder>() {
@@ -12,7 +13,10 @@ class AlertListAdapter : RecyclerView.Adapter<AlertViewHolder>() {
     private val alertList: RealmResults<WeatherAlert>
 
     init {
-        alertList = Realm.getDefaultInstance().where<WeatherAlert>().findAll()
+        alertList = Realm.getDefaultInstance()
+            .where<WeatherAlert>()
+            .sort("enabled", Sort.DESCENDING, "dateAdded", Sort.ASCENDING)
+            .findAll()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlertViewHolder {

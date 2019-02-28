@@ -1,6 +1,7 @@
 package com.tragicfruit.weatherapp.screens.alert.fragments.list
 
 import android.content.Context
+import android.graphics.Color
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -27,7 +28,7 @@ class AlertCell(context: Context) : RelativeLayout(context) {
 
     fun setData(alert: WeatherAlert) {
         nameView.text = alert.name
-        backgroundImage.setBackgroundColor(alert.color)
+        backgroundImage.setBackgroundColor(if (alert.enabled) alert.color else Color.GRAY)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
