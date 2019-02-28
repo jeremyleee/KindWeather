@@ -8,7 +8,7 @@ import io.realm.RealmResults
 import io.realm.Sort
 import io.realm.kotlin.where
 
-class AlertListAdapter : RecyclerView.Adapter<AlertViewHolder>() {
+class AlertListAdapter(private val listener: AlertCell.Listener) : RecyclerView.Adapter<AlertViewHolder>() {
 
     private val alertList: RealmResults<WeatherAlert>
 
@@ -20,7 +20,7 @@ class AlertListAdapter : RecyclerView.Adapter<AlertViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlertViewHolder {
-        return AlertViewHolder(AlertCell(parent.context))
+        return AlertViewHolder(AlertCell(parent.context, listener))
     }
 
     override fun onBindViewHolder(holder: AlertViewHolder, position: Int) {

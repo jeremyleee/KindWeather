@@ -10,7 +10,7 @@ import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.model.WeatherAlert
 import com.tragicfruit.weatherapp.utils.ViewHelper
 
-class AlertCell(context: Context) : RelativeLayout(context) {
+class AlertCell(context: Context, private val listener: Listener? = null) : RelativeLayout(context) {
 
     private val backgroundImage = ImageView(context)
     private val nameView = TextView(context)
@@ -27,12 +27,20 @@ class AlertCell(context: Context) : RelativeLayout(context) {
     }
 
     fun setData(alert: WeatherAlert) {
+        setOnClickListener {
+            listener?.onAlertClicked(alert)
+        }
+
         nameView.text = alert.name
         backgroundImage.setBackgroundColor(if (alert.enabled) alert.color else Color.GRAY)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, widthMeasureSpec / 2)
+    }
+
+    interface Listener {
+        fun onAlertClicked(alert: WeatherAlert)
     }
 
 }
