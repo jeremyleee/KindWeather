@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/alertListFragment"
-        android:name="com.tragicfruit.weatherapp.screens.alert.fragments.AlertListFragment"
+        android:name="com.tragicfruit.weatherapp.screens.alert.fragments.list.AlertListFragment"
         android:label="AlertListFragment" />
 
 </navigation>

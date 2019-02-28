@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_margin_h">4dp</dimen>
+    <dimen name="app_margin">8dp</dimen>
+    <dimen name="app_margin_xx">16dp</dimen>
+    <dimen name="app_margin_xxx">24dp</dimen>
+    <dimen name="app_margin_xxxx">32dp</dimen>
+</resources>
