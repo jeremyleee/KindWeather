@@ -1,4 +1,4 @@
-package com.tragicfruit.weatherapp.screens.alert.fragments.list
+package com.tragicfruit.weatherapp.screens.alert.fragments.list.components
 
 import android.content.Context
 import android.graphics.Color
