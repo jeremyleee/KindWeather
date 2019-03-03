@@ -31,6 +31,10 @@ open class WeatherAlert : RealmObject() {
         fun fromId(alertId: String, realm: Realm = Realm.getDefaultInstance()) =
             realm.where<WeatherAlert>().equalTo("id", alertId).findFirst()
 
+        fun setEnabled(alert: WeatherAlert, enabled: Boolean, realm: Realm) {
+            alert.enabled = enabled
+        }
+
     }
 
 }

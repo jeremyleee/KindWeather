@@ -19,4 +19,10 @@ class AlertDetailPresenter(override var view: AlertDetailContract.View) : AlertD
         view.closeScreen()
     }
 
+    override fun onAlertEnabled(enabled: Boolean) {
+        Realm.getDefaultInstance().executeTransaction {
+            WeatherAlert.setEnabled(alert, enabled, it)
+        }
+    }
+
 }

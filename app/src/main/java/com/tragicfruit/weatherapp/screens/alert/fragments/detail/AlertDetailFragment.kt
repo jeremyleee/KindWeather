@@ -35,7 +35,10 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View {
         alertDetailHeaderImage.setBackgroundColor(alert.color) // TODO: replace with illustration
         alertDetailCollapsingToolbar.setContentScrimColor(alert.color) // TODO: replace with illustration palette colour
 
-        alertDetailEnableSwitch.isEnabled = alert.enabled
+        alertDetailEnableSwitch.isChecked = alert.enabled
+        alertDetailEnableSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            presenter.onAlertEnabled(isChecked)
+        }
     }
 
     override fun closeScreen() {
