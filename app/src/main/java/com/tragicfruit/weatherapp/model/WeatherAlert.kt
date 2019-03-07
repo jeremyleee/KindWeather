@@ -3,6 +3,7 @@ package com.tragicfruit.weatherapp.model
 import android.graphics.Color
 import com.tragicfruit.weatherapp.utils.ColorHelper
 import io.realm.Realm
+import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.kotlin.createObject
 import io.realm.kotlin.where
@@ -16,6 +17,7 @@ open class WeatherAlert : RealmObject() {
     var name = ""; private set
     var enabled = true; private set
     var dateAdded: Date? = null; private set
+    var params = RealmList<WeatherAlertParam>(); private set
 
     companion object {
 

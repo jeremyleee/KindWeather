@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">WeatherApp</string>
 
+    <string name="forecast_type_max_temp">Temperature (max)</string>
+    <string name="forecast_type_min_temp">Temperature (min)</string>
+    <string name="forecast_type_pressure">Pressure</string>
+    <string name="forecast_type_humidity">Humidity</string>
+    <string name="forecast_type_wind_speed">Wind speed</string>
+    <string name="forecast_type_clouds">Cloudiness</string>
+    <string name="forecast_type_rain">Rain</string>
+    <string name="forecast_type_snow">Snow</string>
+
     <string name="alert_detail_enable">Enable notifications</string>
 </resources>
