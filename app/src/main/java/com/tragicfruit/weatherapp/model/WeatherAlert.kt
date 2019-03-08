@@ -37,6 +37,16 @@ open class WeatherAlert : RealmObject() {
             alert.enabled = enabled
         }
 
+        fun addParam(alert: WeatherAlert, param: WeatherAlertParam, realm: Realm) {
+            alert.params.add(param)
+        }
+
+        fun removeParam(alert: WeatherAlert, param: WeatherAlertParam, realm: Realm) {
+            if (alert.params.remove(param)) {
+                param.deleteFromRealm()
+            }
+        }
+
     }
 
 }
