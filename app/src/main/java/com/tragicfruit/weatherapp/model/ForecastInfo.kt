@@ -5,7 +5,7 @@ import com.tragicfruit.weatherapp.R
 import io.realm.RealmObject
 
 open class ForecastInfo : RealmObject() {
-    enum class Type(@StringRes name: Int) {
+    enum class Type(@StringRes val label: Int) {
         Temp_max(R.string.forecast_type_max_temp),      // Kelvin
         Temp_min(R.string.forecast_type_min_temp),      // Kelvin
         Pressure(R.string.forecast_type_pressure),      // hPa

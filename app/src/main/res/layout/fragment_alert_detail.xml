@@ -69,6 +69,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="@dimen/app_margin"/>
 
+            <TextView
+                android:id="@+id/alertDetailParamsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Parameters"
+                app:layout_constraintTop_toBottomOf="@+id/alertDetailEnableText"/>
+
+            <LinearLayout
+                android:id="@+id/alertDetailParamsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/alertDetailParamsTitle"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
