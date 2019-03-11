@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.tragicfruit.weatherapp">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".WApplication"
         android:allowBackup="true"

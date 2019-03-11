@@ -14,11 +14,11 @@ open class WeatherAlertParam : RealmObject() {
     var lessThan: Double? = null; private set
     var lessThanInclusive = false; private set
 
-    fun getType() = ForecastInfo.Type.fromString(type)
+    fun getType() = ForecastType.fromString(type)
 
     companion object {
 
-        fun create(type: ForecastInfo.Type, realm: Realm): WeatherAlertParam {
+        fun create(type: ForecastType, realm: Realm): WeatherAlertParam {
             val param = realm.createObject<WeatherAlertParam>()
             param.type = type.name
             return param
