@@ -2,8 +2,8 @@ package com.tragicfruit.weatherapp.controllers
 
 import com.google.gson.annotations.SerializedName
 import com.tragicfruit.weatherapp.BuildConfig
-import com.tragicfruit.weatherapp.utils.WCallback
 import com.tragicfruit.weatherapp.model.ForecastPeriod
+import com.tragicfruit.weatherapp.utils.WCallback
 import io.realm.Realm
 import io.realm.kotlin.where
 import okhttp3.OkHttpClient

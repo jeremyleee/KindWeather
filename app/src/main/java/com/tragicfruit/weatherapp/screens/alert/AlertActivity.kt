@@ -15,7 +15,7 @@ class AlertActivity : WActivity() {
         setContentView(R.layout.activity_alert)
 
         if (savedInstanceState == null) {
-            presentFragment(AlertListFragment())
+            presentFragment(AlertListFragment(), false)
         }
 
         FetchWeatherWorker.enqueueWork() // TODO: only after location permission request

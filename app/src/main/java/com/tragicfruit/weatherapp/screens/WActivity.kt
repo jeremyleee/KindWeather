@@ -9,10 +9,14 @@ open class WActivity : AppCompatActivity() {
     @IdRes
     protected open val fragmentContainer: Int = android.R.id.content
 
-    fun presentFragment(fragment: Fragment) {
+    fun presentFragment(fragment: Fragment, addToBackStack: Boolean = true) {
         supportFragmentManager.beginTransaction()
             .replace(fragmentContainer, fragment)
-            .addToBackStack(fragment.tag)
+            .apply {
+                if (addToBackStack) {
+                    addToBackStack(fragment.tag)
+                }
+            }
             .commit()
     }
 
