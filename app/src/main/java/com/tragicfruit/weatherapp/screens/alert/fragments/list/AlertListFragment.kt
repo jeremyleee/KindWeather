@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.model.WeatherAlert
 import com.tragicfruit.weatherapp.screens.WFragment
+import com.tragicfruit.weatherapp.screens.alert.fragments.detail.AlertDetailFragment
 import com.tragicfruit.weatherapp.screens.alert.fragments.list.components.AlertCell
 import kotlinx.android.synthetic.main.fragment_alert_list.*
 
@@ -32,8 +32,21 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
     }
 
     override fun showAlertDetailScreen(alert: WeatherAlert) {
-        val action = AlertListFragmentDirections.actionOpenAlertDetails(alert.id)
-        NavHostFragment.findNavController(this).navigate(action)
+        baseActivity?.presentFragment(AlertDetailFragment.newInstance(alert.id))
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter.start()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        presenter.stop()
+    }
+
+    override fun refreshList() {
+        alertListRecyclerView.adapter?.notifyDataSetChanged()
     }
 
 }

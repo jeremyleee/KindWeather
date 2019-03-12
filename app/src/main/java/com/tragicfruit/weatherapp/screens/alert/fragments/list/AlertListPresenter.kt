@@ -8,4 +8,8 @@ class AlertListPresenter(override var view: AlertListContract.View) : AlertListC
         view.showAlertDetailScreen(alert)
     }
 
+    override fun start() {
+        view.refreshList()
+    }
+
 }

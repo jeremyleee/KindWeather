@@ -12,7 +12,7 @@ interface AlertDetailContract {
     }
 
     interface Presenter : WPresenter<View> {
-        fun init(alertId: String)
+        fun init(alertId: String?)
         fun onToolbarBackClicked()
         fun onAlertEnabled(enabled: Boolean)
     }

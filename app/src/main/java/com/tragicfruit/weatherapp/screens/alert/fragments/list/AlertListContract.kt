@@ -8,6 +8,7 @@ interface AlertListContract {
 
     interface View : WView {
         fun showAlertDetailScreen(alert: WeatherAlert)
+        fun refreshList()
     }
 
     interface Presenter : WPresenter<View> {
