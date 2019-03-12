@@ -1,6 +1,7 @@
 package com.tragicfruit.weatherapp
 
 import android.app.Application
+import com.tragicfruit.weatherapp.controllers.NotificationController
 import com.tragicfruit.weatherapp.controllers.WeatherController
 import com.tragicfruit.weatherapp.utils.ViewHelper
 import io.realm.Realm
@@ -24,7 +25,9 @@ class WApplication : Application() {
                 .build())
 
         ViewHelper.init(resources)
+
         WeatherController.init()
+        NotificationController.init(this)
 
     }
 

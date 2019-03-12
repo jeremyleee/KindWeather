@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">WeatherApp</string>
 
+    <string name="notification_channel_location">Location status</string>
+
+    <string name="notification_location_permission_title">Location permissions required!</string>
+    <string name="notification_location_permission_text">Permissions are required to display weather notifications</string>
+
     <string name="forecast_type_max_temp">Temperature (max)</string>
     <string name="forecast_type_min_temp">Temperature (min)</string>
     <string name="forecast_type_pressure">Pressure</string>
