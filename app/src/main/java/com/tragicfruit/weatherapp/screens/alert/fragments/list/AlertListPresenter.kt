@@ -8,7 +8,11 @@ class AlertListPresenter(override var view: AlertListContract.View) : AlertListC
         view.showAlertDetailScreen(alert)
     }
 
-    override fun start() {
+    override fun onAllowLocationClicked() {
+        view.requestLocationPermission()
+    }
+
+    override fun resume() {
         view.refreshList()
     }
 
