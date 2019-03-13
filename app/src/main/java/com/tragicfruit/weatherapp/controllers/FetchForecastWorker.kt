@@ -14,7 +14,7 @@ import com.tragicfruit.weatherapp.utils.PermissionHelper
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class FetchWeatherWorker(context: Context, workerParams: WorkerParameters) : ListenableWorker(context, workerParams) {
+class FetchForecastWorker(context: Context, workerParams: WorkerParameters) : ListenableWorker(context, workerParams) {
 
     @SuppressWarnings("MissingPermission")
     override fun startWork(): ListenableFuture<Result> {
@@ -55,16 +55,19 @@ class FetchWeatherWorker(context: Context, workerParams: WorkerParameters) : Lis
     }
 
     companion object {
+        private const val PERIODIC_FETCH_FORECAST_WORK = "periodic-fetch-forecast"
+
         fun enqueueWork() {
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
-            val request = PeriodicWorkRequestBuilder<FetchWeatherWorker>(3, TimeUnit.HOURS)
+            val request = PeriodicWorkRequestBuilder<FetchForecastWorker>(3, TimeUnit.HOURS)
                 .setConstraints(constraints)
                 .build()
 
-            WorkManager.getInstance().enqueue(request)
+            WorkManager.getInstance()
+                .enqueueUniquePeriodicWork(PERIODIC_FETCH_FORECAST_WORK, ExistingPeriodicWorkPolicy.REPLACE, request)
         }
     }
 

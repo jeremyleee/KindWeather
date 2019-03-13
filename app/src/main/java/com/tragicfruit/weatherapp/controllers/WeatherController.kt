@@ -101,7 +101,7 @@ object WeatherController {
 
 }
 
-interface OpenWeatherAPIService {
+private interface OpenWeatherAPIService {
 
     @GET("forecast")
     fun fetchForecast(@Query("lat") latitude: Double, @Query("lon") longitude: Double): Call<ForecastResponse>

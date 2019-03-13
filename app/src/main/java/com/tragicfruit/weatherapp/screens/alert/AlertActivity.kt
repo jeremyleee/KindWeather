@@ -2,7 +2,7 @@ package com.tragicfruit.weatherapp.screens.alert
 
 import android.os.Bundle
 import com.tragicfruit.weatherapp.R
-import com.tragicfruit.weatherapp.controllers.FetchWeatherWorker
+import com.tragicfruit.weatherapp.controllers.FetchForecastWorker
 import com.tragicfruit.weatherapp.screens.WActivity
 import com.tragicfruit.weatherapp.screens.alert.fragments.list.AlertListFragment
 
@@ -18,6 +18,6 @@ class AlertActivity : WActivity() {
             presentFragment(AlertListFragment(), false)
         }
 
-        FetchWeatherWorker.enqueueWork() // TODO: only after location permission request
+        FetchForecastWorker.enqueueWork() // TODO: only after location permission request
     }
 }
