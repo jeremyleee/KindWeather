@@ -3,7 +3,7 @@ package com.tragicfruit.weatherapp.controllers
 import android.Manifest
 import android.content.Context
 import android.os.Looper
-import androidx.concurrent.futures.ResolvableFuture
+import androidx.concurrent.futures.CallbackToFutureAdapter
 import androidx.work.*
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -18,40 +18,40 @@ class FetchForecastWorker(context: Context, workerParams: WorkerParameters) : Li
 
     @SuppressWarnings("MissingPermission")
     override fun startWork(): ListenableFuture<Result> {
-        val future = ResolvableFuture.create<Result>()
+        val callback = CallbackToFutureAdapter.Resolver<Result> { completer ->
+            if (PermissionHelper.hasPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                Timber.d("Requesting current location")
 
-        if (PermissionHelper.hasPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            Timber.d("Requesting current location")
 
-            // Request current location
-            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(applicationContext)
-            val locationRequest = LocationRequest.create().setNumUpdates(1)
+                // Request current location
+                val fusedLocationClient = LocationServices.getFusedLocationProviderClient(applicationContext)
+                val locationRequest = LocationRequest.create().setNumUpdates(1)
 
-            fusedLocationClient.requestLocationUpdates(locationRequest, object : LocationCallback() {
-                override fun onLocationResult(result: LocationResult?) {
-                    result?.lastLocation?.let { location ->
-                        Timber.d("Found location: $location")
+                fusedLocationClient.requestLocationUpdates(locationRequest, object : LocationCallback() {
+                    override fun onLocationResult(result: LocationResult?) {
+                        result?.lastLocation?.let { location ->
+                            Timber.d("Found location: $location")
 
-                        WeatherController.deleteOldForecasts()
-                        WeatherController.fetchForecast(location.latitude, location.longitude) { success, code, message ->
-                            if (success) {
-                                future.set(Result.success())
-                            } else {
-                                future.set(Result.retry())
+                            WeatherController.deleteOldForecasts()
+                            WeatherController.fetchForecast(location.latitude, location.longitude) { success, code, message ->
+                                if (success) {
+                                    completer.set(Result.success())
+                                } else {
+                                    completer.set(Result.retry())
+                                }
                             }
                         }
                     }
-                }
-            }, Looper.myLooper())
+                }, Looper.myLooper())
 
-        } else {
-            // No location permission, display notification
-            NotificationController.notifyLocationPermissionsRequired(applicationContext)
-            future.set(Result.failure())
+            } else {
+                // No location permission, display notification
+                NotificationController.notifyLocationPermissionsRequired(applicationContext)
+                completer.set(Result.failure())
+            }
         }
 
-        return future
-
+        return CallbackToFutureAdapter.getFuture(callback)
     }
 
     companion object {
