@@ -21,7 +21,7 @@ class AlertActivity : WActivity() {
     }
 
     companion object {
-        fun present(activity: Activity) {
+        fun show(activity: Activity) {
             activity.startActivity(Intent(activity, AlertActivity::class.java))
         }
     }
