@@ -1,8 +1,9 @@
 package com.tragicfruit.weatherapp.screens.alert
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import com.tragicfruit.weatherapp.R
-import com.tragicfruit.weatherapp.controllers.FetchForecastWorker
 import com.tragicfruit.weatherapp.screens.WActivity
 import com.tragicfruit.weatherapp.screens.alert.fragments.list.AlertListFragment
 
@@ -17,7 +18,11 @@ class AlertActivity : WActivity() {
         if (savedInstanceState == null) {
             presentFragment(AlertListFragment(), false)
         }
+    }
 
-        FetchForecastWorker.enqueueWork() // TODO: only after location permission request
+    companion object {
+        fun present(activity: Activity) {
+            activity.startActivity(Intent(activity, AlertActivity::class.java))
+        }
     }
 }

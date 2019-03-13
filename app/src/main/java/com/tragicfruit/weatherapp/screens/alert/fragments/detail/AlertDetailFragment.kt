@@ -57,7 +57,7 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View {
     }
 
     override fun closeScreen() {
-        baseActivity?.onBackPressed()
+        activity?.onBackPressed()
     }
 
     companion object {
