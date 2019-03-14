@@ -8,30 +8,27 @@ open class WeatherAlertParam : RealmObject() {
 
     private var type = ""
 
-    var greaterThan: Double? = null; private set
-    var greaterThanInclusive = false; private set
+    var lowerBound: Double? = null; private set // Inclusive
+    var upperBound: Double? = null; private set // Inclusive
 
-    var lessThan: Double? = null; private set
-    var lessThanInclusive = false; private set
-
-    fun getType() = ForecastType.fromString(type)
+    fun getType(): ForecastType = ForecastType.fromString(type)
 
     companion object {
 
-        fun create(type: ForecastType, realm: Realm): WeatherAlertParam {
+        fun create(type: ForecastType, lowerBound: Double?, upperBound: Double?, realm: Realm): WeatherAlertParam {
             val param = realm.createObject<WeatherAlertParam>()
             param.type = type.name
+            param.lowerBound = lowerBound
+            param.upperBound = upperBound
             return param
         }
 
-        fun addGreaterThanCondition(param: WeatherAlertParam, greaterThan: Double, isInclusive: Boolean, realm: Realm) {
-            param.greaterThan = greaterThan
-            param.greaterThanInclusive = isInclusive
+        fun setLowerBound(param: WeatherAlertParam, lowerBound: Double?, realm: Realm) {
+            param.lowerBound = lowerBound
         }
 
-        fun addLessThanCondition(param: WeatherAlertParam, lessThan: Double, isInclusive: Boolean, realm: Realm) {
-            param.lessThan = lessThan
-            param.lessThanInclusive = isInclusive
+        fun setUpperBound(param: WeatherAlertParam, upperBound: Double?, realm: Realm) {
+            param.upperBound = upperBound
         }
 
     }

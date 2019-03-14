@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.model.WeatherAlert
+import com.tragicfruit.weatherapp.model.WeatherAlertParam
 import com.tragicfruit.weatherapp.screens.WFragment
 import com.tragicfruit.weatherapp.screens.alert.fragments.detail.components.AlertDetailParamView
 import kotlinx.android.synthetic.main.fragment_alert_detail.*
 
-class AlertDetailFragment : WFragment(), AlertDetailContract.View {
+class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailParamView.Listener {
 
     private val presenter = AlertDetailPresenter(this)
 
@@ -50,10 +51,18 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View {
             alertDetailParamsList.removeAllViews()
             for (param in alert.params) {
                 val paramView = AlertDetailParamView(it)
-                paramView.setData(param)
+                paramView.setData(alert.color, param, this)
                 alertDetailParamsList.addView(paramView)
             }
         }
+    }
+
+    override fun onLowerBoundChanged(param: WeatherAlertParam, value: Double?) {
+        presenter.onLowerBoundChanged(param, value)
+    }
+
+    override fun onUpperBoundChanged(param: WeatherAlertParam, value: Double?) {
+        presenter.onUpperBoundChanged(param, value)
     }
 
     override fun closeScreen() {
