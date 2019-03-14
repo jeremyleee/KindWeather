@@ -31,6 +31,11 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         alertDetailEnableSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             presenter.onAlertEnabled(isChecked)
         }
+
+        alertDetailReset.setOnClickListener {
+            alertDetailReset.visibility = View.GONE
+            presenter.onResetToDefaultClicked()
+        }
     }
 
     override fun onInitView(alert: WeatherAlert) {
@@ -57,12 +62,20 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         }
     }
 
+    override fun refreshParamList(alert: WeatherAlert) {
+        initParamList(alert)
+    }
+
     override fun onLowerBoundChanged(param: WeatherAlertParam, value: Double?) {
         presenter.onLowerBoundChanged(param, value)
     }
 
     override fun onUpperBoundChanged(param: WeatherAlertParam, value: Double?) {
         presenter.onUpperBoundChanged(param, value)
+    }
+
+    override fun setResetButtonVisible(visible: Boolean) {
+        alertDetailReset.isVisible = visible
     }
 
     override fun closeScreen() {

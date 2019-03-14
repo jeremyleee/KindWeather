@@ -41,10 +41,9 @@ open class WeatherAlert : RealmObject() {
             alert.params.add(param)
         }
 
-        fun removeParam(alert: WeatherAlert, param: WeatherAlertParam, realm: Realm) {
-            if (alert.params.remove(param)) {
-                param.deleteFromRealm()
-            }
+        fun addParam(alert: WeatherAlert, type: ForecastType, defaultLowerBound: Double?, defaultUpperBound: Double?, realm: Realm) {
+            val param = WeatherAlertParam.create(type, defaultLowerBound, defaultUpperBound, realm)
+            addParam(alert, param, realm)
         }
 
     }

@@ -8,18 +8,23 @@ open class WeatherAlertParam : RealmObject() {
 
     private var type = ""
 
-    var lowerBound: Double? = null; private set // Inclusive
-    var upperBound: Double? = null; private set // Inclusive
+    var defaultLowerBound: Double? = null; private set
+    var defaultUpperBound: Double? = null; private set
+
+    var lowerBound: Double? = null; private set
+    var upperBound: Double? = null; private set
 
     fun getType(): ForecastType = ForecastType.fromString(type)
 
     companion object {
 
-        fun create(type: ForecastType, lowerBound: Double?, upperBound: Double?, realm: Realm): WeatherAlertParam {
+        fun create(type: ForecastType, defaultLowerBound: Double?, defaultUpperBound: Double?, realm: Realm): WeatherAlertParam {
             val param = realm.createObject<WeatherAlertParam>()
             param.type = type.name
-            param.lowerBound = lowerBound
-            param.upperBound = upperBound
+            param.defaultLowerBound = defaultLowerBound
+            param.defaultUpperBound = defaultUpperBound
+            param.lowerBound = defaultLowerBound
+            param.upperBound = defaultUpperBound
             return param
         }
 
@@ -29,6 +34,11 @@ open class WeatherAlertParam : RealmObject() {
 
         fun setUpperBound(param: WeatherAlertParam, upperBound: Double?, realm: Realm) {
             param.upperBound = upperBound
+        }
+
+        fun resetToDefault(param: WeatherAlertParam, realm: Realm) {
+            param.lowerBound = param.defaultLowerBound
+            param.upperBound = param.defaultUpperBound
         }
 
     }

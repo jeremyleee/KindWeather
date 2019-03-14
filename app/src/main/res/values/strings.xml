@@ -23,8 +23,5 @@
 
     <string name="alert_detail_enable">Enable notifications</string>
     <string name="alert_detail_params">Parameters</string>
-    <string name="alert_detail_lt">Less than %1$.1f %2$s</string>
-    <string name="alert_detail_lt_equal">Less than or equal to %1$.1f %2$s</string>
-    <string name="alert_detail_gt">Greater than %1$.1f %2$s</string>
-    <string name="alert_detail_gt_equal">Greater than or equal to %1$.1f %2$s</string>
+    <string name="alert_detail_reset">Reset to default</string>
 </resources>

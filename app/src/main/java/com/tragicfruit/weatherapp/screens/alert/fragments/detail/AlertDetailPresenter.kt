@@ -34,12 +34,27 @@ class AlertDetailPresenter(override var view: AlertDetailContract.View) : AlertD
         Realm.getDefaultInstance().executeTransaction {
             WeatherAlertParam.setLowerBound(param, value, it)
         }
+
+        view.setResetButtonVisible(true)
     }
 
     override fun onUpperBoundChanged(param: WeatherAlertParam, value: Double?) {
         Realm.getDefaultInstance().executeTransaction {
             WeatherAlertParam.setUpperBound(param, value, it)
         }
+
+        view.setResetButtonVisible(true)
+    }
+
+    override fun onResetToDefaultClicked() {
+        Realm.getDefaultInstance().executeTransaction { realm ->
+            alert.params.forEach { param ->
+                WeatherAlertParam.resetToDefault(param, realm)
+            }
+        }
+
+        view.setResetButtonVisible(false)
+        view.refreshParamList(alert)
     }
 
 }

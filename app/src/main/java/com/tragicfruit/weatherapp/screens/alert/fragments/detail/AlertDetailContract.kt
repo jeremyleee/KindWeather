@@ -10,6 +10,8 @@ interface AlertDetailContract {
     interface View : WView {
         fun onInitView(alert: WeatherAlert)
         fun closeScreen()
+        fun refreshParamList(alert: WeatherAlert)
+        fun setResetButtonVisible(visible: Boolean)
     }
 
     interface Presenter : WPresenter<View> {
@@ -18,6 +20,7 @@ interface AlertDetailContract {
         fun onAlertEnabled(enabled: Boolean)
         fun onLowerBoundChanged(param: WeatherAlertParam, value: Double?)
         fun onUpperBoundChanged(param: WeatherAlertParam, value: Double?)
+        fun onResetToDefaultClicked()
     }
 
 }
