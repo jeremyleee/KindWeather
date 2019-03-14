@@ -13,8 +13,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "API_URL", "\"https://api.openweathermap.org/data/2.5/\""
-        buildConfigField "String", "API_KEY", "\"17d7137f9d55665c78f58c3bf586487f\""
+        buildConfigField "String", "API_URL", "\"https://api.darksky.net/\""
+        buildConfigField "String", "API_KEY", "\"ae62b8856a633e788d34e86ad6aa15d9\""
     }
     buildTypes {
         release {

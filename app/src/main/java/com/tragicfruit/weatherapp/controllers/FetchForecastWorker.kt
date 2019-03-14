@@ -32,11 +32,11 @@ class FetchForecastWorker(context: Context, workerParams: WorkerParameters) : Li
                         result?.lastLocation?.let { location ->
                             Timber.d("Found location: $location")
 
-                            WeatherController.deleteOldForecasts()
                             WeatherController.fetchForecast(location.latitude, location.longitude) { success, code, message ->
                                 if (success) {
                                     completer.set(Result.success())
                                 } else {
+                                    Timber.e("Code:$code; Message:$message")
                                     completer.set(Result.retry())
                                 }
                             }
@@ -62,7 +62,7 @@ class FetchForecastWorker(context: Context, workerParams: WorkerParameters) : Li
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
-            val request = PeriodicWorkRequestBuilder<FetchForecastWorker>(3, TimeUnit.HOURS)
+            val request = PeriodicWorkRequestBuilder<FetchForecastWorker>(6, TimeUnit.HOURS)
                 .setConstraints(constraints)
                 .build()
 

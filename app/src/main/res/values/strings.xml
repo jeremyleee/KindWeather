@@ -13,13 +13,15 @@
     <string name="alert_list_allow_location_text">Notifications disabled! Please allow location permissions.</string>
     <string name="alert_list_allow_location_button">Allow</string>
 
-    <string name="forecast_type_temp">Temperature</string>
-    <string name="forecast_type_pressure">Pressure</string>
+    <string name="forecast_type_temp_high">Temperature (high)</string>
+    <string name="forecast_type_temp_low">Temperature (low)</string>
+    <string name="forecast_type_rainfall">Rainfall</string>
+    <string name="forecast_type_rain_probability">Chance of rain</string>
+    <string name="forecast_type_snowfall">Snowfall</string>
+    <string name="forecast_type_snow_probability">Chance of snow</string>
     <string name="forecast_type_humidity">Humidity</string>
     <string name="forecast_type_wind_speed">Wind speed</string>
-    <string name="forecast_type_clouds">Cloudiness</string>
-    <string name="forecast_type_rain">Rain</string>
-    <string name="forecast_type_snow">Snow</string>
+    <string name="forecast_type_uv">UV index</string>
 
     <string name="alert_detail_enable">Enable notifications</string>
     <string name="alert_detail_params">Parameters</string>
