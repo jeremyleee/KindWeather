@@ -45,6 +45,7 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         alertDetailCollapsingToolbar.setContentScrimColor(alert.color) // TODO: replace with illustration palette colour
 
         alertDetailEnableSwitch.isChecked = alert.enabled
+        alertDetailReset.isVisible = alert.areParamsEdited()
 
         initParamList(alert)
     }

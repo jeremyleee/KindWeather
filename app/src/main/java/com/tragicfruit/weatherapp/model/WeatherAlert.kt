@@ -19,6 +19,8 @@ open class WeatherAlert : RealmObject() {
     var dateAdded: Date? = null; private set
     var params = RealmList<WeatherAlertParam>(); private set
 
+    fun areParamsEdited() = params.any { it.isEdited() }
+
     companion object {
 
         fun create(name: String, realm: Realm): WeatherAlert {

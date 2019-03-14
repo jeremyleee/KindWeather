@@ -16,6 +16,8 @@ open class WeatherAlertParam : RealmObject() {
 
     fun getType(): ForecastType = ForecastType.fromString(type)
 
+    fun isEdited() = defaultLowerBound != lowerBound || defaultUpperBound != upperBound
+
     companion object {
 
         fun create(type: ForecastType, defaultLowerBound: Double?, defaultUpperBound: Double?, realm: Realm): WeatherAlertParam {
