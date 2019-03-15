@@ -1,6 +1,7 @@
 package com.tragicfruit.weatherapp.controllers
 
 import com.tragicfruit.weatherapp.BuildConfig
+import com.tragicfruit.weatherapp.model.ForecastData
 import com.tragicfruit.weatherapp.model.ForecastPeriod
 import com.tragicfruit.weatherapp.utils.WCallback
 import io.realm.Realm
@@ -10,7 +11,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import timber.log.Timber
-import java.util.*
 
 object WeatherController {
 
@@ -32,7 +32,7 @@ object WeatherController {
                     if (response.isSuccessful) {
                         Realm.getDefaultInstance().executeTransaction { realm ->
                             response.body()?.let { forecastResponse ->
-                                val timestamp = Date()
+                                val timestamp = System.currentTimeMillis()
 
                                 for (dailyItem in forecastResponse.daily.data) {
                                     ForecastPeriod.fromResponse(dailyItem, forecastResponse.latitude, forecastResponse.longitude, realm)
@@ -57,14 +57,21 @@ object WeatherController {
             })
     }
 
-    private fun deleteForecastsBefore(date: Date, realm: Realm) {
+    private fun deleteForecastsBefore(timestamp: Long, realm: Realm) {
         val oldForecasts = realm.where<ForecastPeriod>()
-            .lessThan("fetchDate", date)
+            .lessThan("fetchedTime", timestamp)
             .findAll()
 
         Timber.d("${oldForecasts.count()} old forecasts deleted")
 
+        val oldForecastData = realm.where<ForecastData>()
+            .lessThan("fetchedTime", timestamp)
+            .findAll()
+
+        Timber.d("${oldForecastData.count()} old forecast data deleted")
+
         oldForecasts.deleteAllFromRealm()
+        oldForecastData.deleteAllFromRealm()
     }
 
 }

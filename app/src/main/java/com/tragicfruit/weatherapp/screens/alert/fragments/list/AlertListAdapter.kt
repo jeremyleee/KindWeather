@@ -16,7 +16,7 @@ class AlertListAdapter(private val listener: AlertCell.Listener) : RecyclerView.
     init {
         alertList = Realm.getDefaultInstance()
             .where<WeatherAlert>()
-            .sort("enabled", Sort.DESCENDING, "dateAdded", Sort.ASCENDING)
+            .sort("enabled", Sort.DESCENDING, "priority", Sort.ASCENDING)
             .findAll()
     }
 

@@ -4,7 +4,6 @@ import com.tragicfruit.weatherapp.controllers.ForecastResponse
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.kotlin.createObject
-import java.util.*
 
 /**
  * Forecast for a day
@@ -17,21 +16,17 @@ open class ForecastPeriod : RealmObject() {
     var time: Long = 0; private set
     var summary: String? = null; private set
     var icon: String? = null; private set
-    var precipIntensity: Double? = null; private set    // mm/h
-    var precipProbability: Double? = null; private set  // mm/h
-    var precipType: String? = null; private set         // rain;snow;sleet
-    var temperatureHigh: Double? = null; private set    // °C
-    var temperatureLow: Double? = null; private set     // °C
-    var dewPoint: Double? = null; private set           // °C
-    var humidity: Double? = null; private set
-    var pressure: Double? = null; private set           // hPa
-    var windSpeed: Double? = null; private set          // m/s
-    var cloudCover: Double? = null; private set
-    var uvIndex: Int? = null; private set
-    var visibility: Double? = null; private set         // km
-    var ozone: Double? = null; private set
+    var rainIntensity: ForecastData? = null; private set    // mm/h
+    var rainProbability: ForecastData? = null; private set  // mm/h
+    var snowIntensity: ForecastData? = null; private set    // mm/h
+    var snowProbability: ForecastData? = null; private set  // mm/h
+    var temperatureHigh: ForecastData? = null; private set  // °C
+    var temperatureLow: ForecastData? = null; private set   // °C
+    var humidity: ForecastData? = null; private set
+    var windSpeed: ForecastData? = null; private set        // m/s
+    var uvIndex: ForecastData? = null; private set
 
-    var fetchDate = Date(); private set
+    var fetchedTime: Long = 0; private set
 
     companion object {
 
@@ -45,19 +40,28 @@ open class ForecastPeriod : RealmObject() {
             forecastPeriod.time = responseData.time
             forecastPeriod.summary = responseData.summary
             forecastPeriod.icon = responseData.icon
-            forecastPeriod.precipIntensity = responseData.precipIntensity
-            forecastPeriod.precipProbability = responseData.precipProbability
-            forecastPeriod.precipType = responseData.precipType
-            forecastPeriod.temperatureHigh = responseData.temperatureHigh
-            forecastPeriod.temperatureLow = responseData.temperatureLow
-            forecastPeriod.dewPoint = responseData.dewPoint
-            forecastPeriod.humidity = responseData.humidity
-            forecastPeriod.pressure = responseData.pressure
-            forecastPeriod.windSpeed = responseData.windSpeed
-            forecastPeriod.cloudCover = responseData.cloudCover
-            forecastPeriod.uvIndex = responseData.uvIndex
-            forecastPeriod.visibility = responseData.visibility
-            forecastPeriod.ozone = responseData.ozone
+
+            when (responseData.precipType) {
+                "rain" -> {
+                    forecastPeriod.rainIntensity = ForecastData.create(ForecastType.Rain_intensity, responseData.precipIntensity, realm)
+                    forecastPeriod.rainProbability = ForecastData.create(ForecastType.Rain_probability, responseData.precipProbability, realm)
+                }
+                "snow" -> {
+                    forecastPeriod.snowIntensity = ForecastData.create(ForecastType.Snow_intensity, responseData.precipIntensity, realm)
+                    forecastPeriod.snowProbability = ForecastData.create(ForecastType.Snow_probability, responseData.precipProbability, realm)
+                }
+                "sleet" -> {
+                    // Do nothing for now
+                }
+            }
+
+            forecastPeriod.temperatureHigh = ForecastData.create(ForecastType.Temp_high, responseData.temperatureHigh, realm)
+            forecastPeriod.temperatureLow = ForecastData.create(ForecastType.Temp_low, responseData.temperatureLow, realm)
+            forecastPeriod.humidity = ForecastData.create(ForecastType.Humidity, responseData.humidity, realm)
+            forecastPeriod.windSpeed = ForecastData.create(ForecastType.Wind_speed, responseData.windSpeed, realm)
+            forecastPeriod.uvIndex = ForecastData.create(ForecastType.Uv_index, responseData.uvIndex?.toDouble(), realm)
+
+            forecastPeriod.fetchedTime = System.currentTimeMillis()
 
             return forecastPeriod
         }

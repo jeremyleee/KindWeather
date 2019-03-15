@@ -14,6 +14,9 @@ import com.tragicfruit.weatherapp.utils.PermissionHelper
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
+/**
+ * Regularly fetches forecast to keep local forecast data up to date
+ */
 class FetchForecastWorker(context: Context, workerParams: WorkerParameters) : ListenableWorker(context, workerParams) {
 
     @SuppressWarnings("MissingPermission")
