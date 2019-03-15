@@ -13,22 +13,31 @@ open class WeatherAlert : RealmObject() {
 
     var id = ""; private set
     var color = Color.WHITE; private set
+    var priority = 0; private set
 
     var name = ""; private set
     var enabled = true; private set
-    var priority = 0; private set
     var params = RealmList<WeatherAlertParam>(); private set
+
+    var description = ""; private set
 
     fun areParamsEdited() = params.any { it.isEdited() }
 
+    fun shouldShowAlert(forecast: ForecastPeriod): Boolean {
+        return params.all {
+            forecast.satisfiesParam(it)
+        }
+    }
+
     companion object {
 
-        fun create(name: String, priority: Int, realm: Realm): WeatherAlert {
+        fun create(name: String, description: String, priority: Int, realm: Realm): WeatherAlert {
             return realm.createObject<WeatherAlert>().apply {
                 this.id = UUID.randomUUID().toString()
                 this.name = name
                 this.color = ColorHelper.getRandomColor()
                 this.priority = priority
+                this.description = description
             }
         }
 

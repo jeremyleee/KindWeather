@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.tragicfruit.weatherapp.R
+import com.tragicfruit.weatherapp.controllers.AlertController
 import com.tragicfruit.weatherapp.controllers.FetchForecastWorker
 import com.tragicfruit.weatherapp.screens.WActivity
 import com.tragicfruit.weatherapp.screens.alert.AlertActivity
@@ -27,6 +28,7 @@ class WelcomeActivity : WActivity(), AllowLocationContract.Callback {
     override fun onLocationPermissionGranted() {
         SharedPrefsHelper.setOnboardingCompleted(this, true)
         FetchForecastWorker.enqueueWork()
+        AlertController.scheduleDailyAlert(this)
 
         // Finish onboarding
         AlertActivity.show(this)

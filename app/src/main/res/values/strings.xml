@@ -2,6 +2,7 @@
     <string name="app_name">WeatherApp</string>
 
     <string name="notification_channel_location">Location status</string>
+    <string name="notification_channel_weather">Weather alerts</string>
 
     <string name="notification_location_permission_title">Location permissions required!</string>
     <string name="notification_location_permission_text">Please allow location permissions to display weather notifications</string>
