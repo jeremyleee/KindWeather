@@ -69,7 +69,7 @@ open class ForecastPeriod : RealmObject() {
             forecastPeriod.data.add(ForecastData.create(ForecastType.Temp_high, responseData.temperatureHigh, realm))
             forecastPeriod.data.add(ForecastData.create(ForecastType.Temp_low, responseData.temperatureLow, realm))
             forecastPeriod.data.add(ForecastData.create(ForecastType.Humidity, responseData.humidity, realm))
-            forecastPeriod.data.add(ForecastData.create(ForecastType.Wind_speed, responseData.windSpeed, realm))
+            forecastPeriod.data.add(ForecastData.create(ForecastType.Wind_gust, responseData.windGust, realm))
             forecastPeriod.data.add(ForecastData.create(ForecastType.Uv_index, responseData.uvIndex?.toDouble(), realm))
 
             forecastPeriod.fetchedTime = System.currentTimeMillis()

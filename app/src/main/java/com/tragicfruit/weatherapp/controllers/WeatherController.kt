@@ -99,6 +99,7 @@ data class ForecastResponse(val latitude: Double, val longitude: Double, val tim
                         val humidity: Double?,
                         val pressure: Double?,
                         val windSpeed: Double?,
+                        val windGust: Double?,
                         val cloudCover: Double?,
                         val uvIndex: Int?,
                         val visibility: Double?,

@@ -22,7 +22,7 @@
     <string name="forecast_type_snow_intensity">Snowfall</string>
     <string name="forecast_type_snow_probability">Chance of snow</string>
     <string name="forecast_type_humidity">Humidity</string>
-    <string name="forecast_type_wind_speed">Wind speed</string>
+    <string name="forecast_type_wind_gust">Wind gust speed</string>
     <string name="forecast_type_uv">UV index</string>
 
     <string name="alert_detail_enable">Enable notifications</string>

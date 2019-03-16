@@ -15,7 +15,7 @@ enum class ForecastType(@StringRes val label: Int = -1,
     Snow_intensity(R.string.forecast_type_snow_intensity, "mm/h", 0.0, 250.0),
     Snow_probability(R.string.forecast_type_snow_probability, "", 0.0, 1.0),
     Humidity(R.string.forecast_type_humidity, "", 0.0, 1.0),
-    Wind_speed(R.string.forecast_type_wind_speed, "km/h", 0.0, 200.0),
+    Wind_gust(R.string.forecast_type_wind_gust, "km/h", 0.0, 200.0),
     Uv_index(R.string.forecast_type_uv, "", 0.0, 10.0),
 
     Unknown;
