@@ -6,6 +6,7 @@
 
     <string name="notification_location_permission_title">Location permissions required!</string>
     <string name="notification_location_permission_text">Please allow location permissions to display weather notifications</string>
+    <string name="notification_alert_foreground">Fetching weather for current location…</string>
 
     <string name="allow_location_title">Allow location permissions</string>
     <string name="allow_location_text">Location permissions are required to determine the weather for your current location.</string>

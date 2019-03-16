@@ -20,6 +20,8 @@ class AlertService : IntentService(AlertService::javaClass.name) {
     }
 
     override fun onHandleIntent(intent: Intent?) {
+        startForeground(FOREGROUND_ID, NotificationController.getAlertForegroundNotification(this))
+
         if (LocationResult.hasResult(intent)) {
             val location = LocationResult.extractResult(intent).lastLocation
             WeatherController.fetchForecast(location.latitude, location.longitude) { success, code, message ->
@@ -61,6 +63,8 @@ class AlertService : IntentService(AlertService::javaClass.name) {
     }
 
     companion object {
+        const val FOREGROUND_ID = 200
+
         fun getIntent(context: Context) = Intent(context, AlertService::class.java)
     }
 

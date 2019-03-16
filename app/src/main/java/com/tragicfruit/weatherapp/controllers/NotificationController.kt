@@ -1,6 +1,7 @@
 package com.tragicfruit.weatherapp.controllers
 
 import android.annotation.TargetApi
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -72,6 +73,14 @@ object NotificationController {
 
         NotificationManagerCompat.from(context)
             .notify(WEATHER_ALERT_ID, builder.build())
+    }
+
+    fun getAlertForegroundNotification(context: Context): Notification {
+        return NotificationCompat.Builder(context, WEATHER_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle(context.getString(R.string.notification_alert_foreground))
+            .setPriority(NotificationCompat.PRIORITY_MIN)
+            .build()
     }
 
 }

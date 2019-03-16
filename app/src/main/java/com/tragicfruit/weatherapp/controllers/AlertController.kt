@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -56,7 +57,11 @@ class AlertReceiver : BroadcastReceiver() {
             val locationRequest = LocationRequest.create().setNumUpdates(1)
 
             val serviceIntent = AlertService.getIntent(context)
-            val pendingIntent = PendingIntent.getService(context, ALERT_SERVICE_REQUEST, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                PendingIntent.getForegroundService(context, ALERT_SERVICE_REQUEST, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            } else {
+                PendingIntent.getService(context, ALERT_SERVICE_REQUEST, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            }
 
             fusedLocationClient.requestLocationUpdates(locationRequest, pendingIntent)
 
