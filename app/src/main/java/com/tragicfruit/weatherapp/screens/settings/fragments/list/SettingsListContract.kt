@@ -9,12 +9,14 @@ interface SettingsListContract {
         fun showAlertTimeDialog(initialAlertHour: Int, initialAlertMinute: Int)
         fun updateAlertTimeText(alertTime: String)
         fun restartAlertService()
+        fun openWebPage(url: String)
     }
 
     interface Presenter : WPresenter<View> {
         fun init()
         fun onAlertTimeClicked()
         fun onAlertTimeChanged(hourOfDay: Int, minute: Int)
+        fun onDarkSkyDisclaimerClicked()
     }
 
 }

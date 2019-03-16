@@ -1,6 +1,8 @@
 package com.tragicfruit.weatherapp.screens.settings.fragments.list
 
 import android.app.TimePickerDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +29,10 @@ class SettingsListFragment : WFragment(), SettingsListContract.View, TimePickerD
         settingsListAlertTime.setOnClickListener {
             presenter.onAlertTimeClicked()
         }
+
+        settingsListDarkSky.setOnClickListener {
+            presenter.onDarkSkyDisclaimerClicked()
+        }
     }
 
     override fun showAlertTimeDialog(initialAlertHour: Int, initialAlertMinute: Int) {
@@ -49,6 +55,16 @@ class SettingsListFragment : WFragment(), SettingsListContract.View, TimePickerD
     override fun restartAlertService() {
         context?.let {
             AlertController.scheduleDailyAlert(it)
+        }
+    }
+
+    override fun openWebPage(url: String) {
+        context?.let {
+            val webpage = Uri.parse(url)
+            val intent = Intent(Intent.ACTION_VIEW, webpage)
+            if (intent.resolveActivity(it.packageManager) != null) {
+                startActivity(intent)
+            }
         }
     }
 

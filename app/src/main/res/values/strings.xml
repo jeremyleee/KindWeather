@@ -31,4 +31,5 @@
 
     <string name="settings_title">Settings</string>
     <string name="settings_list_alert_time">Notify time</string>
+    <string name="settings_list_disclaimer">Powered by Dark Sky</string>
 </resources>

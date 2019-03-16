@@ -37,4 +37,8 @@ class SettingsListPresenter(override var view: SettingsListContract.View) : Sett
         return timeFormatter.format(calendar.time)
     }
 
+    override fun onDarkSkyDisclaimerClicked() {
+        view.openWebPage("https://darksky.net/poweredby/")
+    }
+
 }
