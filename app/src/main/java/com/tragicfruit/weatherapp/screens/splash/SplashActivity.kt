@@ -13,7 +13,7 @@ class SplashActivity : WActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        if (SharedPrefsHelper.isOnboardingCompleted(this)) {
+        if (SharedPrefsHelper.isOnboardingCompleted()) {
             AlertActivity.show(this)
         } else {
             WelcomeActivity.show(this)

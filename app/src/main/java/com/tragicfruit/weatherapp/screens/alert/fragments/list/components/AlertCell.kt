@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.model.WeatherAlert
 import com.tragicfruit.weatherapp.utils.ViewHelper
+import com.tragicfruit.weatherapp.utils.setPadding
 
 class AlertCell(context: Context, private val listener: Listener? = null) : RelativeLayout(context) {
 
@@ -16,7 +17,7 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Rela
     private val nameView = TextView(context)
 
     init {
-        setPadding(0, ViewHelper.px(R.dimen.app_margin_h).toInt(), 0, ViewHelper.px(R.dimen.app_margin_h).toInt())
+        setPadding(0, ViewHelper.px(R.dimen.app_margin_h).toInt())
 
         addView(backgroundImage, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
 

@@ -3,6 +3,7 @@ package com.tragicfruit.weatherapp
 import android.app.Application
 import com.tragicfruit.weatherapp.controllers.NotificationController
 import com.tragicfruit.weatherapp.controllers.WeatherController
+import com.tragicfruit.weatherapp.utils.SharedPrefsHelper
 import com.tragicfruit.weatherapp.utils.ViewHelper
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -24,7 +25,8 @@ class WApplication : Application() {
                 .deleteRealmIfMigrationNeeded() // TODO: remove on production
                 .build())
 
-        ViewHelper.init(resources)
+        SharedPrefsHelper.init(this)
+        ViewHelper.init(this)
 
         WeatherController.init()
         NotificationController.init(this)

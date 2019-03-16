@@ -29,6 +29,9 @@
         <activity android:name=".screens.alert.AlertActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".screens.settings.SettingsActivity"
+            android:screenOrientation="portrait"/>
+
         <receiver android:name=".controllers.AlertReceiver"/>
 
         <service android:name=".controllers.AlertService"/>

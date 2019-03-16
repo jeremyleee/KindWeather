@@ -12,6 +12,7 @@ import com.tragicfruit.weatherapp.model.WeatherAlert
 import com.tragicfruit.weatherapp.screens.WFragment
 import com.tragicfruit.weatherapp.screens.alert.fragments.detail.AlertDetailFragment
 import com.tragicfruit.weatherapp.screens.alert.fragments.list.components.AlertCell
+import com.tragicfruit.weatherapp.screens.settings.SettingsActivity
 import com.tragicfruit.weatherapp.utils.PermissionHelper
 import kotlinx.android.synthetic.main.fragment_alert_list.*
 
@@ -25,6 +26,17 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        alertListToolbar.inflateMenu(R.menu.menu_alert_list)
+        alertListToolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_settings -> {
+                    presenter.onSettingsClicked()
+                    true
+                }
+                else -> false
+            }
+        }
 
         alertListRecyclerView.adapter = AlertListAdapter(this)
         alertListRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -46,6 +58,20 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
         requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION)
     }
 
+    override fun refreshList() {
+        alertListRecyclerView.adapter?.notifyDataSetChanged()
+
+        context?.let {
+            alertListAllowLocation.isVisible = !PermissionHelper.hasPermission(it, Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+    }
+
+    override fun showSettingsScreen() {
+        activity?.let {
+            SettingsActivity.show(it)
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         presenter.resume()
@@ -54,14 +80,6 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
     override fun onPause() {
         super.onPause()
         presenter.pause()
-    }
-
-    override fun refreshList() {
-        alertListRecyclerView.adapter?.notifyDataSetChanged()
-
-        context?.let {
-            alertListAllowLocation.isVisible = !PermissionHelper.hasPermission(it, Manifest.permission.ACCESS_FINE_LOCATION)
-        }
     }
 
     companion object {

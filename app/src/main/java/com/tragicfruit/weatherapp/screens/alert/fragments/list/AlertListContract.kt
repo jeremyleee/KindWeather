@@ -10,11 +10,13 @@ interface AlertListContract {
         fun showAlertDetailScreen(alert: WeatherAlert)
         fun refreshList()
         fun requestLocationPermission()
+        fun showSettingsScreen()
     }
 
     interface Presenter : WPresenter<View> {
         fun onAlertClicked(alert: WeatherAlert)
         fun onAllowLocationClicked()
+        fun onSettingsClicked()
     }
 
 }

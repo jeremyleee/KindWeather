@@ -1,5 +1,6 @@
 package com.tragicfruit.weatherapp.utils
 
+import android.view.View
 import android.widget.TextView
 import androidx.annotation.StringRes
 
@@ -9,4 +10,8 @@ fun TextView.setFormattedText(@StringRes resId: Int, vararg formatArgs: Any?) {
 
 fun Float.format(digits: Int): String {
     return String.format("%.${digits}f", this)
+}
+
+fun View.setPadding(x: Int, y: Int) {
+    setPadding(x, y, x, y)
 }

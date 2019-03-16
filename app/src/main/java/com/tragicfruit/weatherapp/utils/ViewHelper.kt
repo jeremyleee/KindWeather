@@ -1,5 +1,6 @@
 package com.tragicfruit.weatherapp.utils
 
+import android.content.Context
 import android.content.res.Resources
 import android.view.View
 import androidx.annotation.DimenRes
@@ -8,8 +9,8 @@ object ViewHelper {
 
     private var resources: Resources? = null
 
-    fun init(resources: Resources) {
-        this.resources = resources
+    fun init(context: Context) {
+        this.resources = context.resources
     }
 
     fun px(@DimenRes dimen: Int): Float {

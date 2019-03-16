@@ -26,7 +26,7 @@ class WelcomeActivity : WActivity(), AllowLocationContract.Callback {
     }
 
     override fun onLocationPermissionGranted() {
-        SharedPrefsHelper.setOnboardingCompleted(this, true)
+        SharedPrefsHelper.setOnboardingCompleted(true)
         FetchForecastWorker.enqueueWork()
         AlertController.scheduleDailyAlert(this)
 

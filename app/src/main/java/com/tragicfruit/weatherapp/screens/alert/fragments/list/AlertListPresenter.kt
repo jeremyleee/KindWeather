@@ -12,6 +12,10 @@ class AlertListPresenter(override var view: AlertListContract.View) : AlertListC
         view.requestLocationPermission()
     }
 
+    override fun onSettingsClicked() {
+        view.showSettingsScreen()
+    }
+
     override fun resume() {
         view.refreshList()
     }

@@ -1,6 +1,7 @@
 package com.tragicfruit.weatherapp.controllers
 
 import android.app.IntentService
+import android.content.Context
 import android.content.Intent
 import com.google.android.gms.location.LocationResult
 import com.tragicfruit.weatherapp.model.ForecastPeriod
@@ -8,6 +9,7 @@ import com.tragicfruit.weatherapp.model.WeatherAlert
 import io.realm.Realm
 import io.realm.Sort
 import io.realm.kotlin.where
+import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -52,9 +54,14 @@ class AlertService : IntentService(AlertService::javaClass.name) {
             val showAlert = enabledAlerts.first { it.shouldShowAlert(forecast) }
 
             showAlert?.let { alert ->
+                Timber.i("Showing push notification: ${alert.description}")
                 NotificationController.notifyWeatherAlert(this, alert, forecast)
             }
         }
+    }
+
+    companion object {
+        fun getIntent(context: Context) = Intent(context, AlertService::class.java)
     }
 
 }
