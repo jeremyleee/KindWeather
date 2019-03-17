@@ -33,7 +33,6 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         }
 
         alertDetailReset.setOnClickListener {
-            alertDetailReset.visibility = View.GONE
             presenter.onResetToDefaultClicked()
         }
     }
@@ -45,7 +44,7 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         alertDetailCollapsingToolbar.setContentScrimColor(alert.color) // TODO: replace with illustration palette colour
 
         alertDetailEnableSwitch.isChecked = alert.enabled
-        alertDetailReset.isVisible = alert.areParamsEdited()
+        alertDetailReset.isEnabled = alert.areParamsEdited()
 
         initParamList(alert)
     }
@@ -75,8 +74,8 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         presenter.onUpperBoundChanged(param, value)
     }
 
-    override fun setResetButtonVisible(visible: Boolean) {
-        alertDetailReset.isVisible = visible
+    override fun setResetButtonEnabled(enabled: Boolean) {
+        alertDetailReset.isEnabled = enabled
     }
 
     override fun closeScreen() {

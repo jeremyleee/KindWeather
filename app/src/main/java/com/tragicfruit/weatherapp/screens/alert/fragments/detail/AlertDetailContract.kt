@@ -11,7 +11,7 @@ interface AlertDetailContract {
         fun onInitView(alert: WeatherAlert)
         fun closeScreen()
         fun refreshParamList(alert: WeatherAlert)
-        fun setResetButtonVisible(visible: Boolean)
+        fun setResetButtonEnabled(visible: Boolean)
     }
 
     interface Presenter : WPresenter<View> {

@@ -35,7 +35,7 @@ class AlertDetailPresenter(override var view: AlertDetailContract.View) : AlertD
             WeatherAlertParam.setLowerBound(param, value, it)
         }
 
-        view.setResetButtonVisible(true)
+        view.setResetButtonEnabled(true)
     }
 
     override fun onUpperBoundChanged(param: WeatherAlertParam, value: Double?) {
@@ -43,7 +43,7 @@ class AlertDetailPresenter(override var view: AlertDetailContract.View) : AlertD
             WeatherAlertParam.setUpperBound(param, value, it)
         }
 
-        view.setResetButtonVisible(true)
+        view.setResetButtonEnabled(true)
     }
 
     override fun onResetToDefaultClicked() {
@@ -53,7 +53,7 @@ class AlertDetailPresenter(override var view: AlertDetailContract.View) : AlertD
             }
         }
 
-        view.setResetButtonVisible(false)
+        view.setResetButtonEnabled(false)
         view.refreshParamList(alert)
     }
 
