@@ -37,7 +37,8 @@
                 android:clipToPadding="false"
                 android:paddingTop="@dimen/app_margin_h"
                 android:paddingBottom="@dimen/app_margin_h"
-                android:nestedScrollingEnabled="false"/>
+                android:nestedScrollingEnabled="false"
+                android:layoutAnimation="@anim/layout_alert_list"/>
 
         </LinearLayout>
 
