@@ -31,5 +31,13 @@
 
     <string name="settings_title">Settings</string>
     <string name="settings_list_alert_time">Notify time</string>
+    <string name="settings_list_units">Measurement units</string>
+    <string name="settings_list_units_metric">Metric</string>
+    <string name="settings_list_units_imperial">Imperial</string>
     <string name="settings_list_disclaimer">Powered by Dark Sky</string>
+
+    <string-array name="units">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
 </resources>

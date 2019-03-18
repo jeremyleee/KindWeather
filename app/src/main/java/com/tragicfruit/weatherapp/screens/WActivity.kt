@@ -29,7 +29,7 @@ open class WActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .apply {
                 if (addToBackStack) {
-                    addToBackStack(fragment.tag)
+                    addToBackStack(fragment.javaClass.name)
                 }
 
                 sharedElementView?.let {

@@ -14,7 +14,7 @@ class SettingsListItemView : RelativeLayout {
     private val subtitle = TextView(context)
 
     @JvmOverloads
-    constructor(context: Context, attributeSet: AttributeSet? = null, style: Int = -1): super(context, attributeSet, style) {
+    constructor(context: Context, attributeSet: AttributeSet? = null, style: Int = 0): super(context, attributeSet, style) {
         title.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body2)
         addView(title, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             setMargins(ViewHelper.px(R.dimen.app_margin_xx).toInt(),
@@ -27,6 +27,12 @@ class SettingsListItemView : RelativeLayout {
             setMargins(ViewHelper.px(R.dimen.app_margin_xx).toInt(), 0,
                 ViewHelper.px(R.dimen.app_margin_xx).toInt(), ViewHelper.px(R.dimen.app_margin_xx).toInt())
         })
+
+        attributeSet?.let {
+            val typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.SettingsListItemView)
+            title.text = typedArray.getString(R.styleable.SettingsListItemView_title)
+            typedArray.recycle()
+        }
     }
 
     fun setTitle(@StringRes resId: Int) {

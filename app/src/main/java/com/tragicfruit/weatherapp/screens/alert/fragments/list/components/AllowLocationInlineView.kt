@@ -15,7 +15,7 @@ class AllowLocationInlineView : RelativeLayout {
     private val allowButton = Button(context)
 
     @JvmOverloads
-    constructor(context: Context, attributeSet: AttributeSet? = null, style: Int = -1): super(context, attributeSet, style) {
+    constructor(context: Context, attributeSet: AttributeSet? = null, style: Int = 0): super(context, attributeSet, style) {
         setPadding(ViewHelper.px(R.dimen.app_margin).toInt())
 
         allowButton.setText(R.string.alert_list_allow_location_button)

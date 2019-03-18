@@ -12,6 +12,7 @@ object SharedPrefsHelper {
     private const val KEY_ONBOARDING_COMPLETE = "onboarding-complete"
     private const val KEY_ALERT_HOUR = "alert-hour"
     private const val KEY_ALERT_MINUTE = "alert-minute"
+    private const val KEY_METRIC_UNITS = "metric_units"
 
     lateinit var sharedPreferences: SharedPreferences
 
@@ -47,6 +48,16 @@ object SharedPrefsHelper {
 
     fun getAlertMinute(): Int {
         return sharedPreferences.getInt(KEY_ALERT_MINUTE, DEFAULT_ALERT_MINUTE)
+    }
+
+    fun setUsesMetricUnits(metricUnits: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(KEY_METRIC_UNITS, metricUnits)
+            .apply()
+    }
+
+    fun usesMetricUnits(): Boolean {
+        return sharedPreferences.getBoolean(KEY_METRIC_UNITS, true)
     }
 
 }

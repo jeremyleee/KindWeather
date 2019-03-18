@@ -11,11 +11,18 @@ import android.widget.TimePicker
 import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.controllers.AlertController
 import com.tragicfruit.weatherapp.screens.WFragment
+import com.tragicfruit.weatherapp.screens.settings.fragments.list.dialogs.TimePickerDialogFragment
+import com.tragicfruit.weatherapp.screens.settings.fragments.list.dialogs.UnitsDialogFragment
 import kotlinx.android.synthetic.main.fragment_settings_list.*
+import java.text.DateFormat
+import java.util.*
 
-class SettingsListFragment : WFragment(), SettingsListContract.View, TimePickerDialog.OnTimeSetListener {
+class SettingsListFragment : WFragment(), SettingsListContract.View,
+    TimePickerDialog.OnTimeSetListener, UnitsDialogFragment.Listener {
 
     private val presenter = SettingsListPresenter(this)
+
+    private val calendar = Calendar.getInstance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_settings_list, container, false)
@@ -25,9 +32,12 @@ class SettingsListFragment : WFragment(), SettingsListContract.View, TimePickerD
         super.onViewCreated(view, savedInstanceState)
         presenter.init()
 
-        settingsListAlertTime.setTitle(R.string.settings_list_alert_time)
         settingsListAlertTime.setOnClickListener {
             presenter.onAlertTimeClicked()
+        }
+
+        settingsListUnits.setOnClickListener {
+            presenter.onUnitsClicked()
         }
 
         settingsListDarkSky.setOnClickListener {
@@ -36,26 +46,42 @@ class SettingsListFragment : WFragment(), SettingsListContract.View, TimePickerD
     }
 
     override fun showAlertTimeDialog(initialAlertHour: Int, initialAlertMinute: Int) {
-        TimePickerDialog(context,
-            this,
-            initialAlertHour,
-            initialAlertMinute,
-            false)
-            .show()
+        val fragment = TimePickerDialogFragment.newInstance(initialAlertHour, initialAlertMinute, this)
+        fragment.show(fragmentManager, fragment.javaClass.name)
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         presenter.onAlertTimeChanged(hourOfDay, minute)
     }
 
-    override fun updateAlertTimeText(alertTime: String) {
-        settingsListAlertTime.setSubtitle(alertTime)
+    override fun updateAlertTimeText(alertHour: Int, alertMinute: Int) {
+        calendar.set(Calendar.HOUR_OF_DAY, alertHour)
+        calendar.set(Calendar.MINUTE, alertMinute)
+        calendar.set(Calendar.SECOND, 0)
+
+        val timeFormatter = DateFormat.getTimeInstance(DateFormat.SHORT)
+        settingsListAlertTime.setSubtitle(timeFormatter.format(calendar.time))
+    }
+
+    override fun updateUnitsText(usesMetric: Boolean) {
+        val units = getString(if (usesMetric) R.string.settings_list_units_metric else R.string.settings_list_units_imperial)
+        settingsListUnits.setSubtitle(units)
     }
 
     override fun restartAlertService() {
         context?.let {
             AlertController.scheduleDailyAlert(it)
         }
+    }
+
+    override fun showChangeUnitsDialog(usesMetric: Boolean) {
+        val units = if (usesMetric) UnitsDialogFragment.Units.METRIC else UnitsDialogFragment.Units.IMPERIAL
+        val fragment = UnitsDialogFragment.newInstance(units, this)
+        fragment.show(fragmentManager, fragment.javaClass.name)
+    }
+
+    override fun onUnitsChanged(units: UnitsDialogFragment.Units) {
+        presenter.onUnitsChanged(units == UnitsDialogFragment.Units.METRIC)
     }
 
     override fun openWebPage(url: String) {

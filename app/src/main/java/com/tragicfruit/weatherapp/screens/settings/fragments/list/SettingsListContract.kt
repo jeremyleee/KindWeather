@@ -7,8 +7,10 @@ interface SettingsListContract {
 
     interface View : WView {
         fun showAlertTimeDialog(initialAlertHour: Int, initialAlertMinute: Int)
-        fun updateAlertTimeText(alertTime: String)
+        fun updateAlertTimeText(alertHour: Int, alertMinute: Int)
         fun restartAlertService()
+        fun updateUnitsText(usesMetric: Boolean)
+        fun showChangeUnitsDialog(usesMetric: Boolean)
         fun openWebPage(url: String)
     }
 
@@ -16,6 +18,8 @@ interface SettingsListContract {
         fun init()
         fun onAlertTimeClicked()
         fun onAlertTimeChanged(hourOfDay: Int, minute: Int)
+        fun onUnitsClicked()
+        fun onUnitsChanged(metric: Boolean)
         fun onDarkSkyDisclaimerClicked()
     }
 
