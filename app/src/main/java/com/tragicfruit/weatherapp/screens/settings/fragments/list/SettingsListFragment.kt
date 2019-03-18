@@ -63,8 +63,8 @@ class SettingsListFragment : WFragment(), SettingsListContract.View,
         settingsListAlertTime.setSubtitle(timeFormatter.format(calendar.time))
     }
 
-    override fun updateUnitsText(usesMetric: Boolean) {
-        val units = getString(if (usesMetric) R.string.settings_list_units_metric else R.string.settings_list_units_imperial)
+    override fun updateUnitsText(usesImperial: Boolean) {
+        val units = getString(if (usesImperial) R.string.settings_list_units_imperial else R.string.settings_list_units_metric)
         settingsListUnits.setSubtitle(units)
     }
 
@@ -74,14 +74,14 @@ class SettingsListFragment : WFragment(), SettingsListContract.View,
         }
     }
 
-    override fun showChangeUnitsDialog(usesMetric: Boolean) {
-        val units = if (usesMetric) UnitsDialogFragment.Units.METRIC else UnitsDialogFragment.Units.IMPERIAL
+    override fun showChangeUnitsDialog(usesImperial: Boolean) {
+        val units = if (usesImperial) UnitsDialogFragment.Units.IMPERIAL else UnitsDialogFragment.Units.METRIC
         val fragment = UnitsDialogFragment.newInstance(units, this)
         fragment.show(fragmentManager, fragment.javaClass.name)
     }
 
     override fun onUnitsChanged(units: UnitsDialogFragment.Units) {
-        presenter.onUnitsChanged(units == UnitsDialogFragment.Units.METRIC)
+        presenter.onUnitsChanged(units == UnitsDialogFragment.Units.IMPERIAL)
     }
 
     override fun openWebPage(url: String) {

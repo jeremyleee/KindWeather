@@ -6,7 +6,7 @@ class SettingsListPresenter(override var view: SettingsListContract.View) : Sett
 
     override fun init() {
         view.updateAlertTimeText(SharedPrefsHelper.getAlertHour(), SharedPrefsHelper.getAlertMinute())
-        view.updateUnitsText(SharedPrefsHelper.usesMetricUnits())
+        view.updateUnitsText(SharedPrefsHelper.usesImperialUnits())
     }
 
     override fun onAlertTimeClicked() {
@@ -25,12 +25,12 @@ class SettingsListPresenter(override var view: SettingsListContract.View) : Sett
     }
 
     override fun onUnitsClicked() {
-        view.showChangeUnitsDialog(SharedPrefsHelper.usesMetricUnits())
+        view.showChangeUnitsDialog(SharedPrefsHelper.usesImperialUnits())
     }
 
-    override fun onUnitsChanged(metric: Boolean) {
-        SharedPrefsHelper.setUsesMetricUnits(metric)
-        view.updateUnitsText(metric)
+    override fun onUnitsChanged(imperial: Boolean) {
+        SharedPrefsHelper.setUsesImperialUnits(imperial)
+        view.updateUnitsText(imperial)
     }
 
     override fun onDarkSkyDisclaimerClicked() {

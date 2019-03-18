@@ -9,8 +9,8 @@ interface SettingsListContract {
         fun showAlertTimeDialog(initialAlertHour: Int, initialAlertMinute: Int)
         fun updateAlertTimeText(alertHour: Int, alertMinute: Int)
         fun restartAlertService()
-        fun updateUnitsText(usesMetric: Boolean)
-        fun showChangeUnitsDialog(usesMetric: Boolean)
+        fun updateUnitsText(usesImperial: Boolean)
+        fun showChangeUnitsDialog(usesImperial: Boolean)
         fun openWebPage(url: String)
     }
 
@@ -19,7 +19,7 @@ interface SettingsListContract {
         fun onAlertTimeClicked()
         fun onAlertTimeChanged(hourOfDay: Int, minute: Int)
         fun onUnitsClicked()
-        fun onUnitsChanged(metric: Boolean)
+        fun onUnitsChanged(imperial: Boolean)
         fun onDarkSkyDisclaimerClicked()
     }
 

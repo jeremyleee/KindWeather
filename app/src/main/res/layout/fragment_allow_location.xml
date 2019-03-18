@@ -38,7 +38,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="@dimen/app_margin"
+        android:layout_marginTop="@dimen/app_margin_xx"
         app:layout_constraintVertical_chainStyle="packed"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

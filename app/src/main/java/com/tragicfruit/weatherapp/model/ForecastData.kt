@@ -8,12 +8,13 @@ open class ForecastData : RealmObject() {
 
     private var type = ""
     var value = 0.0; private set
+        get() = ForecastType.fromString(type).fromRawValue(field)
 
     var fetchedTime: Long = 0; private set
 
     companion object {
-        fun create(type: ForecastType, value: Double?, realm: Realm): ForecastData? {
-            val value = value ?: return null
+        fun create(type: ForecastType, rawValue: Double?, realm: Realm): ForecastData? {
+            val value = rawValue ?: return null
 
             val data = realm.createObject<ForecastData>()
             data.type = type.name

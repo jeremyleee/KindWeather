@@ -41,13 +41,11 @@ class WApplication : Application() {
             realm.executeTransaction {
                 val umbrellaAlert = WeatherAlert.create("Umbrella", "Remember to bring your umbrella!", 1, it)
                 WeatherAlert.addParam(umbrellaAlert, ForecastType.Rain_probability, 0.5, null, it)
-                WeatherAlert.addParam(umbrellaAlert, ForecastType.Rain_intensity, 10.0, null, it)
-                WeatherAlert.addParam(umbrellaAlert, ForecastType.Wind_gust, null, 40.0, it)
+                WeatherAlert.addParam(umbrellaAlert, ForecastType.Wind_gust, null, 10.8, it)
 
                 val rainJacketAlert = WeatherAlert.create("Rain jacket", "Bring your rain jacket today!", 2, it)
                 WeatherAlert.addParam(rainJacketAlert, ForecastType.Rain_probability, 0.5, null, it)
-                WeatherAlert.addParam(rainJacketAlert, ForecastType.Rain_intensity, 10.0, null, it)
-                WeatherAlert.addParam(rainJacketAlert, ForecastType.Wind_gust, 40.0, null, it)
+                WeatherAlert.addParam(rainJacketAlert, ForecastType.Wind_gust, 10.8, null, it)
 
                 val sunscreenAlert = WeatherAlert.create("Sunscreen", "Put on some sunscreen before you go out", 3, it)
                 WeatherAlert.addParam(sunscreenAlert, ForecastType.Uv_index, 3.0, null, it)

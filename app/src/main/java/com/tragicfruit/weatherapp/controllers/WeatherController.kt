@@ -78,7 +78,7 @@ object WeatherController {
 
 private interface OpenWeatherAPIService {
 
-    @GET("forecast/${BuildConfig.API_KEY}/{latitude},{longitude}?exclude=currently,minutely,hourly&units=ca")
+    @GET("forecast/${BuildConfig.API_KEY}/{latitude},{longitude}?exclude=currently,minutely,hourly&units=si")
     fun fetchForecast(@Path("latitude") latitude: Double, @Path("longitude") longitude: Double): Call<ForecastResponse>
 
 }

@@ -9,10 +9,38 @@ open class WeatherAlertParam : RealmObject() {
     private var type = ""
 
     var defaultLowerBound: Double? = null; private set
-    var defaultUpperBound: Double? = null; private set
+        get() {
+            val value = field ?: return null
+            return getType().fromRawValue(value)
+        }
 
-    var lowerBound: Double? = null; private set
-    var upperBound: Double? = null; private set
+    var defaultUpperBound: Double? = null; private set
+        get() {
+            val value = field ?: return null
+            return getType().fromRawValue(value)
+        }
+
+    var lowerBound: Double? = null
+        private set(value) {
+            field = if (value != null) {
+                getType().toRawValue(value)
+            } else null
+        }
+        get() {
+            val value = field ?: return null
+            return getType().fromRawValue(value)
+        }
+
+    var upperBound: Double? = null
+        private set(value) {
+            field = if (value != null) {
+                getType().toRawValue(value)
+            } else null
+        }
+        get() {
+            val value = field ?: return null
+            return getType().fromRawValue(value)
+        }
 
     fun getType(): ForecastType = ForecastType.fromString(type)
 
@@ -20,13 +48,13 @@ open class WeatherAlertParam : RealmObject() {
 
     companion object {
 
-        fun create(type: ForecastType, defaultLowerBound: Double?, defaultUpperBound: Double?, realm: Realm): WeatherAlertParam {
+        fun create(type: ForecastType, defaultLowerBoundRaw: Double?, defaultUpperBoundRaw: Double?, realm: Realm): WeatherAlertParam {
             val param = realm.createObject<WeatherAlertParam>()
             param.type = type.name
-            param.defaultLowerBound = defaultLowerBound
-            param.defaultUpperBound = defaultUpperBound
-            param.lowerBound = defaultLowerBound
-            param.upperBound = defaultUpperBound
+            param.defaultLowerBound = defaultLowerBoundRaw
+            param.defaultUpperBound = defaultUpperBoundRaw
+            param.lowerBound = param.defaultLowerBound
+            param.upperBound = param.defaultUpperBound
             return param
         }
 
