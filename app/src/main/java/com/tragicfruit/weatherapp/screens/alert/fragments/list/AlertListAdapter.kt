@@ -14,10 +14,16 @@ class AlertListAdapter(private val listener: AlertCell.Listener) : RecyclerView.
     private val alertList: RealmResults<WeatherAlert>
 
     init {
+        setHasStableIds(true)
+
         alertList = Realm.getDefaultInstance()
             .where<WeatherAlert>()
             .sort("enabled", Sort.DESCENDING, "priority", Sort.ASCENDING)
             .findAll()
+    }
+
+    fun getItemPosition(alert: WeatherAlert): Int {
+        return alertList.indexOf(alert)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlertViewHolder {

@@ -7,14 +7,14 @@ import com.tragicfruit.weatherapp.screens.WView
 interface AlertListContract {
 
     interface View : WView {
-        fun showAlertDetailScreen(alert: WeatherAlert)
+        fun showAlertDetailScreen(alert: WeatherAlert, position: Int)
         fun refreshList()
         fun requestLocationPermission()
         fun showSettingsScreen()
     }
 
     interface Presenter : WPresenter<View> {
-        fun onAlertClicked(alert: WeatherAlert)
+        fun onAlertClicked(alert: WeatherAlert, position: Int)
         fun onAllowLocationClicked()
         fun onSettingsClicked()
     }

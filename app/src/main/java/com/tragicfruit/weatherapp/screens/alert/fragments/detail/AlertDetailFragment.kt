@@ -46,6 +46,8 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         alertDetailEnableSwitch.isChecked = alert.enabled
         alertDetailReset.isEnabled = alert.areParamsEdited()
 
+        alertDetailHeaderImage.transitionName = "transition_${alert.id}"
+
         initParamList(alert)
     }
 

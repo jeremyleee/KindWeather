@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.Fade
+import androidx.transition.TransitionInflater
+import androidx.transition.TransitionSet
 import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.model.WeatherAlert
 import com.tragicfruit.weatherapp.screens.WFragment
@@ -19,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_alert_list.*
 class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listener {
 
     private val presenter = AlertListPresenter(this)
+    private val adapter = AlertListAdapter(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_alert_list, container, false)
@@ -38,7 +42,7 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
             }
         }
 
-        alertListRecyclerView.adapter = AlertListAdapter(this)
+        alertListRecyclerView.adapter = adapter
         alertListRecyclerView.layoutManager = LinearLayoutManager(context)
 
         alertListAllowLocation.setButtonClickListener {
@@ -47,11 +51,30 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
     }
 
     override fun onAlertClicked(alert: WeatherAlert) {
-        presenter.onAlertClicked(alert)
+        val position = adapter.getItemPosition(alert)
+        presenter.onAlertClicked(alert, position)
     }
 
-    override fun showAlertDetailScreen(alert: WeatherAlert) {
-        baseActivity?.presentFragment(AlertDetailFragment.newInstance(alert.id))
+    override fun showAlertDetailScreen(alert: WeatherAlert, position: Int) {
+        val transitionDuration = 300L
+
+        // Shared element transition
+        val enterTransitionSet = TransitionSet()
+        enterTransitionSet.addTransition(TransitionInflater.from(context).inflateTransition(android.R.transition.move))
+        enterTransitionSet.duration = transitionDuration
+
+        val alertDetailFragment = AlertDetailFragment.newInstance(alert.id).apply {
+            sharedElementEnterTransition = enterTransitionSet
+        }
+
+        // Enter/exit transitions
+        val transition = Fade().apply { duration = transitionDuration }
+        this.exitTransition = transition
+        alertDetailFragment.enterTransition = transition
+
+        // Present fragment
+        val cell = alertListRecyclerView.layoutManager?.findViewByPosition(position) as? AlertCell
+        baseActivity?.presentFragment(alertDetailFragment, true, cell?.backgroundImage)
     }
 
     override fun requestLocationPermission() {
@@ -59,7 +82,7 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
     }
 
     override fun refreshList() {
-        alertListRecyclerView.adapter?.notifyDataSetChanged()
+        adapter.notifyDataSetChanged()
 
         context?.let {
             alertListAllowLocation.isVisible = !PermissionHelper.hasPermission(it, Manifest.permission.ACCESS_FINE_LOCATION)

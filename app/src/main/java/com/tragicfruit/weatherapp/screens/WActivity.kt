@@ -1,6 +1,7 @@
 package com.tragicfruit.weatherapp.screens
 
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -24,14 +25,18 @@ open class WActivity : AppCompatActivity() {
             Distribute::class.java)
     }
 
-    fun presentFragment(fragment: Fragment, addToBackStack: Boolean = true) {
+    fun presentFragment(fragment: Fragment, addToBackStack: Boolean = true, sharedElementView: View? = null) {
         supportFragmentManager.beginTransaction()
-            .replace(fragmentContainer, fragment)
             .apply {
                 if (addToBackStack) {
                     addToBackStack(fragment.tag)
                 }
+
+                sharedElementView?.let {
+                    addSharedElement(it, it.transitionName)
+                }
             }
+            .replace(fragmentContainer, fragment)
             .commit()
     }
 
