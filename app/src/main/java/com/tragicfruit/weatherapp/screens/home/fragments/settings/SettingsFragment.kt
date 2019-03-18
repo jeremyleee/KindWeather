@@ -1,4 +1,4 @@
-package com.tragicfruit.weatherapp.screens.settings.fragments.list
+package com.tragicfruit.weatherapp.screens.home.fragments.settings
 
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -11,21 +11,22 @@ import android.widget.TimePicker
 import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.controllers.AlertController
 import com.tragicfruit.weatherapp.screens.WFragment
-import com.tragicfruit.weatherapp.screens.settings.fragments.timepicker.TimePickerDialogFragment
-import com.tragicfruit.weatherapp.screens.settings.fragments.units.UnitsDialogFragment
-import kotlinx.android.synthetic.main.fragment_settings_list.*
+import com.tragicfruit.weatherapp.screens.home.fragments.settings.dialogs.TimePickerDialogFragment
+import com.tragicfruit.weatherapp.screens.home.fragments.settings.dialogs.UnitsDialogFragment
+import kotlinx.android.synthetic.main.fragment_settings.*
 import java.text.DateFormat
 import java.util.*
 
-class SettingsListFragment : WFragment(), SettingsListContract.View,
+class SettingsFragment : WFragment(),
+    SettingsContract.View,
     TimePickerDialog.OnTimeSetListener, UnitsDialogFragment.Listener {
 
-    private val presenter = SettingsListPresenter(this)
+    private val presenter = SettingsPresenter(this)
 
     private val calendar = Calendar.getInstance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_settings_list, container, false)
+        return inflater.inflate(R.layout.fragment_settings, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,7 +65,7 @@ class SettingsListFragment : WFragment(), SettingsListContract.View,
     }
 
     override fun updateUnitsText(usesImperial: Boolean) {
-        val units = getString(if (usesImperial) R.string.settings_list_units_imperial else R.string.settings_list_units_metric)
+        val units = getString(if (usesImperial) R.string.settings_units_imperial else R.string.settings_units_metric)
         settingsListUnits.setSubtitle(units)
     }
 

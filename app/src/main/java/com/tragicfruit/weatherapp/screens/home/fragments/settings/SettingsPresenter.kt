@@ -1,8 +1,9 @@
-package com.tragicfruit.weatherapp.screens.settings.fragments.list
+package com.tragicfruit.weatherapp.screens.home.fragments.settings
 
 import com.tragicfruit.weatherapp.utils.SharedPrefsHelper
 
-class SettingsListPresenter(override var view: SettingsListContract.View) : SettingsListContract.Presenter {
+class SettingsPresenter(override var view: SettingsContract.View) :
+    SettingsContract.Presenter {
 
     override fun init() {
         view.updateAlertTimeText(SharedPrefsHelper.getAlertHour(), SharedPrefsHelper.getAlertMinute())

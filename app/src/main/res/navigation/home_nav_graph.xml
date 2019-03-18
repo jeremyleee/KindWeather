@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/home_nav_graph"
+    app:startDestination="@id/alertsFragment">
+
+    <fragment
+        android:id="@+id/alertsFragment"
+        android:name="com.tragicfruit.weatherapp.screens.home.fragments.alerts.AlertsFragment"
+        android:label="@string/home_alerts" />
+    <fragment android:id="@+id/placeholder" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.tragicfruit.weatherapp.screens.home.fragments.settings.SettingsFragment"
+        android:label="@string/home_settings" />
+</navigation>

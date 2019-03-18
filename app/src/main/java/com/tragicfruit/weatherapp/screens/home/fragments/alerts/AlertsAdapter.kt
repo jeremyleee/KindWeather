@@ -1,4 +1,4 @@
-package com.tragicfruit.weatherapp.screens.alert.fragments.list
+package com.tragicfruit.weatherapp.screens.home.fragments.alerts
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

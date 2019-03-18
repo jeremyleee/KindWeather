@@ -19,7 +19,7 @@ class AlertDetailActivity : WActivity() {
 
         if (savedInstanceState == null) {
             val alertId = intent.extras?.getString(SELECTED_ALERT_ID) ?: ""
-            presentFragment(AlertDetailFragment.newInstance(alertId), false)
+            presentFragment(AlertDetailFragment.newInstance(alertId))
         }
     }
 

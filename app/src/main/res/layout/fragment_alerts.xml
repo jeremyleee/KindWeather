@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true">
+
+        <com.tragicfruit.weatherapp.components.AllowLocationInlineView
+            android:id="@+id/alertListAllowLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/alertListRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/app_margin_h"
+            android:paddingBottom="@dimen/app_margin_h"
+            android:nestedScrollingEnabled="false"
+            android:layoutAnimation="@anim/layout_alerts"/>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

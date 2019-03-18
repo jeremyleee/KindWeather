@@ -27,10 +27,7 @@
         <activity android:name=".screens.welcome.WelcomeActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".screens.alert.AlertActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".screens.settings.SettingsActivity"
+        <activity android:name=".screens.home.HomeActivity"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".screens.alertdetail.AlertDetailActivity"

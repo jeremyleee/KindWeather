@@ -1,4 +1,4 @@
-package com.tragicfruit.weatherapp.screens.settings.fragments.timepicker
+package com.tragicfruit.weatherapp.screens.home.fragments.settings.dialogs
 
 import android.app.Dialog
 import android.app.TimePickerDialog

@@ -1,9 +1,9 @@
-package com.tragicfruit.weatherapp.screens.settings.fragments.list
+package com.tragicfruit.weatherapp.screens.home.fragments.settings
 
 import com.tragicfruit.weatherapp.screens.WPresenter
 import com.tragicfruit.weatherapp.screens.WView
 
-interface SettingsListContract {
+interface SettingsContract {
 
     interface View : WView {
         fun showAlertTimeDialog(initialAlertHour: Int, initialAlertMinute: Int)

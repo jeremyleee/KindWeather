@@ -1,8 +1,8 @@
-package com.tragicfruit.weatherapp.screens.alert.fragments.list
+package com.tragicfruit.weatherapp.screens.home.fragments.alerts
 
 import com.tragicfruit.weatherapp.model.WeatherAlert
 
-class AlertListPresenter(override var view: AlertListContract.View) : AlertListContract.Presenter {
+class AlertsPresenter(override var view: AlertsContract.View) : AlertsContract.Presenter {
 
     override fun onAlertClicked(alert: WeatherAlert, position: Int) {
         view.showAlertDetailScreen(alert, position)
@@ -10,10 +10,6 @@ class AlertListPresenter(override var view: AlertListContract.View) : AlertListC
 
     override fun onAllowLocationClicked() {
         view.requestLocationPermission()
-    }
-
-    override fun onSettingsClicked() {
-        view.showSettingsScreen()
     }
 
     override fun resume() {

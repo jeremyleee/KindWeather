@@ -1,4 +1,4 @@
-package com.tragicfruit.weatherapp.screens.settings.fragments.units
+package com.tragicfruit.weatherapp.screens.home.fragments.settings.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -18,7 +18,7 @@ class UnitsDialogFragment : DialogFragment() {
         val unit = (arguments?.getSerializable(UNIT) as? Units) ?: Units.METRIC
 
         return AlertDialog.Builder(activity)
-            .setTitle(R.string.settings_list_units)
+            .setTitle(R.string.settings_units)
             .setSingleChoiceItems(R.array.units, unit.ordinal) { dialog, which ->
                 listener?.onUnitsChanged(Units.values()[which])
                 dismiss()

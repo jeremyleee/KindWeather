@@ -17,14 +17,14 @@
                 android:id="@+id/settingsListAlertTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="@string/settings_list_alert_time"
+                app:title="@string/settings_alert_time"
                 android:background="?attr/selectableItemBackground"/>
 
             <com.tragicfruit.weatherapp.components.SettingsListItemView
                 android:id="@+id/settingsListUnits"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="@string/settings_list_units"
+                app:title="@string/settings_units"
                 android:background="?attr/selectableItemBackground"/>
 
         </LinearLayout>
@@ -39,7 +39,7 @@
         android:layout_gravity="bottom"
         android:paddingBottom="@dimen/app_margin_xx"
         android:paddingTop="@dimen/app_margin_xx"
-        android:text="@string/settings_list_disclaimer"
+        android:text="@string/settings_disclaimer"
         style="@style/TextAppearance.AppCompat.Caption"/>
 
 </FrameLayout>
