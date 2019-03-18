@@ -1,6 +1,6 @@
 package com.tragicfruit.weatherapp.screens.welcome
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.tragicfruit.weatherapp.R
@@ -36,8 +36,8 @@ class WelcomeActivity : WActivity(), AllowLocationContract.Callback {
     }
 
     companion object {
-        fun show(activity: Activity) {
-            activity.startActivity(Intent(activity, WelcomeActivity::class.java))
+        fun show(context: Context) {
+            context.startActivity(Intent(context, WelcomeActivity::class.java))
         }
     }
 

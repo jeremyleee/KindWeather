@@ -7,14 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.Fade
-import androidx.transition.TransitionInflater
-import androidx.transition.TransitionSet
 import com.tragicfruit.weatherapp.R
+import com.tragicfruit.weatherapp.components.AlertCell
 import com.tragicfruit.weatherapp.model.WeatherAlert
 import com.tragicfruit.weatherapp.screens.WFragment
-import com.tragicfruit.weatherapp.screens.alert.fragments.detail.AlertDetailFragment
-import com.tragicfruit.weatherapp.screens.alert.fragments.list.components.AlertCell
+import com.tragicfruit.weatherapp.screens.alertdetail.AlertDetailActivity
 import com.tragicfruit.weatherapp.screens.settings.SettingsActivity
 import com.tragicfruit.weatherapp.utils.PermissionHelper
 import kotlinx.android.synthetic.main.fragment_alert_list.*
@@ -56,25 +53,10 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
     }
 
     override fun showAlertDetailScreen(alert: WeatherAlert, position: Int) {
-        val transitionDuration = 300L
-
-        // Shared element transition
-        val enterTransitionSet = TransitionSet()
-        enterTransitionSet.addTransition(TransitionInflater.from(context).inflateTransition(android.R.transition.move))
-        enterTransitionSet.duration = transitionDuration
-
-        val alertDetailFragment = AlertDetailFragment.newInstance(alert.id).apply {
-            sharedElementEnterTransition = enterTransitionSet
+        activity?.let {
+            val cell = alertListRecyclerView.layoutManager?.findViewByPosition(position) as? AlertCell
+            AlertDetailActivity.show(it, alert.id, cell?.backgroundImage)
         }
-
-        // Enter/exit transitions
-        val transition = Fade().apply { duration = transitionDuration }
-        this.exitTransition = transition
-        alertDetailFragment.enterTransition = transition
-
-        // Present fragment
-        val cell = alertListRecyclerView.layoutManager?.findViewByPosition(position) as? AlertCell
-        baseActivity?.presentFragment(alertDetailFragment, true, cell?.backgroundImage)
     }
 
     override fun requestLocationPermission() {
@@ -90,7 +72,7 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
     }
 
     override fun showSettingsScreen() {
-        activity?.let {
+        context?.let {
             SettingsActivity.show(it)
         }
     }

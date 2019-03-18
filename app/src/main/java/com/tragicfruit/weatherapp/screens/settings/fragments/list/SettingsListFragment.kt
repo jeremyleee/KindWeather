@@ -11,8 +11,8 @@ import android.widget.TimePicker
 import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.controllers.AlertController
 import com.tragicfruit.weatherapp.screens.WFragment
-import com.tragicfruit.weatherapp.screens.settings.fragments.list.dialogs.TimePickerDialogFragment
-import com.tragicfruit.weatherapp.screens.settings.fragments.list.dialogs.UnitsDialogFragment
+import com.tragicfruit.weatherapp.screens.settings.fragments.timepicker.TimePickerDialogFragment
+import com.tragicfruit.weatherapp.screens.settings.fragments.units.UnitsDialogFragment
 import kotlinx.android.synthetic.main.fragment_settings_list.*
 import java.text.DateFormat
 import java.util.*

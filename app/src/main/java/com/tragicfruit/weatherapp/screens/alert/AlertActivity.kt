@@ -1,6 +1,6 @@
 package com.tragicfruit.weatherapp.screens.alert
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.tragicfruit.weatherapp.R
@@ -21,8 +21,8 @@ class AlertActivity : WActivity() {
     }
 
     companion object {
-        fun show(activity: Activity) {
-            activity.startActivity(Intent(activity, AlertActivity::class.java))
+        fun show(context: Context) {
+            context.startActivity(Intent(context, AlertActivity::class.java))
         }
     }
 }

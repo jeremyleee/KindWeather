@@ -3,7 +3,7 @@ package com.tragicfruit.weatherapp.screens.alert.fragments.list
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tragicfruit.weatherapp.model.WeatherAlert
-import com.tragicfruit.weatherapp.screens.alert.fragments.list.components.AlertCell
+import com.tragicfruit.weatherapp.components.AlertCell
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
