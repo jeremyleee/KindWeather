@@ -10,10 +10,22 @@
     <fragment
         android:id="@+id/alertsFragment"
         android:name="com.tragicfruit.weatherapp.screens.home.fragments.alerts.AlertsFragment"
-        android:label="@string/home_alerts" />
+        android:label="@string/home_alerts" >
+        <action
+            android:id="@+id/action_alertsFragment_to_alertDetailFragment"
+            app:destination="@id/alertDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.tragicfruit.weatherapp.screens.home.fragments.settings.SettingsFragment"
         android:label="@string/home_settings" />
+    <fragment
+        android:id="@+id/alertDetailFragment"
+        android:name="com.tragicfruit.weatherapp.screens.home.fragments.alertdetail.AlertDetailFragment"
+        android:label="AlertDetailFragment" >
+        <argument
+            android:name="alertId"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

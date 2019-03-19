@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.screens.WActivity
@@ -17,8 +16,6 @@ class HomeActivity : WActivity() {
         setContentView(R.layout.activity_home)
 
         val navController = findNavController(R.id.homeNavHostFragment)
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.feedFragment, R.id.alertsFragment, R.id.settingsFragment))
-        homeToolbar.setupWithNavController(navController, appBarConfiguration)
         homeBottomNavigation.setupWithNavController(navController)
     }
 

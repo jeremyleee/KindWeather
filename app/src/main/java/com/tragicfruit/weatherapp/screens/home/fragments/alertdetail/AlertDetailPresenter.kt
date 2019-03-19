@@ -1,4 +1,4 @@
-package com.tragicfruit.weatherapp.screens.alertdetail.fragments.detail
+package com.tragicfruit.weatherapp.screens.home.fragments.alertdetail
 
 import com.tragicfruit.weatherapp.model.WeatherAlert
 import com.tragicfruit.weatherapp.model.WeatherAlertParam

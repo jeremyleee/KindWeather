@@ -1,20 +1,23 @@
-package com.tragicfruit.weatherapp.screens.alertdetail.fragments.detail
+package com.tragicfruit.weatherapp.screens.home.fragments.alertdetail
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.navArgs
 import com.tragicfruit.weatherapp.R
+import com.tragicfruit.weatherapp.components.AlertDetailParamView
 import com.tragicfruit.weatherapp.model.WeatherAlert
 import com.tragicfruit.weatherapp.model.WeatherAlertParam
 import com.tragicfruit.weatherapp.screens.WFragment
-import com.tragicfruit.weatherapp.components.AlertDetailParamView
 import kotlinx.android.synthetic.main.fragment_alert_detail.*
 
 class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailParamView.Listener {
 
     private val presenter = AlertDetailPresenter(this)
+
+    private val args: AlertDetailFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_alert_detail, container, false)
@@ -22,7 +25,7 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.init(arguments?.getString(ALERT_ID_EXTRA))
+        presenter.init(args.alertId)
 
         alertDetailToolbar.setNavigationOnClickListener {
             presenter.onToolbarBackClicked()
@@ -45,8 +48,6 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
 
         alertDetailEnableSwitch.isChecked = alert.enabled
         alertDetailReset.isEnabled = alert.areParamsEdited()
-
-        alertDetailHeaderImage.transitionName = "transition_${alert.id}"
 
         initParamList(alert)
     }
@@ -82,18 +83,6 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
 
     override fun closeScreen() {
         activity?.onBackPressed()
-    }
-
-    companion object {
-        const val ALERT_ID_EXTRA = "alert-id"
-
-        fun newInstance(alertId: String): AlertDetailFragment {
-            val fragment = AlertDetailFragment()
-            fragment.arguments = Bundle().apply {
-                putString(ALERT_ID_EXTRA, alertId)
-            }
-            return fragment
-        }
     }
 
 }

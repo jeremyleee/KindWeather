@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.components.AlertCell
 import com.tragicfruit.weatherapp.model.WeatherAlert
 import com.tragicfruit.weatherapp.screens.WFragment
-import com.tragicfruit.weatherapp.screens.alertdetail.AlertDetailActivity
 import com.tragicfruit.weatherapp.utils.PermissionHelper
 import kotlinx.android.synthetic.main.fragment_alerts.*
 
@@ -41,10 +41,10 @@ class AlertsFragment : WFragment(), AlertsContract.View, AlertCell.Listener {
     }
 
     override fun showAlertDetailScreen(alert: WeatherAlert, position: Int) {
-        activity?.let {
-            val cell = alertListRecyclerView.layoutManager?.findViewByPosition(position) as? AlertCell
-            AlertDetailActivity.show(it, alert.id, cell?.backgroundImage)
-        }
+//        val cell = alertListRecyclerView.layoutManager?.findViewByPosition(position) as? AlertCell
+
+        val action = AlertsFragmentDirections.actionAlertsFragmentToAlertDetailFragment(alert.id)
+        findNavController().navigate(action)
     }
 
     override fun requestLocationPermission() {

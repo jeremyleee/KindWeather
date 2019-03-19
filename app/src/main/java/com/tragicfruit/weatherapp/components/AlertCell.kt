@@ -34,7 +34,6 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Rela
 
         nameView.text = alert.name
         backgroundImage.setBackgroundColor(if (alert.enabled) alert.color else Color.GRAY)
-        backgroundImage.transitionName = "transition_${alert.id}"
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
