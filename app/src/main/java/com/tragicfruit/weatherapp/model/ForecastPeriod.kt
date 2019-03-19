@@ -16,8 +16,8 @@ open class ForecastPeriod : RealmObject() {
     var longitude = 0.0; private set
 
     var time: Long = 0; private set
-    var summary: String? = null; private set
-    var icon: String? = null; private set
+    var summary = ""; private set
+    var icon = ""; private set
     var data = RealmList<ForecastData>(); private set
 
     var fetchedTime: Long = 0; private set
@@ -26,7 +26,7 @@ open class ForecastPeriod : RealmObject() {
         val lowerBound = param.lowerBound
         val upperBound = param.upperBound
 
-        val data = data.where().equalTo("type", param.getType().name).findFirst()
+        val data = getDataForType(param.getType())
 
         // If data doesn't exist, treat it as zero
         val observedValue = data?.value ?: 0.0
@@ -39,6 +39,14 @@ open class ForecastPeriod : RealmObject() {
         return satisfiesLowerBound && satisfiesUpperBound
     }
 
+    fun getHighTemp(): Double {
+        val data = getDataForType(ForecastType.Temp_high) ?: return 0.0
+        return data.value
+    }
+
+    private fun getDataForType(type: ForecastType) =
+        data.where().equalTo("type", type.name).findFirst()
+
     companion object {
 
         fun fromResponse(responseData: ForecastResponse.Daily.DataPoint,
@@ -49,8 +57,8 @@ open class ForecastPeriod : RealmObject() {
             forecastPeriod.longitude = longitude
 
             forecastPeriod.time = responseData.time
-            forecastPeriod.summary = responseData.summary
-            forecastPeriod.icon = responseData.icon
+            forecastPeriod.summary = responseData.summary ?: forecastPeriod.summary
+            forecastPeriod.icon = responseData.icon ?: forecastPeriod.icon
 
             when (responseData.precipType) {
                 "rain" -> {

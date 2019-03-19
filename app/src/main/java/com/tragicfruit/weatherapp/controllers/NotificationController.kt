@@ -11,7 +11,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.tragicfruit.weatherapp.R
-import com.tragicfruit.weatherapp.model.ForecastPeriod
 import com.tragicfruit.weatherapp.model.WeatherAlert
 
 object NotificationController {
@@ -60,13 +59,13 @@ object NotificationController {
             .notify(LOCATION_PERMISSIONS_ID, builder.build())
     }
 
-    fun notifyWeatherAlert(context: Context, alert: WeatherAlert, forecast: ForecastPeriod) {
+    fun notifyWeatherAlert(context: Context, alert: WeatherAlert) {
         val builder = NotificationCompat.Builder(context, WEATHER_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle(forecast.summary)
-            .setContentText(alert.description)
+            .setContentTitle(alert.description)
+            .setContentText(context.getString(R.string.notification_weather_tap))
             .setStyle(NotificationCompat.BigTextStyle()
-                .bigText(alert.description))
+                .bigText(context.getString(R.string.notification_weather_tap)))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
 
         // TODO: setup pending intent

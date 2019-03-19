@@ -17,7 +17,7 @@ class HomeActivity : WActivity() {
         setContentView(R.layout.activity_home)
 
         val navController = findNavController(R.id.homeNavHostFragment)
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.alertsFragment, R.id.settingsFragment))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.feedFragment, R.id.alertsFragment, R.id.settingsFragment))
         homeToolbar.setupWithNavController(navController, appBarConfiguration)
         homeBottomNavigation.setupWithNavController(navController)
     }

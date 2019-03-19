@@ -31,11 +31,7 @@ enum class ForecastType(@StringRes val label: Int = -1,
         get() = fromRawValue(field)
 
     val units: String
-        get() = if (SharedPrefsHelper.usesImperialUnits()) {
-            imperialUnits
-        } else {
-            metricUnits
-        }
+        get() = getUnits(this)
 
     fun toRawValue(value: Double): Double {
         return if (SharedPrefsHelper.usesImperialUnits()) {
@@ -58,6 +54,14 @@ enum class ForecastType(@StringRes val label: Int = -1,
             ForecastType.valueOf(type!!)
         } catch (e: Exception) {
             Unknown
+        }
+
+        fun getUnits(type: ForecastType): String {
+            return if (SharedPrefsHelper.usesImperialUnits()) {
+                type.imperialUnits
+            } else {
+                type.metricUnits
+            }
         }
     }
 }

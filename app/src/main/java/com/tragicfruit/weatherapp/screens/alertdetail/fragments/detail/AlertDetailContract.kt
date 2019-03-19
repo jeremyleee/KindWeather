@@ -8,7 +8,7 @@ import com.tragicfruit.weatherapp.screens.WView
 interface AlertDetailContract {
 
     interface View : WView {
-        fun onInitView(alert: WeatherAlert)
+        fun initView(alert: WeatherAlert)
         fun closeScreen()
         fun refreshParamList(alert: WeatherAlert)
         fun setResetButtonEnabled(enabled: Boolean)

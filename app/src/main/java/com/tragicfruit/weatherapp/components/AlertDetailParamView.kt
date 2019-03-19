@@ -8,8 +8,9 @@ import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.model.WeatherAlertParam
+import com.tragicfruit.weatherapp.utils.DisplayUtils
 import com.tragicfruit.weatherapp.utils.ViewHelper
-import com.tragicfruit.weatherapp.utils.format
+import com.tragicfruit.weatherapp.utils.getViewId
 
 class AlertDetailParamView(context: Context) : RelativeLayout(context) {
 
@@ -28,18 +29,18 @@ class AlertDetailParamView(context: Context) : RelativeLayout(context) {
         addView(paramTitle, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
 
         addView(slider, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
-            addRule(BELOW, ViewHelper.getViewId(paramTitle))
+            addRule(BELOW, paramTitle.getViewId())
         })
 
         lowerBoundText.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body1)
         addView(lowerBoundText, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
-            addRule(BELOW, ViewHelper.getViewId(slider))
+            addRule(BELOW, slider.getViewId())
             addRule(ALIGN_PARENT_LEFT)
         })
 
         upperBoundText.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body1)
         addView(upperBoundText, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
-            addRule(BELOW, ViewHelper.getViewId(slider))
+            addRule(BELOW, slider.getViewId())
             addRule(ALIGN_PARENT_RIGHT)
         })
     }
@@ -58,8 +59,8 @@ class AlertDetailParamView(context: Context) : RelativeLayout(context) {
         val leftValue = param.lowerBound?.toFloat() ?: minValue
         val rightValue = param.upperBound?.toFloat() ?: maxValue
         slider.setValue(leftValue, rightValue)
-        lowerBoundText.text = getMeasurementString(leftValue, type.units)
-        upperBoundText.text = getMeasurementString(rightValue, type.units)
+        lowerBoundText.text = DisplayUtils.getMeasurementString(leftValue, type.units)
+        upperBoundText.text = DisplayUtils.getMeasurementString(rightValue, type.units)
 
         slider.setOnRangeChangedListener(object : OnRangeChangedListener {
             override fun onStartTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {
@@ -70,8 +71,8 @@ class AlertDetailParamView(context: Context) : RelativeLayout(context) {
                 lowerBound = if (leftValue > minValue) leftValue.toDouble() else null
                 upperBound = if (rightValue < maxValue) rightValue.toDouble() else null
 
-                lowerBoundText.text = getMeasurementString(leftValue, type.units)
-                upperBoundText.text = getMeasurementString(rightValue, type.units)
+                lowerBoundText.text = DisplayUtils.getMeasurementString(leftValue, type.units)
+                upperBoundText.text = DisplayUtils.getMeasurementString(rightValue, type.units)
             }
 
             override fun onStopTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {
@@ -82,10 +83,6 @@ class AlertDetailParamView(context: Context) : RelativeLayout(context) {
                 }
             }
         })
-    }
-
-    private fun getMeasurementString(value: Float, units: String): String {
-        return "${value.format(1)} $units"
     }
 
     interface Listener {

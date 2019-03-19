@@ -17,7 +17,7 @@ class AlertDetailPresenter(override var view: AlertDetailContract.View) : AlertD
             ?: return view.closeScreen()
 
         alert = alertFromId
-        view.onInitView(alert)
+        view.initView(alert)
     }
 
     override fun onToolbarBackClicked() {

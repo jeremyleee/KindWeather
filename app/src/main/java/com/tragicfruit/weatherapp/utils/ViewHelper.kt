@@ -23,12 +23,4 @@ object ViewHelper {
         } ?: return 0
     }
 
-    fun getViewId(view: View): Int {
-        if (view.id == View.NO_ID) {
-            view.id = View.generateViewId()
-        }
-
-        return view.id
-    }
-
 }

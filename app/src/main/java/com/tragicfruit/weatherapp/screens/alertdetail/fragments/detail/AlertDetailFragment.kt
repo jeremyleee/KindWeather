@@ -37,7 +37,7 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         }
     }
 
-    override fun onInitView(alert: WeatherAlert) {
+    override fun initView(alert: WeatherAlert) {
         alertDetailCollapsingToolbar.title = alert.name
 
         alertDetailHeaderImage.setBackgroundColor(alert.color) // TODO: replace with illustration

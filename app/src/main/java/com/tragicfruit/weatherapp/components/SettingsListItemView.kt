@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.utils.ViewHelper
+import com.tragicfruit.weatherapp.utils.getViewId
 
 class SettingsListItemView : RelativeLayout {
 
@@ -23,7 +24,7 @@ class SettingsListItemView : RelativeLayout {
 
         subtitle.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body1)
         addView(subtitle, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
-            addRule(BELOW, ViewHelper.getViewId(title))
+            addRule(BELOW, title.getViewId())
             setMargins(ViewHelper.px(R.dimen.app_margin_xx).toInt(), 0,
                 ViewHelper.px(R.dimen.app_margin_xx).toInt(), ViewHelper.px(R.dimen.app_margin_xx).toInt())
         })

@@ -13,17 +13,14 @@ import com.tragicfruit.weatherapp.controllers.AlertController
 import com.tragicfruit.weatherapp.screens.WFragment
 import com.tragicfruit.weatherapp.screens.home.fragments.settings.dialogs.TimePickerDialogFragment
 import com.tragicfruit.weatherapp.screens.home.fragments.settings.dialogs.UnitsDialogFragment
+import com.tragicfruit.weatherapp.utils.DisplayUtils
 import kotlinx.android.synthetic.main.fragment_settings.*
-import java.text.DateFormat
-import java.util.*
 
 class SettingsFragment : WFragment(),
     SettingsContract.View,
     TimePickerDialog.OnTimeSetListener, UnitsDialogFragment.Listener {
 
     private val presenter = SettingsPresenter(this)
-
-    private val calendar = Calendar.getInstance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_settings, container, false)
@@ -56,12 +53,7 @@ class SettingsFragment : WFragment(),
     }
 
     override fun updateAlertTimeText(alertHour: Int, alertMinute: Int) {
-        calendar.set(Calendar.HOUR_OF_DAY, alertHour)
-        calendar.set(Calendar.MINUTE, alertMinute)
-        calendar.set(Calendar.SECOND, 0)
-
-        val timeFormatter = DateFormat.getTimeInstance(DateFormat.SHORT)
-        settingsListAlertTime.setSubtitle(timeFormatter.format(calendar.time))
+        settingsListAlertTime.setSubtitle(DisplayUtils.getTimeString(alertHour, alertMinute, 0))
     }
 
     override fun updateUnitsText(usesImperial: Boolean) {

@@ -15,3 +15,11 @@ fun Float.format(digits: Int): String {
 fun View.setPadding(x: Int, y: Int) {
     setPadding(x, y, x, y)
 }
+
+fun View.getViewId(): Int {
+    if (this.id == View.NO_ID) {
+        this.id = View.generateViewId()
+    }
+
+    return this.id
+}

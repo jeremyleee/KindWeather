@@ -4,6 +4,8 @@
     <string name="notification_channel_location">Location status</string>
     <string name="notification_channel_weather">Weather alerts</string>
 
+    <string name="notification_weather_tap">Tap for more information</string>
+
     <string name="notification_location_permission_title">Location permissions required!</string>
     <string name="notification_location_permission_text">Please allow location permissions to display weather notifications</string>
     <string name="notification_alert_foreground">Fetching weather for current location…</string>

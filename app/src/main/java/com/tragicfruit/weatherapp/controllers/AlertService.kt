@@ -6,6 +6,7 @@ import android.content.Intent
 import com.google.android.gms.location.LocationResult
 import com.tragicfruit.weatherapp.model.ForecastPeriod
 import com.tragicfruit.weatherapp.model.WeatherAlert
+import com.tragicfruit.weatherapp.model.WeatherNotification
 import io.realm.Realm
 import io.realm.Sort
 import io.realm.kotlin.where
@@ -57,7 +58,12 @@ class AlertService : IntentService(AlertService::javaClass.name) {
 
             showAlert?.let { alert ->
                 Timber.i("Showing push notification: ${alert.description}")
-                NotificationController.notifyWeatherAlert(this, alert, forecast)
+                NotificationController.notifyWeatherAlert(this, alert)
+
+                // Create notification model object
+                realm.executeTransaction { realm ->
+                    WeatherNotification.create(forecast.icon, alert.description, forecast.getHighTemp(), realm)
+                }
             }
         }
     }
