@@ -10,6 +10,7 @@ import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavDeepLinkBuilder
 import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.model.WeatherAlert
 
@@ -60,6 +61,11 @@ object NotificationController {
     }
 
     fun notifyWeatherAlert(context: Context, alert: WeatherAlert) {
+        val pendingIntent = NavDeepLinkBuilder(context)
+            .setGraph(R.navigation.home_nav_graph)
+            .setDestination(R.id.feedFragment)
+            .createPendingIntent()
+
         val builder = NotificationCompat.Builder(context, WEATHER_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(alert.description)
@@ -67,8 +73,8 @@ object NotificationController {
             .setStyle(NotificationCompat.BigTextStyle()
                 .bigText(context.getString(R.string.notification_weather_tap)))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-
-        // TODO: setup pending intent
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
 
         NotificationManagerCompat.from(context)
             .notify(WEATHER_ALERT_ID, builder.build())
