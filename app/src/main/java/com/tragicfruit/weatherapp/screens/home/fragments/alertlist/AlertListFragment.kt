@@ -20,8 +20,13 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
     private val presenter = AlertListPresenter(this)
     private val adapter = AlertListAdapter(this)
 
+    private var alertListView: View? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_alert_list, container, false)
+        if (alertListView == null) {
+            alertListView = inflater.inflate(R.layout.fragment_alert_list, container, false)
+        }
+        return alertListView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
