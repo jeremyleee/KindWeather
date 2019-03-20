@@ -1,8 +1,8 @@
-package com.tragicfruit.weatherapp.screens.home.fragments.alerts
+package com.tragicfruit.weatherapp.screens.home.fragments.alertlist
 
 import com.tragicfruit.weatherapp.model.WeatherAlert
 
-class AlertsPresenter(override var view: AlertsContract.View) : AlertsContract.Presenter {
+class AlertListPresenter(override var view: AlertListContract.View) : AlertListContract.Presenter {
 
     override fun onAlertClicked(alert: WeatherAlert, position: Int) {
         view.showAlertDetailScreen(alert, position)

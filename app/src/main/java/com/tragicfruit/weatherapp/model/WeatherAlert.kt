@@ -1,7 +1,6 @@
 package com.tragicfruit.weatherapp.model
 
 import android.graphics.Color
-import com.tragicfruit.weatherapp.utils.ColorHelper
 import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmObject
@@ -13,6 +12,7 @@ open class WeatherAlert : RealmObject() {
 
     var id = ""; private set
     var color = Color.WHITE; private set
+    var drawableName = ""; private set
     var priority = 0; private set
 
     var name = ""; private set
@@ -31,11 +31,18 @@ open class WeatherAlert : RealmObject() {
 
     companion object {
 
-        fun create(name: String, description: String, priority: Int, realm: Realm): WeatherAlert {
+        fun create(name: String,
+                   description: String,
+                   priority: Int,
+                   color: Int,
+                   drawableName: String,
+                   realm: Realm): WeatherAlert {
+
             return realm.createObject<WeatherAlert>().apply {
                 this.id = UUID.randomUUID().toString()
                 this.name = name
-                this.color = ColorHelper.getRandomColor()
+                this.color = color
+                this.drawableName = drawableName
                 this.priority = priority
                 this.description = description
             }

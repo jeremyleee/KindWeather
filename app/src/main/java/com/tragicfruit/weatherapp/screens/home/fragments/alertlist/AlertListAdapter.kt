@@ -1,9 +1,9 @@
-package com.tragicfruit.weatherapp.screens.home.fragments.alerts
+package com.tragicfruit.weatherapp.screens.home.fragments.alertlist
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.tragicfruit.weatherapp.model.WeatherAlert
 import com.tragicfruit.weatherapp.components.AlertCell
+import com.tragicfruit.weatherapp.model.WeatherAlert
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort

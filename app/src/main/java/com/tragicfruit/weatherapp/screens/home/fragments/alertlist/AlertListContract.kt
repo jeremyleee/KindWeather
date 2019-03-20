@@ -1,10 +1,10 @@
-package com.tragicfruit.weatherapp.screens.home.fragments.alerts
+package com.tragicfruit.weatherapp.screens.home.fragments.alertlist
 
 import com.tragicfruit.weatherapp.model.WeatherAlert
 import com.tragicfruit.weatherapp.screens.WPresenter
 import com.tragicfruit.weatherapp.screens.WView
 
-interface AlertsContract {
+interface AlertListContract {
 
     interface View : WView {
         fun showAlertDetailScreen(alert: WeatherAlert, position: Int)

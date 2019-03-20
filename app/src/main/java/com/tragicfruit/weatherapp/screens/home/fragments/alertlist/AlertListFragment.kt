@@ -1,4 +1,4 @@
-package com.tragicfruit.weatherapp.screens.home.fragments.alerts
+package com.tragicfruit.weatherapp.screens.home.fragments.alertlist
 
 import android.Manifest
 import android.os.Bundle
@@ -13,15 +13,15 @@ import com.tragicfruit.weatherapp.components.AlertCell
 import com.tragicfruit.weatherapp.model.WeatherAlert
 import com.tragicfruit.weatherapp.screens.WFragment
 import com.tragicfruit.weatherapp.utils.PermissionHelper
-import kotlinx.android.synthetic.main.fragment_alerts.*
+import kotlinx.android.synthetic.main.fragment_alert_list.*
 
-class AlertsFragment : WFragment(), AlertsContract.View, AlertCell.Listener {
+class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listener {
 
-    private val presenter = AlertsPresenter(this)
+    private val presenter = AlertListPresenter(this)
     private val adapter = AlertListAdapter(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_alerts, container, false)
+        return inflater.inflate(R.layout.fragment_alert_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,7 +43,7 @@ class AlertsFragment : WFragment(), AlertsContract.View, AlertCell.Listener {
     override fun showAlertDetailScreen(alert: WeatherAlert, position: Int) {
 //        val cell = alertListRecyclerView.layoutManager?.findViewByPosition(position) as? AlertCell
 
-        val action = AlertsFragmentDirections.actionAlertsFragmentToAlertDetailFragment(alert.id)
+        val action = AlertListFragmentDirections.actionAlertsFragmentToAlertDetailFragment(alert.id)
         findNavController().navigate(action)
     }
 

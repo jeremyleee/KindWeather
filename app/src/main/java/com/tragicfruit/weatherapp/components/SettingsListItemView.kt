@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.core.view.setPadding
 import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.utils.ViewHelper
 import com.tragicfruit.weatherapp.utils.getViewId
@@ -16,17 +17,14 @@ class SettingsListItemView : RelativeLayout {
 
     @JvmOverloads
     constructor(context: Context, attributeSet: AttributeSet? = null, style: Int = 0): super(context, attributeSet, style) {
+        setPadding(ViewHelper.parsePx(R.dimen.app_margin_xx))
+
         title.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body2)
-        addView(title, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
-            setMargins(ViewHelper.px(R.dimen.app_margin_xx).toInt(),
-                ViewHelper.px(R.dimen.app_margin_xx).toInt(), ViewHelper.px(R.dimen.app_margin_xx).toInt(), 0)
-        })
+        addView(title, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 
         subtitle.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body1)
         addView(subtitle, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             addRule(BELOW, title.getViewId())
-            setMargins(ViewHelper.px(R.dimen.app_margin_xx).toInt(), 0,
-                ViewHelper.px(R.dimen.app_margin_xx).toInt(), ViewHelper.px(R.dimen.app_margin_xx).toInt())
         })
 
         attributeSet?.let {

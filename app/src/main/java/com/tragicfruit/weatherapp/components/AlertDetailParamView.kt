@@ -23,7 +23,7 @@ class AlertDetailParamView(context: Context) : RelativeLayout(context) {
     var upperBound: Double? = null; private set
 
     init {
-        setPadding(ViewHelper.px(R.dimen.app_margin_xx).toInt())
+        setPadding(ViewHelper.parsePx(R.dimen.app_margin_xx))
 
         paramTitle.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body2)
         addView(paramTitle, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))

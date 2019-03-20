@@ -4,7 +4,7 @@
         android:title="@string/home_feed"
         android:icon="@drawable/ic_list"/>
 
-    <item android:id="@+id/alertsFragment"
+    <item android:id="@+id/alertListFragment"
         android:title="@string/home_alerts"
         android:icon="@drawable/ic_warning"/>
 

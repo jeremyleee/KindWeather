@@ -2,7 +2,6 @@ package com.tragicfruit.weatherapp.utils
 
 import android.content.Context
 import android.content.res.Resources
-import android.view.View
 import androidx.annotation.DimenRes
 
 object ViewHelper {
@@ -13,14 +12,14 @@ object ViewHelper {
         this.resources = context.resources
     }
 
-    fun px(@DimenRes dimen: Int): Float {
-        return resources?.getDimension(dimen) ?: 0f
+    fun toPx(dp: Int): Int {
+        resources?.let { res ->
+            return (dp * res.displayMetrics.density).toInt()
+        } ?: return 0
     }
 
-    fun dp(@DimenRes dimen: Int): Int {
-        resources?.let { res ->
-            return (res.getDimension(dimen) / res.displayMetrics.density).toInt()
-        } ?: return 0
+    fun parsePx(@DimenRes dimen: Int): Int {
+        return resources?.getDimension(dimen)?.toInt() ?: 0
     }
 
 }

@@ -8,8 +8,8 @@
         android:name="com.tragicfruit.weatherapp.screens.home.fragments.feed.FeedFragment"
         android:label="@string/home_feed" />
     <fragment
-        android:id="@+id/alertsFragment"
-        android:name="com.tragicfruit.weatherapp.screens.home.fragments.alerts.AlertsFragment"
+        android:id="@+id/alertListFragment"
+        android:name="com.tragicfruit.weatherapp.screens.home.fragments.alertlist.AlertListFragment"
         android:label="@string/home_alerts" >
         <action
             android:id="@+id/action_alertsFragment_to_alertDetailFragment"

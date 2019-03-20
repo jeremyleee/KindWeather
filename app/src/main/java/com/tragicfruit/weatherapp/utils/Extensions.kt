@@ -1,6 +1,7 @@
 package com.tragicfruit.weatherapp.utils
 
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.StringRes
 
@@ -22,4 +23,8 @@ fun View.getViewId(): Int {
     }
 
     return this.id
+}
+
+fun ViewGroup.MarginLayoutParams.setMargins(x: Int, y: Int) {
+    setMargins(x, y, x, y)
 }

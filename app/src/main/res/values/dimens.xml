@@ -7,4 +7,5 @@
     <dimen name="app_margin_xxxx">32dp</dimen>
 
     <dimen name="weather_icon_size">50dp</dimen>
+    <dimen name="alert_cell_height">200dp</dimen>
 </resources>

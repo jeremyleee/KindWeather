@@ -22,14 +22,14 @@ class FeedCell(context: Context) : RelativeLayout(context) {
     private val descriptionView = TextView(context)
 
     init {
-        setPadding(ViewHelper.px(R.dimen.app_margin_xx).toInt())
+        setPadding(ViewHelper.parsePx(R.dimen.app_margin_xx))
 
         dateView.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body1)
         addView(dateView, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
-            setMargins(0, 0, 0, ViewHelper.px(R.dimen.app_margin_xx).toInt())
+            setMargins(0, 0, 0, ViewHelper.parsePx(R.dimen.app_margin_xx))
         })
 
-        addView(icon, LayoutParams(ViewHelper.px(R.dimen.weather_icon_size).toInt(), ViewHelper.px(R.dimen.weather_icon_size).toInt()).apply {
+        addView(icon, LayoutParams(ViewHelper.parsePx(R.dimen.weather_icon_size), ViewHelper.parsePx(R.dimen.weather_icon_size)).apply {
             addRule(BELOW, dateView.getViewId())
         })
 
@@ -39,14 +39,14 @@ class FeedCell(context: Context) : RelativeLayout(context) {
             addRule(ALIGN_START, icon.getViewId())
             addRule(ALIGN_END, icon.getViewId())
             addRule(BELOW, icon.getViewId())
-            setMargins(0, ViewHelper.px(R.dimen.app_margin).toInt(), 0, 0)
+            setMargins(0, ViewHelper.parsePx(R.dimen.app_margin), 0, 0)
         })
 
         descriptionView.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body2)
         addView(descriptionView, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
             addRule(BELOW, dateView.getViewId())
             addRule(END_OF, icon.getViewId())
-            setMargins(ViewHelper.px(R.dimen.app_margin_xx).toInt(), 0, 0, 0)
+            setMargins(ViewHelper.parsePx(R.dimen.app_margin_xx), 0, 0, 0)
         })
     }
 

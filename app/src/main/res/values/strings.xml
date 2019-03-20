@@ -14,8 +14,8 @@
     <string name="allow_location_text">Location permissions are required to determine the weather for your current location.</string>
     <string name="allow_location_allow">Allow</string>
 
-    <string name="alerts_allow_location_text">Notifications disabled! Please allow location permissions.</string>
-    <string name="alerts_allow_location_button">Allow</string>
+    <string name="alert_list_allow_location_text">Notifications disabled! Please allow location permissions.</string>
+    <string name="alert_list_allow_location_button">Allow</string>
     
     <string name="home_feed">Feed</string>
     <string name="home_alerts">Alerts</string>

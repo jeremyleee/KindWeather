@@ -5,4 +5,9 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="white">#FFFFFF</color>
+
+    <color name="alert_list_background">#FCF9ED</color>
+    <color name="alert_title">#25293E</color>
+    <color name="alert_umbrella">#C4DBE7</color>
+    <color name="alert_rain_jacket">#E6C7C9</color>
 </resources>
