@@ -6,11 +6,10 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.kotlin.createObject
 import io.realm.kotlin.where
-import java.util.*
 
 open class WeatherAlert : RealmObject() {
 
-    var id = ""; private set
+    var id = 0; private set
     var color = Color.WHITE; private set
     var drawableName = ""; private set
     var priority = 0; private set
@@ -31,7 +30,8 @@ open class WeatherAlert : RealmObject() {
 
     companion object {
 
-        fun create(name: String,
+        fun create(id: Int,
+                   name: String,
                    description: String,
                    priority: Int,
                    color: Int,
@@ -39,7 +39,7 @@ open class WeatherAlert : RealmObject() {
                    realm: Realm): WeatherAlert {
 
             return realm.createObject<WeatherAlert>().apply {
-                this.id = UUID.randomUUID().toString()
+                this.id = id
                 this.name = name
                 this.color = color
                 this.drawableName = drawableName
@@ -48,7 +48,7 @@ open class WeatherAlert : RealmObject() {
             }
         }
 
-        fun fromId(alertId: String, realm: Realm = Realm.getDefaultInstance()) =
+        fun fromId(alertId: Int, realm: Realm = Realm.getDefaultInstance()) =
             realm.where<WeatherAlert>().equalTo("id", alertId).findFirst()
 
         fun setEnabled(alert: WeatherAlert, enabled: Boolean, realm: Realm) {

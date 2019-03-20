@@ -25,7 +25,7 @@
         android:label="AlertDetailFragment" >
         <argument
             android:name="alertId"
-            app:argType="string" />
+            app:argType="integer" />
     </fragment>
 
 </navigation>

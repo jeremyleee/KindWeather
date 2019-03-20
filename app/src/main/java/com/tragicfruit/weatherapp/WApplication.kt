@@ -41,17 +41,17 @@ class WApplication : Application() {
         val realm = Realm.getDefaultInstance()
         if (realm.where<WeatherAlert>().count() == 0L) {
             realm.executeTransaction {
-                val umbrellaAlert = WeatherAlert.create("Bring an\numbrella", "Remember to bring your umbrella!",
+                val umbrellaAlert = WeatherAlert.create(1, "Bring an\numbrella", "Remember to bring your umbrella!",
                     1, ContextCompat.getColor(this, R.color.alert_umbrella), "umbrella", it)
                 WeatherAlert.addParam(umbrellaAlert, ForecastType.Rain_probability, 0.5, null, it)
                 WeatherAlert.addParam(umbrellaAlert, ForecastType.Wind_gust, null, 10.8, it)
 
-                val rainJacketAlert = WeatherAlert.create("Wear a\nthick jacket", "Bring your rain jacket today!",
+                val rainJacketAlert = WeatherAlert.create(2, "Wear a\nthick jacket", "Bring your rain jacket today!",
                     2, ContextCompat.getColor(this, R.color.alert_rain_jacket), "jacket", it)
                 WeatherAlert.addParam(rainJacketAlert, ForecastType.Rain_probability, 0.5, null, it)
                 WeatherAlert.addParam(rainJacketAlert, ForecastType.Wind_gust, 10.8, null, it)
 
-                val sunscreenAlert = WeatherAlert.create("Sunscreen", "Put on some sunscreen before you go out",
+                val sunscreenAlert = WeatherAlert.create(3, "Sunscreen", "Put on some sunscreen before you go out",
                     3, ColorHelper.getRandomColor(), "sunscreen", it)
                 WeatherAlert.addParam(sunscreenAlert, ForecastType.Uv_index, 3.0, null, it)
             }

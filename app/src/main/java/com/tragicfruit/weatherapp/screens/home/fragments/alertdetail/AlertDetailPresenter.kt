@@ -8,11 +8,7 @@ class AlertDetailPresenter(override var view: AlertDetailContract.View) : AlertD
 
     private lateinit var alert: WeatherAlert
 
-    override fun init(alertId: String?) {
-        if (alertId.isNullOrEmpty()) {
-            return view.closeScreen()
-        }
-
+    override fun init(alertId: Int) {
         val alertFromId = WeatherAlert.fromId(alertId, Realm.getDefaultInstance())
             ?: return view.closeScreen()
 
