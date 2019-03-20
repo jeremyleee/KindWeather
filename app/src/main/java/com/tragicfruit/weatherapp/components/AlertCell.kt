@@ -7,6 +7,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import com.bumptech.glide.Glide
 import com.tragicfruit.weatherapp.R
 import com.tragicfruit.weatherapp.model.WeatherAlert
 import com.tragicfruit.weatherapp.utils.ViewHelper
@@ -51,7 +52,9 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Rela
         backgroundView.setColorFilter(alert.color, PorterDuff.Mode.SRC_IN)
 
         val drawableRes = context.resources.getIdentifier(alert.drawableName, "drawable", context.packageName)
-        illustrationView.setImageResource(drawableRes)
+        Glide.with(this)
+            .load(drawableRes)
+            .into(illustrationView)
     }
 
     interface Listener {
