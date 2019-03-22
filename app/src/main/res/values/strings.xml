@@ -18,7 +18,7 @@
     <string name="alert_list_allow_location_button">Allow</string>
     
     <string name="home_feed">Feed</string>
-    <string name="home_alerts">Alerts</string>
+    <string name="home_conditions">Conditions</string>
     <string name="home_settings">Settings</string>
 
     <string name="forecast_type_temp_high">Temperature (high)</string>
