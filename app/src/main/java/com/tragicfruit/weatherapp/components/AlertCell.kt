@@ -36,7 +36,7 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Rela
         })
 
         nameView.textSize = 36f
-        nameView.typeface = ResourcesCompat.getFont(context, R.font.bodoni_bold)
+        nameView.typeface = ResourcesCompat.getFont(context, R.font.playfair_regular)
         nameView.setTextColor(ContextCompat.getColor(context, R.color.alert_title))
         cellContainer.addView(nameView, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             setMargins(ViewHelper.parsePx(R.dimen.app_margin_xxx), ViewHelper.toPx(42), 0, 0)
