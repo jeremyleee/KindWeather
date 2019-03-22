@@ -53,7 +53,7 @@ class WApplication : Application() {
 
                 val sunscreenAlert = WeatherAlert.create(3, "Sunscreen", "Put on some sunscreen before you go out",
                     3, ColorHelper.getRandomColor(), "sunscreen", it)
-                WeatherAlert.addParam(sunscreenAlert, ForecastType.UV_INDEX, 3.0, null, it)
+                WeatherAlert.addParam(sunscreenAlert, ForecastType.UV_INDEX, 6.0, null, it)
             }
         }
 
