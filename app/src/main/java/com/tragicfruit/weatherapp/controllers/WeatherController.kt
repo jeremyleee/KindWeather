@@ -14,7 +14,7 @@ import timber.log.Timber
 
 object WeatherController {
 
-    private lateinit var service: OpenWeatherAPIService
+    private lateinit var service: DarkSkyAPIService
 
     fun init() {
         val retrofit = Retrofit.Builder()
@@ -76,35 +76,9 @@ object WeatherController {
 
 }
 
-private interface OpenWeatherAPIService {
+private interface DarkSkyAPIService {
 
     @GET("forecast/${BuildConfig.API_KEY}/{latitude},{longitude}?exclude=currently,minutely,hourly&units=si")
     fun fetchForecast(@Path("latitude") latitude: Double, @Path("longitude") longitude: Double): Call<ForecastResponse>
-
-}
-
-data class ForecastResponse(val latitude: Double, val longitude: Double, val timezone: String, val daily: Daily) {
-
-    data class Daily(val summary: String?, val icon: String?, val data: List<DataPoint>) {
-
-        data class DataPoint(val time: Long,
-                        val summary: String?,
-                        val icon: String?,
-                        val precipIntensity: Double?,
-                        val precipProbability: Double?,
-                        val precipType: String?,
-                        val temperatureHigh: Double?,
-                        val temperatureLow: Double?,
-                        val dewPoint: Double?,
-                        val humidity: Double?,
-                        val pressure: Double?,
-                        val windSpeed: Double?,
-                        val windGust: Double?,
-                        val cloudCover: Double?,
-                        val uvIndex: Int?,
-                        val visibility: Double?,
-                        val ozone: Double?)
-
-    }
 
 }

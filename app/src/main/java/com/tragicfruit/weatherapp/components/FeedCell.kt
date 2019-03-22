@@ -7,9 +7,9 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.view.setPadding
 import com.tragicfruit.weatherapp.R
+import com.tragicfruit.weatherapp.controllers.ForecastIcon
 import com.tragicfruit.weatherapp.model.ForecastType
 import com.tragicfruit.weatherapp.model.WeatherNotification
-import com.tragicfruit.weatherapp.utils.ColorHelper
 import com.tragicfruit.weatherapp.utils.DisplayUtils
 import com.tragicfruit.weatherapp.utils.ViewHelper
 import com.tragicfruit.weatherapp.utils.getViewId
@@ -29,6 +29,7 @@ class FeedCell(context: Context) : RelativeLayout(context) {
             setMargins(0, 0, 0, ViewHelper.parsePx(R.dimen.app_margin_xx))
         })
 
+        icon.scaleType = ImageView.ScaleType.FIT_CENTER
         addView(icon, LayoutParams(ViewHelper.parsePx(R.dimen.weather_icon_size), ViewHelper.parsePx(R.dimen.weather_icon_size)).apply {
             addRule(BELOW, dateView.getViewId())
         })
@@ -53,13 +54,12 @@ class FeedCell(context: Context) : RelativeLayout(context) {
     fun setData(notification: WeatherNotification) {
         dateView.text = DisplayUtils.getDateString(notification.createdAt)
 
-        // TODO: set icon image
-        icon.setBackgroundColor(ColorHelper.getRandomColor())
+        icon.setImageResource(ForecastIcon.fromString(notification.icon).iconRes)
 
         descriptionView.text = notification.description
         highTempView.text = DisplayUtils.getMeasurementString(
             notification.highTemp.toFloat(),
-            ForecastType.getUnits(ForecastType.Temp_high),
+            ForecastType.getUnits(ForecastType.TEMP_HIGH),
             0)
     }
 

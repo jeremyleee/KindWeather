@@ -40,7 +40,7 @@ open class ForecastPeriod : RealmObject() {
     }
 
     fun getHighTemp(): Double {
-        val data = getDataForType(ForecastType.Temp_high) ?: return 0.0
+        val data = getDataForType(ForecastType.TEMP_HIGH) ?: return 0.0
         return data.value
     }
 
@@ -62,23 +62,23 @@ open class ForecastPeriod : RealmObject() {
 
             when (responseData.precipType) {
                 "rain" -> {
-                    forecastPeriod.data.add(ForecastData.create(ForecastType.Rain_intensity, responseData.precipIntensity, realm))
-                    forecastPeriod.data.add(ForecastData.create(ForecastType.Rain_probability, responseData.precipProbability, realm))
+                    forecastPeriod.data.add(ForecastData.create(ForecastType.RAIN_INTENSITY, responseData.precipIntensity, realm))
+                    forecastPeriod.data.add(ForecastData.create(ForecastType.RAIN_PROBABILITY, responseData.precipProbability, realm))
                 }
                 "snow" -> {
-                    forecastPeriod.data.add(ForecastData.create(ForecastType.Snow_intensity, responseData.precipIntensity, realm))
-                    forecastPeriod.data.add(ForecastData.create(ForecastType.Snow_probability, responseData.precipProbability, realm))
+                    forecastPeriod.data.add(ForecastData.create(ForecastType.SNOW_INTENSITY, responseData.precipIntensity, realm))
+                    forecastPeriod.data.add(ForecastData.create(ForecastType.SNOW_PROBABILITY, responseData.precipProbability, realm))
                 }
                 "sleet" -> {
                     // Do nothing for now
                 }
             }
 
-            forecastPeriod.data.add(ForecastData.create(ForecastType.Temp_high, responseData.temperatureHigh, realm))
-            forecastPeriod.data.add(ForecastData.create(ForecastType.Temp_low, responseData.temperatureLow, realm))
-            forecastPeriod.data.add(ForecastData.create(ForecastType.Humidity, responseData.humidity, realm))
-            forecastPeriod.data.add(ForecastData.create(ForecastType.Wind_gust, responseData.windGust, realm))
-            forecastPeriod.data.add(ForecastData.create(ForecastType.Uv_index, responseData.uvIndex?.toDouble(), realm))
+            forecastPeriod.data.add(ForecastData.create(ForecastType.TEMP_HIGH, responseData.temperatureHigh, realm))
+            forecastPeriod.data.add(ForecastData.create(ForecastType.TEMP_LOW, responseData.temperatureLow, realm))
+            forecastPeriod.data.add(ForecastData.create(ForecastType.HUMIDITY, responseData.humidity, realm))
+            forecastPeriod.data.add(ForecastData.create(ForecastType.WIND_GUST, responseData.windGust, realm))
+            forecastPeriod.data.add(ForecastData.create(ForecastType.UV_INDEX, responseData.uvIndex?.toDouble(), realm))
 
             forecastPeriod.fetchedTime = System.currentTimeMillis()
 
