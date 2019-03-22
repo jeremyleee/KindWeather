@@ -60,12 +60,14 @@ object WeatherController {
     private fun deleteForecastsBefore(timestamp: Long, realm: Realm) {
         val oldForecasts = realm.where<ForecastPeriod>()
             .lessThan("fetchedTime", timestamp)
+            .equalTo("isDisplayed", false)
             .findAll()
 
         Timber.d("${oldForecasts.count()} old forecasts deleted")
 
         val oldForecastData = realm.where<ForecastData>()
             .lessThan("fetchedTime", timestamp)
+            .equalTo("isDisplayed", false)
             .findAll()
 
         Timber.d("${oldForecastData.count()} old forecast data deleted")

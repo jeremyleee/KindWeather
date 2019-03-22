@@ -12,6 +12,8 @@ open class ForecastData : RealmObject() {
 
     var fetchedTime: Long = 0; private set
 
+    var isDisplayed = false; private set
+
     companion object {
         fun create(type: ForecastType, rawValue: Double?, realm: Realm): ForecastData? {
             val value = rawValue ?: return null
@@ -21,6 +23,10 @@ open class ForecastData : RealmObject() {
             data.value = value
             data.fetchedTime = System.currentTimeMillis()
             return data
+        }
+
+        fun setDisplayed(data: ForecastData, displayed: Boolean, realm: Realm) {
+            data.isDisplayed = displayed
         }
     }
 

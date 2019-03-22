@@ -44,8 +44,8 @@ enum class ForecastIcon(@DrawableRes val iconRes: Int = 0) {
     unknown;
 
     companion object {
-        fun fromString(type: String) = try {
-            ForecastIcon.valueOf(type.replace("-", ""))
+        fun fromString(type: String?) = try {
+            ForecastIcon.valueOf(type!!.replace("-", ""))
         } catch (e: Exception) {
             unknown
         }

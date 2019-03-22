@@ -22,6 +22,8 @@ open class ForecastPeriod : RealmObject() {
 
     var fetchedTime: Long = 0; private set
 
+    var isDisplayed = false; private set
+
     fun satisfiesParam(param: WeatherAlertParam): Boolean {
         val lowerBound = param.lowerBound
         val upperBound = param.upperBound
@@ -39,12 +41,7 @@ open class ForecastPeriod : RealmObject() {
         return satisfiesLowerBound && satisfiesUpperBound
     }
 
-    fun getHighTemp(): Double {
-        val data = getDataForType(ForecastType.TEMP_HIGH) ?: return 0.0
-        return data.value
-    }
-
-    private fun getDataForType(type: ForecastType) =
+    fun getDataForType(type: ForecastType) =
         data.where().equalTo("type", type.name).findFirst()
 
     companion object {
@@ -83,6 +80,13 @@ open class ForecastPeriod : RealmObject() {
             forecastPeriod.fetchedTime = System.currentTimeMillis()
 
             return forecastPeriod
+        }
+
+        fun setDisplayed(forecast: ForecastPeriod, displayed: Boolean, realm: Realm) {
+            forecast.isDisplayed = displayed
+            forecast.data.forEach { data ->
+                ForecastData.setDisplayed(data, displayed, realm)
+            }
         }
 
     }

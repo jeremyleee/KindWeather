@@ -62,7 +62,8 @@ class AlertService : IntentService(AlertService::javaClass.name) {
 
                 // Create notification model object
                 realm.executeTransaction { realm ->
-                    WeatherNotification.create(forecast.icon, alert.description, forecast.getHighTemp(), realm)
+                    WeatherNotification.create(alert.description, forecast, realm)
+                    ForecastPeriod.setDisplayed(forecast, true, realm)
                 }
             }
         }

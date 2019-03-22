@@ -54,11 +54,13 @@ class FeedCell(context: Context) : RelativeLayout(context) {
     fun setData(notification: WeatherNotification) {
         dateView.text = DisplayUtils.getDateString(notification.createdAt)
 
-        icon.setImageResource(ForecastIcon.fromString(notification.icon).iconRes)
+        icon.setImageResource(ForecastIcon.fromString(notification.forecast?.icon).iconRes)
 
         descriptionView.text = notification.description
+
+        val highTemp = notification.forecast?.getDataForType(ForecastType.TEMP_HIGH)?.value ?: 0.0
         highTempView.text = DisplayUtils.getMeasurementString(
-            notification.highTemp.toFloat(),
+            highTemp.toFloat(),
             ForecastType.getUnits(ForecastType.TEMP_HIGH),
             0)
     }
