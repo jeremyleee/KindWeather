@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:animateLayoutChanges="true">
 
-        <com.tragicfruit.weatherapp.components.AllowLocationInlineView
+        <com.tragicfruit.kindweather.components.AllowLocationInlineView
             android:id="@+id/alertListAllowLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

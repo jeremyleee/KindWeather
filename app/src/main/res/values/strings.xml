@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeatherApp</string>
+    <string name="app_name">Kind Weather</string>
 
     <string name="notification_channel_location">Location status</string>
     <string name="notification_channel_weather">Weather alerts</string>

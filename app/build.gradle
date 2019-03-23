@@ -8,7 +8,7 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.tragicfruit.weatherapp"
+        applicationId "com.tragicfruit.kindweather"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 4
