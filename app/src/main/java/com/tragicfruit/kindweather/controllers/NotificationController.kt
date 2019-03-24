@@ -4,8 +4,12 @@ import android.annotation.TargetApi
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -21,6 +25,8 @@ object NotificationController {
 
     private const val LOCATION_PERMISSIONS_ID = 600
     private const val WEATHER_ALERT_ID = 601
+
+    private const val APP_SETTINGS_ACTION = 601
 
     fun init(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -46,6 +52,13 @@ object NotificationController {
     }
 
     fun notifyLocationPermissionsRequired(context: Context) {
+        val intent = Intent().apply {
+            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+            data = Uri.fromParts("package", context.packageName, null)
+        }
+
+        val pendingIntent = PendingIntent.getActivity(context, APP_SETTINGS_ACTION, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
         val builder = NotificationCompat.Builder(context, LOCATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(context.getString(R.string.notification_location_permission_title))
@@ -53,8 +66,8 @@ object NotificationController {
             .setStyle(NotificationCompat.BigTextStyle()
                 .bigText(context.getString(R.string.notification_location_permission_text)))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-        // TODO: setup pending intent
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
 
         NotificationManagerCompat.from(context)
             .notify(LOCATION_PERMISSIONS_ID, builder.build())
