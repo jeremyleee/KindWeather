@@ -28,7 +28,7 @@ class SettingsListItemView : RelativeLayout {
         })
 
         attributeSet?.let {
-            val typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.SettingsListItemView)
+            val typedArray = context.obtainStyledAttributes(it, R.styleable.SettingsListItemView)
             title.text = typedArray.getString(R.styleable.SettingsListItemView_title)
             typedArray.recycle()
         }

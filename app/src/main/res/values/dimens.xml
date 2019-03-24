@@ -6,6 +6,8 @@
     <dimen name="app_margin_xxx">24dp</dimen>
     <dimen name="app_margin_xxxx">32dp</dimen>
 
+    <dimen name="onboarding_indicator_size">8dp</dimen>
+
     <dimen name="weather_icon_size">50dp</dimen>
     <dimen name="alert_cell_height">200dp</dimen>
 </resources>

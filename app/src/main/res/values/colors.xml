@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="onboarding_indicator_selected">#AAA</color>
+    <color name="onboarding_indicator_unselected">#DDD</color>
+
     <color name="white">#FFFFFF</color>
 
     <color name="alert_list_background">#FCF9ED</color>

@@ -3,4 +3,8 @@
     <declare-styleable name="SettingsListItemView">
         <attr name="title" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="OnboardingIndicator">
+        <attr name="pageCount" format="integer"/>
+    </declare-styleable>
 </resources>
