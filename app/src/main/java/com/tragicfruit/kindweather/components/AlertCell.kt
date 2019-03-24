@@ -49,12 +49,15 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Rela
             listener?.onAlertClicked(alert)
         }
 
-        nameView.text = alert.name
-        backgroundView.setColorFilter(if (alert.enabled) alert.color else Color.GRAY, PorterDuff.Mode.SRC_IN)
+        nameView.setText(alert.getInfo().title)
 
-        val drawableRes = context.resources.getIdentifier(alert.drawableName, "drawable", context.packageName)
+        val backgroundColor = if (alert.enabled) {
+            ContextCompat.getColor(context, alert.getInfo().color)
+        } else Color.GRAY
+        backgroundView.setColorFilter(backgroundColor, PorterDuff.Mode.SRC_IN)
+
         Glide.with(this)
-            .load(drawableRes)
+            .load(alert.getInfo().image)
             .into(illustrationView)
     }
 

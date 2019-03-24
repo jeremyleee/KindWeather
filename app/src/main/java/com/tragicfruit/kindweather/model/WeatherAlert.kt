@@ -1,6 +1,9 @@
 package com.tragicfruit.kindweather.model
 
-import android.graphics.Color
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import com.tragicfruit.kindweather.R
 import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmObject
@@ -10,15 +13,13 @@ import io.realm.kotlin.where
 open class WeatherAlert : RealmObject() {
 
     var id = 0; private set
-    var color = Color.WHITE; private set
-    var drawableName = ""; private set
-    var priority = 0; private set
+    private var info = ""
+    var priority = 0
 
-    var name = ""; private set
     var enabled = true; private set
     var params = RealmList<WeatherAlertParam>(); private set
 
-    var description = ""; private set
+    fun getInfo() = Info.fromString(info)
 
     fun areParamsEdited() = params.any { it.isEdited() }
 
@@ -30,21 +31,11 @@ open class WeatherAlert : RealmObject() {
 
     companion object {
 
-        fun create(id: Int,
-                   name: String,
-                   description: String,
-                   priority: Int,
-                   color: Int,
-                   drawableName: String,
-                   realm: Realm): WeatherAlert {
-
+        fun create(id: Int, info: Info, realm: Realm): WeatherAlert {
             return realm.createObject<WeatherAlert>().apply {
                 this.id = id
-                this.name = name
-                this.color = color
-                this.drawableName = drawableName
-                this.priority = priority
-                this.description = description
+                this.info = info.name
+                this.priority = id // TODO: determine a priority for alerts
             }
         }
 
@@ -62,6 +53,40 @@ open class WeatherAlert : RealmObject() {
         fun addParam(alert: WeatherAlert, type: ForecastType, defaultLowerBound: Double?, defaultUpperBound: Double?, realm: Realm) {
             val param = WeatherAlertParam.create(type, defaultLowerBound, defaultUpperBound, realm)
             addParam(alert, param, realm)
+        }
+
+    }
+
+    enum class Info(@StringRes val title: Int = 0,
+                    @StringRes val message: Int = 0,
+                    @ColorRes val color: Int = 0,
+                    @DrawableRes val image: Int = 0) {
+
+        UMBRELLA(
+            R.string.alert_umbrella_title,
+            R.string.alert_umbrella_notification,
+            R.color.alert_umbrella,
+            R.drawable.umbrella),
+
+        RAIN_JACKET(
+            R.string.alert_rain_jacket_title,
+            R.string.alert_rain_jacket_notification,
+            R.color.alert_rain_jacket,
+            R.drawable.jacket),
+
+        SUNSCREEN(
+            R.string.alert_sunscreen_title,
+            R.string.alert_sunscreen_notification,
+            R.color.alert_sunscreen),
+
+        UNKNOWN;
+
+        companion object {
+            fun fromString(info: String) = try {
+                valueOf(info)
+            } catch (e: Exception) {
+                UNKNOWN
+            }
         }
 
     }

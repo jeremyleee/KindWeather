@@ -1,9 +1,11 @@
 package com.tragicfruit.kindweather.screens.home.fragments.alertdetail
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.tragicfruit.kindweather.R
@@ -41,10 +43,13 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
     }
 
     override fun initView(alert: WeatherAlert) {
-        alertDetailCollapsingToolbar.title = alert.name
+        alertDetailCollapsingToolbar.title = getString(alert.getInfo().title)
 
-        alertDetailHeaderImage.setBackgroundColor(alert.color) // TODO: replace with illustration
-        alertDetailCollapsingToolbar.setContentScrimColor(alert.color) // TODO: replace with illustration palette colour
+        val color = context?.let {
+            ContextCompat.getColor(it, alert.getInfo().color)
+        } ?: Color.WHITE
+        alertDetailHeaderImage.setBackgroundColor(color) // TODO: replace with illustration
+        alertDetailCollapsingToolbar.setContentScrimColor(color) // TODO: replace with illustration palette colour
 
         alertDetailEnableSwitch.isChecked = alert.enabled
         alertDetailReset.isEnabled = alert.areParamsEdited()
@@ -59,7 +64,7 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
             alertDetailParamsList.removeAllViews()
             for (param in alert.params) {
                 val paramView = AlertDetailParamView(it)
-                paramView.setData(alert.color, param, this)
+                paramView.setData(ContextCompat.getColor(it, alert.getInfo().color), param, this)
                 alertDetailParamsList.addView(paramView)
             }
         }

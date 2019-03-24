@@ -10,8 +10,12 @@ import android.os.Build
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import com.tragicfruit.kindweather.model.ForecastType
+import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.utils.PermissionHelper
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
+import io.realm.Realm
+import io.realm.kotlin.where
 import timber.log.Timber
 import java.util.*
 
@@ -20,6 +24,30 @@ object AlertController {
     private const val ALERT_RECEIVER_REQUEST = 300
 
     private val calendar = Calendar.getInstance()
+
+    fun createAlerts() {
+        if (Realm.getDefaultInstance().where<WeatherAlert>().count() > 0) {
+            // Alerts already created
+            return
+        }
+
+        // TODO: replace with proper alerts
+        Realm.getDefaultInstance().executeTransaction { realm ->
+            WeatherAlert.create(1, WeatherAlert.Info.UMBRELLA, realm).also { alert ->
+                WeatherAlert.addParam(alert, ForecastType.RAIN_PROBABILITY, 0.5, null, realm)
+                WeatherAlert.addParam(alert, ForecastType.WIND_GUST, null, 10.8, realm)
+            }
+
+            WeatherAlert.create(2, WeatherAlert.Info.RAIN_JACKET, realm).also { alert ->
+                WeatherAlert.addParam(alert, ForecastType.RAIN_PROBABILITY, 0.5, null, realm)
+                WeatherAlert.addParam(alert, ForecastType.WIND_GUST, 10.8, null, realm)
+            }
+
+            WeatherAlert.create(3, WeatherAlert.Info.SUNSCREEN, realm).also { alert ->
+                WeatherAlert.addParam(alert, ForecastType.UV_INDEX, 6.0, null, realm)
+            }
+        }
+    }
 
     fun scheduleDailyAlert(context: Context) {
         val alarmManager = ContextCompat.getSystemService(context, AlarmManager::class.java)
@@ -47,27 +75,27 @@ class AlertReceiver : BroadcastReceiver() {
 
     @SuppressWarnings("MissingPermission")
     override fun onReceive(context: Context?, intent: Intent?) {
-        val context = context ?: return
+        val validContext = context ?: return
 
-        if (PermissionHelper.hasPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)) {
+        if (PermissionHelper.hasPermission(validContext, Manifest.permission.ACCESS_FINE_LOCATION)) {
             Timber.d("Requesting current location")
 
             // Request current location
-            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(validContext)
             val locationRequest = LocationRequest.create().setNumUpdates(1)
 
-            val serviceIntent = AlertService.getIntent(context)
+            val serviceIntent = AlertService.getIntent(validContext)
             val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                PendingIntent.getForegroundService(context, ALERT_SERVICE_REQUEST, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.getForegroundService(validContext, ALERT_SERVICE_REQUEST, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             } else {
-                PendingIntent.getService(context, ALERT_SERVICE_REQUEST, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.getService(validContext, ALERT_SERVICE_REQUEST, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             }
 
             fusedLocationClient.requestLocationUpdates(locationRequest, pendingIntent)
 
         } else {
             // No location permission, display notification
-            NotificationController.notifyLocationPermissionsRequired(context)
+            NotificationController.notifyLocationPermissionsRequired(validContext)
         }
     }
 

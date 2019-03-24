@@ -57,12 +57,13 @@ class AlertService : IntentService(AlertService::javaClass.name) {
             val showAlert = enabledAlerts.first { it.shouldShowAlert(forecast) }
 
             showAlert?.let { alert ->
-                Timber.i("Showing push notification: ${alert.description}")
+                val message = getString(alert.getInfo().message)
+                Timber.i("Showing push notification: $message")
                 NotificationController.notifyWeatherAlert(this, alert)
 
                 // Create notification model object
                 realm.executeTransaction { realm ->
-                    WeatherNotification.create(alert.description, forecast, realm)
+                    WeatherNotification.create(message, forecast, realm)
                     ForecastPeriod.setDisplayed(forecast, true, realm)
                 }
             }
