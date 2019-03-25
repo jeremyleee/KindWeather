@@ -17,6 +17,8 @@ import kotlinx.android.synthetic.main.fragment_alert_list.*
 
 class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listener {
 
+    override var statusBarColor = R.color.alert_list_background
+
     private val presenter = AlertListPresenter(this)
     private val adapter = AlertListAdapter(this)
 
@@ -46,6 +48,7 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
     }
 
     override fun showAlertDetailScreen(alert: WeatherAlert, position: Int) {
+        // TODO: shared element transition
 //        val cell = alertListRecyclerView.layoutManager?.findViewByPosition(position) as? AlertCell
 
         val action = AlertListFragmentDirections.actionAlertsFragmentToAlertDetailFragment(alert.id)
