@@ -4,6 +4,7 @@ import android.app.IntentService
 import android.content.Context
 import android.content.Intent
 import com.google.android.gms.location.LocationResult
+import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.model.WeatherNotification
@@ -54,18 +55,19 @@ class AlertService : IntentService(AlertService::javaClass.name) {
                 .findAll()
 
             // Highest priority alert
-            val showAlert = enabledAlerts.first { it.shouldShowAlert(forecast) }
+            val showAlert = enabledAlerts.firstOrNull { it.shouldShowAlert(forecast) }
 
+            var message = getString(R.string.feed_entry_default)
             showAlert?.let { alert ->
-                val message = getString(alert.getInfo().message)
+                message = getString(alert.getInfo().message)
                 Timber.i("Showing push notification: $message")
                 NotificationController.notifyWeatherAlert(this, alert)
+            }
 
-                // Create notification model object
-                realm.executeTransaction { realm ->
-                    WeatherNotification.create(message, forecast, realm)
-                    ForecastPeriod.setDisplayed(forecast, true, realm)
-                }
+            // Create model object for feed
+            realm.executeTransaction { realm ->
+                WeatherNotification.create(message, forecast, realm)
+                ForecastPeriod.setDisplayed(forecast, true, realm)
             }
         }
     }

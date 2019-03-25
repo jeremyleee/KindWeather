@@ -58,9 +58,11 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Line
         } else Color.LTGRAY
         background.setColorFilter(backgroundColor, PorterDuff.Mode.SRC_IN)
 
-        Glide.with(this)
-            .load(alert.getInfo().image)
-            .into(illustrationView)
+        if (alert.getInfo().image != 0) {
+            Glide.with(this)
+                .load(alert.getInfo().image)
+                .into(illustrationView)
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

@@ -28,12 +28,14 @@
     <string name="home_conditions">Conditions</string>
     <string name="home_settings">Settings</string>
 
+    <string name="feed_entry_default">No notifications for today</string>
+
     <string name="alert_umbrella_title">Bring an umbrella</string>
-    <string name="alert_umbrella_notification">Remember to bring your umbrella!</string>
+    <string name="alert_umbrella_notification">Remember to bring your umbrella</string>
     <string name="alert_rain_jacket_title">Wear a thick jacket</string>
-    <string name="alert_rain_jacket_notification">Bring your rain jacket today!</string>
+    <string name="alert_rain_jacket_notification">Bring your thick jacket today</string>
     <string name="alert_sunscreen_title">Sunscreen</string>
-    <string name="alert_sunscreen_notification">Put on some sunscreen before you go out!</string>
+    <string name="alert_sunscreen_notification">Put on some sunscreen before you go out</string>
 
     <string name="forecast_type_temp_high">Temperature (high)</string>
     <string name="forecast_type_temp_low">Temperature (low)</string>
