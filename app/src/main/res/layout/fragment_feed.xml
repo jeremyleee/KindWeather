@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/homeToolbar"
+        android:id="@+id/feedToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -13,11 +13,23 @@
         android:elevation="4dp"
         app:title="@string/home_feed"/>
 
+    <TextView
+        android:id="@+id/feedEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/feedToolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center_horizontal"
+        android:layout_marginStart="@dimen/app_margin_xxxx"
+        android:layout_marginEnd="@dimen/app_margin_xxxx"
+        android:text="@string/feed_empty"
+        style="@style/TextAppearance.AppCompat.Subhead"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/feedRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/homeToolbar"
+        app:layout_constraintTop_toBottomOf="@id/feedToolbar"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

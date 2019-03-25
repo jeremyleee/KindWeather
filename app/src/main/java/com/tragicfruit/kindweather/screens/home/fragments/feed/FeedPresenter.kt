@@ -28,7 +28,7 @@ class FeedPresenter(override var view: FeedContract.View) : FeedContract.Present
     }
 
     override fun resume() {
-        view.refreshFeed()
+        updateFeedView()
         feedData.addChangeListener(this)
     }
 
@@ -37,7 +37,12 @@ class FeedPresenter(override var view: FeedContract.View) : FeedContract.Present
     }
 
     override fun onChange(t: RealmResults<WeatherNotification>) {
+        updateFeedView()
+    }
+
+    private fun updateFeedView() {
         view.refreshFeed()
+        view.showEmptyState(feedData.isEmpty())
     }
 
 }

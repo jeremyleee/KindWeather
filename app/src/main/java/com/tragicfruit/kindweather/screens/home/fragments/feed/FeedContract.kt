@@ -12,6 +12,7 @@ interface FeedContract {
         fun refreshFeed()
         fun initView(feedData: RealmResults<WeatherNotification>)
         fun showForecastScreen(forecast: ForecastPeriod)
+        fun showEmptyState(show: Boolean)
     }
 
     interface Presenter : WPresenter<View> {

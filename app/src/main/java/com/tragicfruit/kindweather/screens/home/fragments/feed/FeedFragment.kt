@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tragicfruit.kindweather.R
@@ -30,6 +31,8 @@ class FeedFragment : WFragment(), FeedContract.View, FeedCell.Listener {
     override fun initView(feedData: RealmResults<WeatherNotification>) {
         feedRecyclerView.adapter = FeedAdapter(feedData, this)
         feedRecyclerView.layoutManager = LinearLayoutManager(context)
+
+        feedEmpty.isVisible = feedData.isEmpty()
     }
 
     override fun showForecastScreen(forecast: ForecastPeriod) {
@@ -39,6 +42,10 @@ class FeedFragment : WFragment(), FeedContract.View, FeedCell.Listener {
 
     override fun refreshFeed() {
         feedRecyclerView.adapter?.notifyDataSetChanged()
+    }
+
+    override fun showEmptyState(show: Boolean) {
+        feedEmpty.isVisible = show
     }
 
     override fun onFeedItemClicked(notification: WeatherNotification) {
