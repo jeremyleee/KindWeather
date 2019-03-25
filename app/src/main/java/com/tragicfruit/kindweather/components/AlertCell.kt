@@ -28,7 +28,8 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Line
         orientation = HORIZONTAL
         setBackgroundResource(R.drawable.alert_cell_background)
 
-        nameView.textSize = 36f
+        nameView.textSize = 28f
+        nameView.setLineSpacing(ViewHelper.toPx(4).toFloat(), 1f)
         nameView.typeface = ResourcesCompat.getFont(context, R.font.playfair_bold)
         nameView.setTextColor(ContextCompat.getColor(context, R.color.alert_title))
         nameView.gravity = Gravity.CENTER_VERTICAL
