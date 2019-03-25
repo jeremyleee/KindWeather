@@ -19,6 +19,7 @@ import androidx.navigation.NavDeepLinkBuilder
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.model.WeatherAlert
+import com.tragicfruit.kindweather.screens.home.fragments.forecast.ForecastFragmentArgs
 
 object NotificationController {
 
@@ -79,7 +80,7 @@ object NotificationController {
         val pendingIntent = NavDeepLinkBuilder(context)
             .setGraph(R.navigation.home_nav_graph)
             .setDestination(R.id.forecastFragment)
-            .setArguments(bundleOf("forecastId" to forecast.id))
+            .setArguments(ForecastFragmentArgs(forecast.id, System.currentTimeMillis()).toBundle())
             .createPendingIntent()
 
         val builder = NotificationCompat.Builder(context, WEATHER_CHANNEL_ID)
