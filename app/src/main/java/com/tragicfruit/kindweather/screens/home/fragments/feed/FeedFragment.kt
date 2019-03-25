@@ -35,8 +35,8 @@ class FeedFragment : WFragment(), FeedContract.View, FeedCell.Listener {
         feedEmpty.isVisible = feedData.isEmpty()
     }
 
-    override fun showForecastScreen(forecast: ForecastPeriod) {
-        val action = FeedFragmentDirections.actionFeedFragmentToForecastFragment(forecast.id)
+    override fun showForecastScreen(forecast: ForecastPeriod, timeCreatedMillis: Long) {
+        val action = FeedFragmentDirections.actionFeedFragmentToForecastFragment(forecast.id, timeCreatedMillis)
         findNavController().navigate(action)
     }
 

@@ -7,20 +7,19 @@ import com.tragicfruit.kindweather.utils.DisplayUtils
 import io.realm.Realm
 import io.realm.kotlin.where
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class ForecastPresenter(override var view: ForecastContract.View) : ForecastContract.Presenter {
 
     private val calendar = Calendar.getInstance()
 
-    override fun init(forecastId: String) {
+    override fun init(forecastId: String, timeCreatedMillis: Long) {
         val forecast = Realm.getDefaultInstance()
             .where<ForecastPeriod>()
             .equalTo("id", forecastId)
             .findFirst()
 
         forecast?.let {
-            calendar.timeInMillis = TimeUnit.SECONDS.toMillis(it.time)
+            calendar.timeInMillis = timeCreatedMillis
 
             view.initView(
                 DisplayUtils.getDateString(calendar.time),

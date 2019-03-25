@@ -6,6 +6,7 @@ import io.realm.RealmChangeListener
 import io.realm.RealmResults
 import io.realm.Sort
 import io.realm.kotlin.where
+import java.util.concurrent.TimeUnit
 
 class FeedPresenter(override var view: FeedContract.View) : FeedContract.Presenter,
     RealmChangeListener<RealmResults<WeatherNotification>> {
@@ -23,7 +24,8 @@ class FeedPresenter(override var view: FeedContract.View) : FeedContract.Present
 
     override fun onFeedItemClicked(notification: WeatherNotification) {
         notification.forecast?.let {
-            view.showForecastScreen(it)
+            val timeCreatedMillis = notification.createdAt?.time ?: TimeUnit.SECONDS.toMillis(it.fetchedTime)
+            view.showForecastScreen(it, timeCreatedMillis)
         }
     }
 

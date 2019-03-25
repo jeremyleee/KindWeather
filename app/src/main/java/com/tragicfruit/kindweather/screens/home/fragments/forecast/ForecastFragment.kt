@@ -23,7 +23,7 @@ class ForecastFragment : WFragment(), ForecastContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.init(args.forecastId)
+        presenter.init(args.forecastId, args.timeCreatedMillis)
 
         forecastToolbar.setNavigationOnClickListener {
             presenter.onBackClicked()

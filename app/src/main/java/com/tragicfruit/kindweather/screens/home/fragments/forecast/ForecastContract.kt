@@ -12,7 +12,7 @@ interface ForecastContract {
     }
 
     interface Presenter: WPresenter<View> {
-        fun init(forecastId: String)
+        fun init(forecastId: String, timeCreatedMillis: Long)
         fun onBackClicked()
     }
 

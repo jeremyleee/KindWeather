@@ -38,6 +38,9 @@
         <argument
             android:name="forecastId"
             app:argType="string" />
+        <argument
+            android:name="timeCreatedMillis"
+            app:argType="long" />
     </fragment>
 
 </navigation>
