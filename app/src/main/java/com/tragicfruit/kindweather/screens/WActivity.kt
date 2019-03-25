@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +28,7 @@ open class WActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        applyStatusBarColor(statusBarColor, lightStatusBar)
+        applyStatusBarColorRes(statusBarColor, lightStatusBar)
 
         AppCenter.start(application, BuildConfig.APP_CENTER,
             Analytics::class.java,
@@ -41,10 +42,10 @@ open class WActivity : AppCompatActivity() {
             .commit()
     }
 
-    fun applyStatusBarColor(@ColorRes colorRes: Int, lightStatusBar: Boolean) {
+    fun applyStatusBarColor(@ColorInt color: Int, lightStatusBar: Boolean) {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(this, colorRes)
+        window.statusBarColor = color
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             window.decorView.systemUiVisibility = if (lightStatusBar) {
@@ -53,6 +54,10 @@ open class WActivity : AppCompatActivity() {
                 window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
             }
         }
+    }
+
+    fun applyStatusBarColorRes(@ColorRes colorRes: Int, lightStatusBar: Boolean) {
+        applyStatusBarColor(ContextCompat.getColor(this, colorRes), lightStatusBar)
     }
 
 }

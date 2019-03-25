@@ -13,6 +13,7 @@ import com.tragicfruit.kindweather.components.AlertDetailParamView
 import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.model.WeatherAlertParam
 import com.tragicfruit.kindweather.screens.WFragment
+import com.tragicfruit.kindweather.utils.ColorHelper
 import kotlinx.android.synthetic.main.fragment_alert_detail.*
 
 class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailParamView.Listener {
@@ -48,6 +49,8 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         val color = context?.let {
             ContextCompat.getColor(it, alert.getInfo().color)
         } ?: Color.WHITE
+
+        applyStatusBarColor(ColorHelper.darkenColor(color), true)
         alertDetailHeaderImage.setBackgroundColor(color) // TODO: replace with illustration
         alertDetailCollapsingToolbar.setContentScrimColor(color) // TODO: replace with illustration palette colour
 
