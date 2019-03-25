@@ -40,6 +40,8 @@
 
         <service android:name=".controllers.AlertService"/>
 
+        <service android:name=".controllers.FetchAddressService"/>
+
     </application>
 
 </manifest>

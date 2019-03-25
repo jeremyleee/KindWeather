@@ -21,10 +21,21 @@
         android:layout_marginTop="@dimen/app_margin_xxxx"/>
 
     <TextView
+        android:id="@+id/forecastAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/forecastImage"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/app_margin"
+        android:layout_marginStart="@dimen/app_margin_xxxx"
+        android:layout_marginEnd="@dimen/app_margin_xxxx"
+        style="@style/TextAppearance.AppCompat.Title"/>
+
+    <TextView
         android:id="@+id/forecastHighTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/forecastImage"
+        app:layout_constraintTop_toBottomOf="@id/forecastAddress"
         app:layout_constraintEnd_toStartOf="@id/forecastLowTemp"
         android:text="@string/forecast_high_temp"
         android:layout_marginTop="@dimen/app_margin_xxxx"
@@ -47,7 +58,7 @@
         android:id="@+id/forecastLowTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/forecastImage"
+        app:layout_constraintTop_toBottomOf="@id/forecastAddress"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/forecast_low_temp"
@@ -71,7 +82,7 @@
         android:id="@+id/forecastPrecip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/forecastImage"
+        app:layout_constraintTop_toBottomOf="@id/forecastAddress"
         app:layout_constraintStart_toEndOf="@id/forecastLowTemp"
         android:text="@string/forecast_precip"
         android:layout_marginTop="@dimen/app_margin_xxxx"

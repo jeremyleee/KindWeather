@@ -28,7 +28,13 @@ class ForecastPresenter(override var view: ForecastContract.View) : ForecastCont
                 it.getDataForType(ForecastType.TEMP_LOW)?.getDisplayString(),
                 it.getDataForType(ForecastType.PRECIP_PROBABILITY)?.getDisplayString()
             )
+
+            view.fetchAddress(forecast.latitude, forecast.longitude)
         }
+    }
+
+    override fun onAddressFetched(address: String?) {
+        view.showAddress(address)
     }
 
     override fun onBackClicked() {
