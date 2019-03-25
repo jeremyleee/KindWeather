@@ -1,5 +1,6 @@
 package com.tragicfruit.kindweather.model
 
+import com.tragicfruit.kindweather.utils.DisplayUtils
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.kotlin.createObject
@@ -11,8 +12,10 @@ open class ForecastData : RealmObject() {
         get() = ForecastType.fromString(type).fromRawValue(field)
 
     var fetchedTime: Long = 0; private set
-
     var isDisplayed = false; private set
+
+    fun getType() = ForecastType.fromString(type)
+    fun getDisplayString() = DisplayUtils.getMeasurementString(value.toFloat(), getType().units, 0)
 
     companion object {
         fun create(type: ForecastType, rawValue: Double?, realm: Realm): ForecastData? {

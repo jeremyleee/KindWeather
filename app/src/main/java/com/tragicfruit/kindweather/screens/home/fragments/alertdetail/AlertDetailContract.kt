@@ -16,7 +16,7 @@ interface AlertDetailContract {
 
     interface Presenter : WPresenter<View> {
         fun init(alertId: Int)
-        fun onToolbarBackClicked()
+        fun onBackClicked()
         fun onAlertEnabled(enabled: Boolean)
         fun onLowerBoundChanged(param: WeatherAlertParam, value: Double?)
         fun onUpperBoundChanged(param: WeatherAlertParam, value: Double?)

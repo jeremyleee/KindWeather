@@ -32,8 +32,8 @@ class AlertListAdapter(private val listener: AlertCell.Listener) : RecyclerView.
 
     override fun onBindViewHolder(holder: AlertViewHolder, position: Int) {
         alertList[position]?.let { alert ->
-            val cell = holder.itemView as? AlertCell
-            cell?.setData(alert)
+            val cell = holder.itemView as AlertCell
+            cell.setData(alert)
         }
     }
 

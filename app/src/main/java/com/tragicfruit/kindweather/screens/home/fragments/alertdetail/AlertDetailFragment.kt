@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.components.AlertDetailParamView
@@ -31,7 +32,7 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         presenter.init(args.alertId)
 
         alertDetailToolbar.setNavigationOnClickListener {
-            presenter.onToolbarBackClicked()
+            presenter.onBackClicked()
         }
 
         alertDetailEnableSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -90,7 +91,7 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
     }
 
     override fun closeScreen() {
-        activity?.onBackPressed()
+        findNavController().navigateUp()
     }
 
 }

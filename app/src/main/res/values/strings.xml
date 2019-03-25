@@ -30,6 +30,10 @@
 
     <string name="feed_entry_default">No notifications for today</string>
 
+    <string name="forecast_high_temp">High</string>
+    <string name="forecast_low_temp">Low</string>
+    <string name="forecast_precip">Precip</string>
+
     <string name="alert_umbrella_title">Bring an umbrella</string>
     <string name="alert_umbrella_notification">Remember to bring your umbrella</string>
     <string name="alert_rain_jacket_title">Wear a thick jacket</string>

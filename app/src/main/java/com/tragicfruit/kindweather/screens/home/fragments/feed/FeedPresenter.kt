@@ -21,6 +21,12 @@ class FeedPresenter(override var view: FeedContract.View) : FeedContract.Present
         view.initView(feedData)
     }
 
+    override fun onFeedItemClicked(notification: WeatherNotification) {
+        notification.forecast?.let {
+            view.showForecastScreen(it)
+        }
+    }
+
     override fun resume() {
         view.refreshFeed()
         feedData.addChangeListener(this)

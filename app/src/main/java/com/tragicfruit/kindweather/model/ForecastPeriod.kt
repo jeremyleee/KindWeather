@@ -6,11 +6,14 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.kotlin.createObject
 import timber.log.Timber
+import java.util.*
 
 /**
  * Forecast for a day
  */
 open class ForecastPeriod : RealmObject() {
+
+    var id = ""; private set
 
     var latitude = 0.0; private set
     var longitude = 0.0; private set
@@ -49,6 +52,8 @@ open class ForecastPeriod : RealmObject() {
         fun fromResponse(responseData: ForecastResponse.Daily.DataPoint,
                          latitude: Double, longitude: Double, realm: Realm): ForecastPeriod {
             val forecastPeriod = realm.createObject<ForecastPeriod>()
+
+            forecastPeriod.id = UUID.randomUUID().toString()
 
             forecastPeriod.latitude = latitude
             forecastPeriod.longitude = longitude

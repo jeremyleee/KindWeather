@@ -1,6 +1,7 @@
 package com.tragicfruit.kindweather.components
 
 import android.content.Context
+import android.util.TypedValue
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -14,7 +15,7 @@ import com.tragicfruit.kindweather.utils.DisplayUtils
 import com.tragicfruit.kindweather.utils.ViewHelper
 import com.tragicfruit.kindweather.utils.getViewId
 
-class FeedCell(context: Context) : RelativeLayout(context) {
+class FeedCell(context: Context, private val listener: Listener? = null) : RelativeLayout(context) {
 
     private val dateView = TextView(context)
     private val icon = ImageView(context)
@@ -23,6 +24,10 @@ class FeedCell(context: Context) : RelativeLayout(context) {
 
     init {
         setPadding(ViewHelper.parsePx(R.dimen.app_margin_xx))
+
+        val outValue = TypedValue()
+        context.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
+        setBackgroundResource(outValue.resourceId)
 
         dateView.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body1)
         addView(dateView, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
@@ -52,17 +57,18 @@ class FeedCell(context: Context) : RelativeLayout(context) {
     }
 
     fun setData(notification: WeatherNotification) {
-        dateView.text = DisplayUtils.getDateString(notification.createdAt)
+        setOnClickListener {
+            listener?.onFeedItemClicked(notification)
+        }
 
+        dateView.text = DisplayUtils.getSummaryDateString(notification.createdAt)
         icon.setImageResource(ForecastIcon.fromString(notification.forecast?.icon).iconRes)
-
         descriptionView.text = notification.description
+        highTempView.text = notification.forecast?.getDataForType(ForecastType.TEMP_HIGH)?.getDisplayString()
+    }
 
-        val highTemp = notification.forecast?.getDataForType(ForecastType.TEMP_HIGH)?.value ?: 0.0
-        highTempView.text = DisplayUtils.getMeasurementString(
-            highTemp.toFloat(),
-            ForecastType.getUnits(ForecastType.TEMP_HIGH),
-            0)
+    interface Listener {
+        fun onFeedItemClicked(notification: WeatherNotification)
     }
 
 }
