@@ -57,22 +57,10 @@ open class ForecastPeriod : RealmObject() {
             forecastPeriod.summary = responseData.summary ?: forecastPeriod.summary
             forecastPeriod.icon = responseData.icon ?: forecastPeriod.icon
 
-            when (responseData.precipType) {
-                "rain" -> {
-                    forecastPeriod.data.add(ForecastData.create(ForecastType.RAIN_INTENSITY, responseData.precipIntensity, realm))
-                    forecastPeriod.data.add(ForecastData.create(ForecastType.RAIN_PROBABILITY, responseData.precipProbability, realm))
-                }
-                "snow" -> {
-                    forecastPeriod.data.add(ForecastData.create(ForecastType.SNOW_INTENSITY, responseData.precipIntensity, realm))
-                    forecastPeriod.data.add(ForecastData.create(ForecastType.SNOW_PROBABILITY, responseData.precipProbability, realm))
-                }
-                "sleet" -> {
-                    // Do nothing for now
-                }
-            }
-
             forecastPeriod.data.add(ForecastData.create(ForecastType.TEMP_HIGH, responseData.temperatureHigh, realm))
             forecastPeriod.data.add(ForecastData.create(ForecastType.TEMP_LOW, responseData.temperatureLow, realm))
+            forecastPeriod.data.add(ForecastData.create(ForecastType.PRECIP_INTENSITY, responseData.precipIntensity, realm))
+            forecastPeriod.data.add(ForecastData.create(ForecastType.PRECIP_PROBABILITY, responseData.precipProbability, realm))
             forecastPeriod.data.add(ForecastData.create(ForecastType.HUMIDITY, responseData.humidity, realm))
             forecastPeriod.data.add(ForecastData.create(ForecastType.WIND_GUST, responseData.windGust, realm))
             forecastPeriod.data.add(ForecastData.create(ForecastType.UV_INDEX, responseData.uvIndex?.toDouble(), realm))

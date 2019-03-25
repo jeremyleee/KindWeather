@@ -37,10 +37,8 @@
 
     <string name="forecast_type_temp_high">Temperature (high)</string>
     <string name="forecast_type_temp_low">Temperature (low)</string>
-    <string name="forecast_type_rain_intensity">Rainfall</string>
-    <string name="forecast_type_rain_probability">Chance of rain</string>
-    <string name="forecast_type_snow_intensity">Snowfall</string>
-    <string name="forecast_type_snow_probability">Chance of snow</string>
+    <string name="forecast_type_precip_intensity">Precipitation</string>
+    <string name="forecast_type_precip_probability">Chance of precipitation</string>
     <string name="forecast_type_humidity">Humidity</string>
     <string name="forecast_type_wind_gust">Wind gust speed</string>
     <string name="forecast_type_uv">UV index</string>

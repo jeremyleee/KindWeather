@@ -34,12 +34,12 @@ object AlertController {
         // TODO: replace with proper alerts
         Realm.getDefaultInstance().executeTransaction { realm ->
             WeatherAlert.create(1, WeatherAlert.Info.UMBRELLA, realm).also { alert ->
-                WeatherAlert.addParam(alert, ForecastType.RAIN_PROBABILITY, 0.5, null, realm)
+                WeatherAlert.addParam(alert, ForecastType.PRECIP_PROBABILITY, 0.5, null, realm)
                 WeatherAlert.addParam(alert, ForecastType.WIND_GUST, null, 10.8, realm)
             }
 
             WeatherAlert.create(2, WeatherAlert.Info.RAIN_JACKET, realm).also { alert ->
-                WeatherAlert.addParam(alert, ForecastType.RAIN_PROBABILITY, 0.5, null, realm)
+                WeatherAlert.addParam(alert, ForecastType.PRECIP_PROBABILITY, 0.5, null, realm)
                 WeatherAlert.addParam(alert, ForecastType.WIND_GUST, 10.8, null, realm)
             }
 
