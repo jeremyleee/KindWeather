@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
-        android:name="com.tragicfruit.kindweather.WApplication"
+        android:name=".WApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.tragicfruit.kindweather.screens.splash.SplashActivity"
+        <activity android:name=".screens.splash.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -24,15 +24,21 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.tragicfruit.kindweather.screens.welcome.WelcomeActivity"
+        <activity android:name=".screens.welcome.WelcomeActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name="com.tragicfruit.kindweather.screens.home.HomeActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".screens.home.HomeActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.INFO"/>
+            </intent-filter>
+        </activity>
 
-        <receiver android:name="com.tragicfruit.kindweather.controllers.AlertReceiver"/>
+        <receiver android:name=".controllers.AlertReceiver"/>
 
-        <service android:name="com.tragicfruit.kindweather.controllers.AlertService"/>
+        <service android:name=".controllers.AlertService"/>
 
     </application>
 

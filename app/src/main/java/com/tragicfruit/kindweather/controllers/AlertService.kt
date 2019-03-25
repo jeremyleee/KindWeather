@@ -61,7 +61,7 @@ class AlertService : IntentService(AlertService::javaClass.name) {
             showAlert?.let { alert ->
                 message = getString(alert.getInfo().message)
                 Timber.i("Showing push notification: $message")
-                NotificationController.notifyWeatherAlert(this, alert)
+                NotificationController.notifyWeatherAlert(this, alert, forecast)
             }
 
             // Create model object for feed

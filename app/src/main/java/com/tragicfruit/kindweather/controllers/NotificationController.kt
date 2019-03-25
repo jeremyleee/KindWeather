@@ -14,8 +14,10 @@ import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.navigation.NavDeepLinkBuilder
 import com.tragicfruit.kindweather.R
+import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.model.WeatherAlert
 
 object NotificationController {
@@ -73,10 +75,11 @@ object NotificationController {
             .notify(LOCATION_PERMISSIONS_ID, builder.build())
     }
 
-    fun notifyWeatherAlert(context: Context, alert: WeatherAlert) {
+    fun notifyWeatherAlert(context: Context, alert: WeatherAlert, forecast: ForecastPeriod) {
         val pendingIntent = NavDeepLinkBuilder(context)
             .setGraph(R.navigation.home_nav_graph)
-            .setDestination(R.id.feedFragment)
+            .setDestination(R.id.forecastFragment)
+            .setArguments(bundleOf("forecastId" to forecast.id))
             .createPendingIntent()
 
         val builder = NotificationCompat.Builder(context, WEATHER_CHANNEL_ID)
