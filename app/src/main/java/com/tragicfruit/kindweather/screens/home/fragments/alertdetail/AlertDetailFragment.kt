@@ -17,6 +17,7 @@ import com.tragicfruit.kindweather.model.WeatherAlertParam
 import com.tragicfruit.kindweather.screens.WFragment
 import com.tragicfruit.kindweather.utils.ColorHelper
 import kotlinx.android.synthetic.main.fragment_alert_detail.*
+import android.graphics.drawable.GradientDrawable
 
 class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailParamView.Listener {
 
@@ -52,10 +53,13 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
             ContextCompat.getColor(it, alert.getInfo().color)
         } ?: Color.WHITE
 
-        applyStatusBarColor(ColorHelper.darkenColor(color), true)
+        applyStatusBarColor(ColorHelper.darkenColor(color), lightStatusBar)
         alertDetailHeader.setBackgroundColor(color)
         alertDetailImage.setImageResource(alert.getInfo().image)
         alertDetailCollapsingToolbar.setContentScrimColor(color)
+
+        val gradient = GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, intArrayOf(color, Color.TRANSPARENT))
+        alertDetailImageOverlay.setImageDrawable(gradient)
 
         context?.let {
             alertDetailCollapsingToolbar.setCollapsedTitleTypeface(ResourcesCompat.getFont(it, R.font.lato_bold))

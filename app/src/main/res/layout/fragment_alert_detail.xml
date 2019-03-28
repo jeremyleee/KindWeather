@@ -30,9 +30,9 @@
                     android:scaleType="centerCrop"/>
 
                 <ImageView
+                    android:id="@+id/alertDetailImageOverlay"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/alert_detail_overlay"/>
+                    android:layout_height="match_parent"/>
 
             </RelativeLayout>
 

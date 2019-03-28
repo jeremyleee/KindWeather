@@ -25,7 +25,7 @@ class FeedPresenter(override var view: FeedContract.View) : FeedContract.Present
     override fun onFeedItemClicked(notification: WeatherNotification) {
         notification.forecast?.let {
             val timeCreatedMillis = notification.createdAt?.time ?: TimeUnit.SECONDS.toMillis(it.fetchedTime)
-            view.showForecastScreen(it, timeCreatedMillis)
+            view.showForecastScreen(it, timeCreatedMillis, notification.color)
         }
     }
 

@@ -12,7 +12,7 @@ class ForecastPresenter(override var view: ForecastContract.View) : ForecastCont
 
     private val calendar = Calendar.getInstance()
 
-    override fun init(forecastId: String, timeCreatedMillis: Long) {
+    override fun init(forecastId: String, timeCreatedMillis: Long, color: Int) {
         val forecast = Realm.getDefaultInstance()
             .where<ForecastPeriod>()
             .equalTo("id", forecastId)
@@ -22,6 +22,7 @@ class ForecastPresenter(override var view: ForecastContract.View) : ForecastCont
             calendar.timeInMillis = timeCreatedMillis
 
             view.initView(
+                color,
                 DisplayUtils.getDateString(calendar.time),
                 ForecastIcon.fromString(it.icon),
                 it.getDataForType(ForecastType.TEMP_HIGH)?.getDisplayString(),

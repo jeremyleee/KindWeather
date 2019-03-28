@@ -3,6 +3,7 @@ package com.tragicfruit.kindweather.controllers
 import android.app.IntentService
 import android.content.Context
 import android.content.Intent
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationResult
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.model.ForecastPeriod
@@ -58,15 +59,18 @@ class AlertService : IntentService(AlertService::javaClass.name) {
             val showAlert = enabledAlerts.firstOrNull { it.shouldShowAlert(forecast) }
 
             var message = getString(R.string.feed_entry_default)
+            var color = ContextCompat.getColor(this, R.color.alert_no_notification)
+
             showAlert?.let { alert ->
                 message = getString(alert.getInfo().title)
+                color = ContextCompat.getColor(this, alert.getInfo().color)
                 Timber.i("Showing push notification: $message")
                 NotificationController.notifyWeatherAlert(this, alert, forecast)
             }
 
             // Create model object for feed
             realm.executeTransaction { realm ->
-                WeatherNotification.create(message, forecast, realm)
+                WeatherNotification.create(message, forecast, color, realm)
                 ForecastPeriod.setDisplayed(forecast, true, realm)
             }
         }

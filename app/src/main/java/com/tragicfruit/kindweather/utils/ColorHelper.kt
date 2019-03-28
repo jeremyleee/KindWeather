@@ -6,7 +6,7 @@ import androidx.annotation.ColorInt
 object ColorHelper {
 
     @ColorInt
-    fun darkenColor(@ColorInt color: Int, factor: Float = 0.8f): Int {
+    fun darkenColor(@ColorInt color: Int, factor: Float = 0.9f): Int {
         val a = Color.alpha(color)
         val r = Math.round(Color.red(color) * factor)
         val g = Math.round(Color.green(color) * factor)

@@ -77,10 +77,16 @@ object NotificationController {
     }
 
     fun notifyWeatherAlert(context: Context, alert: WeatherAlert, forecast: ForecastPeriod) {
+        val arguments = ForecastFragmentArgs(
+            forecast.id,
+            System.currentTimeMillis(),
+            ContextCompat.getColor(context, alert.getInfo().color)
+        ).toBundle()
+
         val pendingIntent = NavDeepLinkBuilder(context)
             .setGraph(R.navigation.home_nav_graph)
             .setDestination(R.id.forecastFragment)
-            .setArguments(ForecastFragmentArgs(forecast.id, System.currentTimeMillis()).toBundle())
+            .setArguments(arguments)
             .createPendingIntent()
 
         val builder = NotificationCompat.Builder(context, WEATHER_CHANNEL_ID)

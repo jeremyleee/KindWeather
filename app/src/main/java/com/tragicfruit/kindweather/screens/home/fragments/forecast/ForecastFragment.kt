@@ -13,11 +13,11 @@ import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.controllers.FetchAddressService
 import com.tragicfruit.kindweather.controllers.ForecastIcon
 import com.tragicfruit.kindweather.screens.WFragment
+import com.tragicfruit.kindweather.utils.ColorHelper
 import kotlinx.android.synthetic.main.fragment_forecast.*
 
 class ForecastFragment : WFragment(), ForecastContract.View {
 
-    override var statusBarColor = R.color.white
     private val args: ForecastFragmentArgs by navArgs()
     private val presenter = ForecastPresenter(this)
 
@@ -27,18 +27,22 @@ class ForecastFragment : WFragment(), ForecastContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.init(args.forecastId, args.timeCreatedMillis)
+        presenter.init(args.forecastId, args.timeCreatedMillis, args.color)
 
         forecastToolbar.setNavigationOnClickListener {
             presenter.onBackClicked()
         }
     }
 
-    override fun initView(dateString: String,
+    override fun initView(color: Int,
+                          dateString: String,
                           icon: ForecastIcon,
                           highTempString: String?,
                           lowTempString: String?,
                           precipString: String?) {
+
+        forecastToolbar.setBackgroundColor(color)
+        applyStatusBarColor(ColorHelper.darkenColor(color), lightStatusBar)
 
         forecastToolbar.title = dateString
         forecastImage.setImageResource(icon.iconRes)

@@ -44,6 +44,9 @@
         <argument
             android:name="timeCreatedMillis"
             app:argType="long" />
+        <argument
+            android:name="color"
+            app:argType="integer" />
     </fragment>
 
 </navigation>

@@ -22,6 +22,7 @@
     <color name="alert_rain_jacket">#CfC4E7</color>
     <color name="alert_sunscreen">#E6E3C7</color>
     <color name="alert_thick_jacket">#E6D5C7</color>
+    <color name="alert_no_notification">#E6E6E6</color>
 
     <color name="text_black">#282828</color>
     <color name="text_grey">#686868</color>
