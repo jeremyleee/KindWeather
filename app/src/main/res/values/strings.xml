@@ -11,11 +11,11 @@
     <string name="notification_alert_foreground">Fetching weather for current location…</string>
 
     <string name="onboarding_1_title">Kind Weather</string>
-    <string name="onboarding_1_desc">Welcome! Kind Weather is here to help you by sending you reminders every morning to prepare for the day’s weather ahead.</string>
+    <string name="onboarding_1_desc">Welcome! Kind Weather sends you reminders every morning to help you prepare for the day’s weather ahead.</string>
     <string name="onboarding_2_title">Explore the conditions</string>
-    <string name="onboarding_2_desc">Whether you need to bring your umbrella with you, or it’s a t-shirt kind of day, we’ve got you covered.</string>
+    <string name="onboarding_2_desc">Whether you need to bring your umbrella with you, or it’s a t-shirt kind of day, we’ve got you sorted.</string>
     <string name="onboarding_3_title">Customise to your heart’s content</string>
-    <string name="onboarding_3_desc">You can disable any conditions you aren’t too bothered by, or even play around with the parameters to get the perfect reminders just for you.</string>
+    <string name="onboarding_3_desc">You can turn off any conditions you aren’t too bothered by, or even play around with the parameters to get the perfect reminders just for you.</string>
 
     <string name="allow_location_title">Allow location permissions</string>
     <string name="allow_location_desc">To get started, please allow location permissions so we can figure out the forecast for your current location.</string>
