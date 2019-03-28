@@ -1,12 +1,15 @@
 package com.tragicfruit.kindweather.screens.home.fragments.alertdetail
 
+import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,7 +20,6 @@ import com.tragicfruit.kindweather.model.WeatherAlertParam
 import com.tragicfruit.kindweather.screens.WFragment
 import com.tragicfruit.kindweather.utils.ColorHelper
 import kotlinx.android.synthetic.main.fragment_alert_detail.*
-import android.graphics.drawable.GradientDrawable
 
 class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailParamView.Listener {
 
@@ -47,24 +49,29 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
     }
 
     override fun initView(alert: WeatherAlert) {
-        alertDetailCollapsingToolbar.title = getString(alert.getInfo().shortTitle)
+        val context = context ?: return
+        val color = ContextCompat.getColor(context, alert.getInfo().color)
 
-        val color = context?.let {
-            ContextCompat.getColor(it, alert.getInfo().color)
-        } ?: Color.WHITE
-
+        // Header
         applyStatusBarColor(ColorHelper.darkenColor(color), lightStatusBar)
+
+        alertDetailCollapsingToolbar.title = getString(alert.getInfo().shortTitle)
+        alertDetailCollapsingToolbar.setCollapsedTitleTypeface(ResourcesCompat.getFont(context, R.font.lato_bold))
+        alertDetailCollapsingToolbar.setExpandedTitleTypeface(ResourcesCompat.getFont(context, R.font.lato_bold))
+        alertDetailCollapsingToolbar.setContentScrimColor(color)
+
         alertDetailHeader.setBackgroundColor(color)
         alertDetailImage.setImageResource(alert.getInfo().image)
-        alertDetailCollapsingToolbar.setContentScrimColor(color)
 
         val gradient = GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, intArrayOf(color, Color.TRANSPARENT))
         alertDetailImageOverlay.setImageDrawable(gradient)
 
-        context?.let {
-            alertDetailCollapsingToolbar.setCollapsedTitleTypeface(ResourcesCompat.getFont(it, R.font.lato_bold))
-            alertDetailCollapsingToolbar.setExpandedTitleTypeface(ResourcesCompat.getFont(it, R.font.lato_bold))
-        }
+        // Content
+        val states = arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked))
+        val thumbColors = intArrayOf(ContextCompat.getColor(context, R.color.switch_unchecked), color)
+        val trackColors = intArrayOf(ContextCompat.getColor(context, R.color.switch_unchecked_track), ColorHelper.darkenColor(color, 0.8f))
+        DrawableCompat.setTintList(DrawableCompat.wrap(alertDetailEnableSwitch.thumbDrawable), ColorStateList(states, thumbColors))
+        DrawableCompat.setTintList(DrawableCompat.wrap(alertDetailEnableSwitch.trackDrawable), ColorStateList(states, trackColors))
 
         alertDetailEnableSwitch.isChecked = alert.enabled
         alertDetailReset.isEnabled = alert.areParamsEdited()
