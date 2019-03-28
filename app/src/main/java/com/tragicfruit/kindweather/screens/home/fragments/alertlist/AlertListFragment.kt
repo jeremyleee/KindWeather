@@ -32,7 +32,7 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
         alertListRecyclerView.adapter = adapter
         alertListRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        alertListAllowLocation.setButtonClickListener {
+        alertListAllowLocationButton.setOnClickListener {
             presenter.onAllowLocationClicked()
         }
     }

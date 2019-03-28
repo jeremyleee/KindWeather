@@ -12,11 +12,33 @@
         android:orientation="vertical"
         android:animateLayoutChanges="true">
 
-        <com.tragicfruit.kindweather.components.AllowLocationInlineView
+        <RelativeLayout
             android:id="@+id/alertListAllowLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/app_margin_xxx"
+            android:paddingStart="@dimen/app_margin_xx"
+            android:paddingEnd="@dimen/app_margin_xx">
+
+            <com.tragicfruit.kindweather.components.WButton
+                android:id="@+id/alertListAllowLocationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/alert_list_allow_location_button"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/alert_list_allow_location_text"
+                android:layout_toStartOf="@id/alertListAllowLocationButton"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/app_margin"
+                android:layout_marginEnd="@dimen/app_margin"/>
+
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/alertListRecyclerView"
