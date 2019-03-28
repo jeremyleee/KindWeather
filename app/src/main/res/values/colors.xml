@@ -11,6 +11,7 @@
 
     <color name="background">#FEF9F4</color>
     <color name="button_background">#DDDDDD</color>
+    <color name="button_ripple">#BBBBBB</color>
 
     <color name="alert_title">#25293E</color>
     <color name="alert_umbrella">#C4DBE7</color>
