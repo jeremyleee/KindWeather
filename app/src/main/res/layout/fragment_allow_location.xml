@@ -12,7 +12,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/allowLocationTitle"
-        android:background="@color/colorAccent"/>
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_location"/>
 
     <com.tragicfruit.kindweather.components.WButton
         android:id="@+id/allowLocationButton"

@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.os.bundleOf
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.screens.WFragment
 import kotlinx.android.synthetic.main.fragment_onboarding.*
@@ -20,10 +22,15 @@ class OnboardingFragment : WFragment(), OnboardingContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val imageRes = arguments?.getInt(IMAGE_RES) ?: 0
         val titleRes = arguments?.getInt(TITLE_RES) ?: 0
         val descRes = arguments?.getInt(DESC_RES) ?: 0
 
-        presenter.init(titleRes, descRes)
+        presenter.init(imageRes, titleRes, descRes)
+    }
+
+    override fun setImage(imageRes: Int) {
+        onboardingImage.setImageResource(imageRes)
     }
 
     override fun setTitle(titleRes: Int) {
@@ -35,15 +42,17 @@ class OnboardingFragment : WFragment(), OnboardingContract.View {
     }
 
     companion object {
+        private const val IMAGE_RES = "image-res"
         private const val TITLE_RES = "title-res"
         private const val DESC_RES = "desc-res"
 
-        fun newInstance(@StringRes titleRes: Int, @StringRes descRes: Int): OnboardingFragment {
+        fun newInstance(@DrawableRes imageRes: Int, @StringRes titleRes: Int, @StringRes descRes: Int): OnboardingFragment {
             return OnboardingFragment().also {
-                it.arguments = Bundle().apply {
-                    putInt(TITLE_RES, titleRes)
-                    putInt(DESC_RES, descRes)
-                }
+                it.arguments = bundleOf(
+                    IMAGE_RES to imageRes,
+                    TITLE_RES to titleRes,
+                    DESC_RES to descRes
+                )
             }
         }
     }

@@ -2,7 +2,11 @@ package com.tragicfruit.kindweather.screens.welcome.fragments.onboarding
 
 class OnboardingPresenter(override var view: OnboardingContract.View) : OnboardingContract.Presenter {
 
-    override fun init(titleRes: Int, descRes: Int) {
+    override fun init(imageRes: Int, titleRes: Int, descRes: Int) {
+        if (imageRes != 0) {
+            view.setImage(imageRes)
+        }
+
         if (titleRes != 0) {
             view.setTitle(titleRes)
         }

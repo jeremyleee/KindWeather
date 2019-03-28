@@ -18,9 +18,9 @@ class WelcomeAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fr
 
     override fun getItem(position: Int): Fragment {
         return when (Page.values()[position]) {
-            Page.PAGE_1 -> OnboardingFragment.newInstance(R.string.onboarding_1_title, R.string.onboarding_1_desc)
-            Page.PAGE_2 -> OnboardingFragment.newInstance(R.string.onboarding_2_title, R.string.onboarding_2_desc)
-            Page.PAGE_3 -> OnboardingFragment.newInstance(R.string.onboarding_3_title, R.string.onboarding_3_desc)
+            Page.PAGE_1 -> OnboardingFragment.newInstance(R.drawable.alert_umbrella, R.string.onboarding_1_title, R.string.onboarding_1_desc)
+            Page.PAGE_2 -> OnboardingFragment.newInstance(R.drawable.alert_rain_jacket, R.string.onboarding_2_title, R.string.onboarding_2_desc)
+            Page.PAGE_3 -> OnboardingFragment.newInstance(R.drawable.alert_sunscreen, R.string.onboarding_3_title, R.string.onboarding_3_desc)
             Page.ALLOW_LOCATION -> AllowLocationFragment()
         }
     }
