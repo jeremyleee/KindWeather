@@ -9,10 +9,18 @@
         android:label="@string/home_feed" >
         <action
             android:id="@+id/action_feedFragment_to_forecastFragment"
-            app:destination="@id/forecastFragment" />
+            app:destination="@id/forecastFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_feedFragment_to_alertListFragment"
-            app:destination="@id/alertListFragment" />
+            app:destination="@id/alertListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/alertListFragment"
@@ -20,7 +28,11 @@
         android:label="@string/home_conditions" >
         <action
             android:id="@+id/action_alertsFragment_to_alertDetailFragment"
-            app:destination="@id/alertDetailFragment" />
+            app:destination="@id/alertDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
