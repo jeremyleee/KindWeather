@@ -18,6 +18,7 @@
     <color name="switch_unchecked_track">#B1AEAA</color>
 
     <color name="alert_title">#25293E</color>
+    <color name="alert_title_disabled">#9E9E9E</color>
     <color name="alert_umbrella">#C4DBE7</color>
     <color name="alert_jacket">#E6C7C9</color>
     <color name="alert_tshirt">#D1E6C7</color>
@@ -25,6 +26,7 @@
     <color name="alert_sunscreen">#E6E3C7</color>
     <color name="alert_thick_jacket">#E6D5C7</color>
     <color name="alert_no_notification">#E6E6E6</color>
+    <color name="alert_disabled">#E6E6E6</color>
 
     <color name="text_black">#282828</color>
     <color name="text_grey">#686868</color>

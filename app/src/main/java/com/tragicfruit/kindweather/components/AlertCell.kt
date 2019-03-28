@@ -74,10 +74,14 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Cons
 
         titleView.setText(alert.getInfo().title)
 
-        val backgroundColor = if (alert.enabled) {
-            ContextCompat.getColor(context, alert.getInfo().color)
-        } else Color.LTGRAY
-        background.setColorFilter(backgroundColor, PorterDuff.Mode.SRC_IN)
+        if (alert.enabled) {
+            background.setColorFilter(ContextCompat.getColor(context, alert.getInfo().color), PorterDuff.Mode.SRC_IN)
+            titleView.setTextColor(ContextCompat.getColor(context, R.color.alert_title))
+        } else {
+            background.setColorFilter(ContextCompat.getColor(context, R.color.alert_disabled), PorterDuff.Mode.SRC_IN)
+            titleView.setTextColor(ContextCompat.getColor(context, R.color.alert_title_disabled))
+            // TODO: greyscale illustration
+        }
 
         if (alert.getInfo().image != 0) {
             illustrationView.setImageResource(alert.getInfo().image)
