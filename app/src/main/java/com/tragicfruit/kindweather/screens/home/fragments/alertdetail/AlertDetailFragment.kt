@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -52,8 +53,14 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         } ?: Color.WHITE
 
         applyStatusBarColor(ColorHelper.darkenColor(color), true)
-        alertDetailHeaderImage.setBackgroundColor(color) // TODO: replace with illustration
-        alertDetailCollapsingToolbar.setContentScrimColor(color) // TODO: replace with illustration palette colour
+        alertDetailHeader.setBackgroundColor(color)
+        alertDetailImage.setImageResource(alert.getInfo().image)
+        alertDetailCollapsingToolbar.setContentScrimColor(color)
+
+        context?.let {
+            alertDetailCollapsingToolbar.setCollapsedTitleTypeface(ResourcesCompat.getFont(it, R.font.lato_bold))
+            alertDetailCollapsingToolbar.setExpandedTitleTypeface(ResourcesCompat.getFont(it, R.font.lato_bold))
+        }
 
         alertDetailEnableSwitch.isChecked = alert.enabled
         alertDetailReset.isEnabled = alert.areParamsEdited()

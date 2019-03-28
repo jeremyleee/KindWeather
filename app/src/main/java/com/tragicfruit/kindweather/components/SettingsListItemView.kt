@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.utils.ViewHelper
@@ -19,12 +21,17 @@ class SettingsListItemView : RelativeLayout {
     constructor(context: Context, attributeSet: AttributeSet? = null, style: Int = 0): super(context, attributeSet, style) {
         setPadding(ViewHelper.parsePx(R.dimen.app_margin_xx))
 
-        title.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body2)
+        title.typeface = ResourcesCompat.getFont(context, R.font.lato_bold)
+        title.textSize = 16f
+        title.setTextColor(ContextCompat.getColor(context, R.color.text_black))
         addView(title, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 
-        subtitle.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body1)
+        subtitle.typeface = ResourcesCompat.getFont(context, R.font.lato_regular)
+        subtitle.textSize = 14f
+        subtitle.setTextColor(ContextCompat.getColor(context, R.color.text_grey))
         addView(subtitle, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             addRule(BELOW, title.getViewId())
+            setMargins(0, ViewHelper.parsePx(R.dimen.app_margin_h), 0, 0)
         })
 
         attributeSet?.let {

@@ -17,6 +17,8 @@ import kotlinx.android.synthetic.main.fragment_feed.*
 
 class FeedFragment : WFragment(), FeedContract.View, FeedCell.Listener {
 
+    override var statusBarColor = R.color.white
+
     private val presenter = FeedPresenter(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

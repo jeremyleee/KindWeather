@@ -17,8 +17,8 @@ import kotlinx.android.synthetic.main.fragment_forecast.*
 
 class ForecastFragment : WFragment(), ForecastContract.View {
 
+    override var statusBarColor = R.color.white
     private val args: ForecastFragmentArgs by navArgs()
-
     private val presenter = ForecastPresenter(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

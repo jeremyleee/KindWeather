@@ -4,41 +4,50 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/allowLocationTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Title"
+    <ImageView
+        android:id="@+id/allowLocationImage"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/allowLocationText"
-        android:text="@string/allow_location_title"
-        android:gravity="center_horizontal"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        app:layout_constraintBottom_toTopOf="@id/allowLocationTitle"
+        android:background="@color/colorAccent"/>
 
-    <TextView
-        android:id="@+id/allowLocationText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:gravity="center_horizontal"
-        app:layout_constraintTop_toBottomOf="@id/allowLocationTitle"
-        app:layout_constraintBottom_toTopOf="@id/allowLocationButton"
-        android:text="@string/allow_location_text"
-        android:layout_marginTop="@dimen/app_margin"
-        android:layout_marginStart="@dimen/app_margin_xxx"
-        android:layout_marginEnd="@dimen/app_margin_xxx"
-        app:layout_constraintVertical_chainStyle="packed"/>
-
-    <Button
+    <com.tragicfruit.kindweather.components.WButton
         android:id="@+id/allowLocationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/allow_location_allow"
-        app:layout_constraintTop_toBottomOf="@id/allowLocationText"
+        app:layout_constraintBottom_toTopOf="@id/allowLocationTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/app_margin_xxxx"/>
+
+    <TextView
+        android:id="@+id/allowLocationTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/allowLocationDesc"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/app_margin_xx"
+        android:layout_marginStart="@dimen/app_margin_xxxx"
+        android:layout_marginEnd="@dimen/app_margin_xxxx"
+        android:textStyle="bold"
+        android:textColor="@color/text_black"
+        android:textSize="20sp"
+        android:text="@string/allow_location_title"/>
+
+    <TextView
+        android:id="@+id/allowLocationDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="@dimen/app_margin_xx"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="80dp"
+        android:layout_marginStart="@dimen/app_margin_xxxx"
+        android:layout_marginEnd="@dimen/app_margin_xxxx"
+        android:textSize="14sp"
+        android:text="@string/allow_location_desc"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

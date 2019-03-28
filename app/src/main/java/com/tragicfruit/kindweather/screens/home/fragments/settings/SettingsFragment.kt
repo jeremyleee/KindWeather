@@ -16,9 +16,9 @@ import com.tragicfruit.kindweather.screens.home.fragments.settings.dialogs.Units
 import com.tragicfruit.kindweather.utils.DisplayUtils
 import kotlinx.android.synthetic.main.fragment_settings.*
 
-class SettingsFragment : WFragment(),
-    SettingsContract.View,
-    TimePickerDialog.OnTimeSetListener, UnitsDialogFragment.Listener {
+class SettingsFragment : WFragment(), SettingsContract.View, TimePickerDialog.OnTimeSetListener, UnitsDialogFragment.Listener {
+
+    override var statusBarColor = R.color.white
 
     private val presenter = SettingsPresenter(this)
 

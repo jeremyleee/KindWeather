@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.controllers.ForecastIcon
@@ -29,7 +30,7 @@ class FeedCell(context: Context, private val listener: Listener? = null) : Relat
         context.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
         setBackgroundResource(outValue.resourceId)
 
-        dateView.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body1)
+        dateView.setTextColor(ContextCompat.getColor(context, R.color.text_lt_grey))
         addView(dateView, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
             setMargins(0, 0, 0, ViewHelper.parsePx(R.dimen.app_margin_xx))
         })
@@ -39,7 +40,7 @@ class FeedCell(context: Context, private val listener: Listener? = null) : Relat
             addRule(BELOW, dateView.getViewId())
         })
 
-        highTempView.setTextAppearance(context, R.style.TextAppearance_AppCompat_Caption)
+        highTempView.setTextColor(ContextCompat.getColor(context, R.color.text_grey))
         highTempView.gravity = Gravity.CENTER_HORIZONTAL
         addView(highTempView, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             addRule(ALIGN_START, icon.getViewId())
@@ -48,7 +49,8 @@ class FeedCell(context: Context, private val listener: Listener? = null) : Relat
             setMargins(0, ViewHelper.parsePx(R.dimen.app_margin), 0, 0)
         })
 
-        descriptionView.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body2)
+        descriptionView.textSize = 18f
+        descriptionView.setTextColor(ContextCompat.getColor(context, R.color.text_black))
         addView(descriptionView, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
             addRule(BELOW, dateView.getViewId())
             addRule(END_OF, icon.getViewId())
@@ -63,8 +65,8 @@ class FeedCell(context: Context, private val listener: Listener? = null) : Relat
 
         dateView.text = DisplayUtils.getSummaryDateString(notification.createdAt)
         icon.setImageResource(ForecastIcon.fromString(notification.forecast?.icon).iconRes)
-        descriptionView.text = notification.description
         highTempView.text = notification.forecast?.getDataForType(ForecastType.TEMP_HIGH)?.getDisplayString()
+        descriptionView.text = notification.description
     }
 
     interface Listener {

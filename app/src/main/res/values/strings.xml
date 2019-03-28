@@ -18,7 +18,7 @@
     <string name="onboarding_3_desc">Description goes here</string>
 
     <string name="allow_location_title">Allow location permissions</string>
-    <string name="allow_location_text">Location permissions are required to determine the weather for your current location.</string>
+    <string name="allow_location_desc">Location permissions are required to determine the weather for your current location.</string>
     <string name="allow_location_allow">Allow</string>
 
     <string name="alert_list_allow_location_text">Notifications disabled! Please allow location permissions.</string>

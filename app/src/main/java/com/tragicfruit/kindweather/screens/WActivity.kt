@@ -23,7 +23,7 @@ open class WActivity : AppCompatActivity() {
     protected open val fragmentContainer: Int = android.R.id.content
 
     @ColorRes
-    open var statusBarColor = R.color.white
+    open var statusBarColor = R.color.background
     open var lightStatusBar = true
 
     override fun onCreate(savedInstanceState: Bundle?) {

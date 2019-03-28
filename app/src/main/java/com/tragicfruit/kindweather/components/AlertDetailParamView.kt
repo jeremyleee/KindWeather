@@ -3,6 +3,8 @@ package com.tragicfruit.kindweather.components
 import android.content.Context
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
@@ -25,23 +27,26 @@ class AlertDetailParamView(context: Context) : RelativeLayout(context) {
     init {
         setPadding(ViewHelper.parsePx(R.dimen.app_margin_xx))
 
-        paramTitle.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body2)
+        paramTitle.typeface = ResourcesCompat.getFont(context, R.font.lato_bold)
         addView(paramTitle, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
 
         addView(slider, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
             addRule(BELOW, paramTitle.getViewId())
+            setMargins(0, ViewHelper.parsePx(R.dimen.app_margin), 0, 0)
         })
 
-        lowerBoundText.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body1)
+        lowerBoundText.setTextColor(ContextCompat.getColor(context, R.color.text_grey))
         addView(lowerBoundText, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             addRule(BELOW, slider.getViewId())
             addRule(ALIGN_PARENT_LEFT)
+            marginStart = ViewHelper.parsePx(R.dimen.app_margin)
         })
 
-        upperBoundText.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body1)
+        upperBoundText.setTextColor(ContextCompat.getColor(context, R.color.text_grey))
         addView(upperBoundText, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
             addRule(BELOW, slider.getViewId())
             addRule(ALIGN_PARENT_RIGHT)
+            marginEnd = ViewHelper.parsePx(R.dimen.app_margin)
         })
     }
 

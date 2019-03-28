@@ -14,15 +14,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:expandedTitleMarginStart="48dp"
-            app:expandedTitleMarginEnd="64dp">
+            app:collapsedTitleTextAppearance="@style/ToolbarTitle"
+            app:expandedTitleTextAppearance="@style/ExpandedToolbarTitle">
 
-            <ImageView
-                android:id="@+id/alertDetailHeaderImage"
+            <RelativeLayout
+                android:id="@+id/alertDetailHeader"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"/>
+                app:layout_collapseMode="parallax">
+
+                <ImageView
+                    android:id="@+id/alertDetailImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/alert_detail_overlay"/>
+
+            </RelativeLayout>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/alertDetailToolbar"
@@ -55,9 +67,9 @@
                 android:text="@string/alert_detail_enable"
                 android:layout_marginStart="@dimen/app_margin_xx"
                 android:layout_marginTop="@dimen/app_margin"
-                android:paddingTop="@dimen/app_margin"
-                android:paddingBottom="@dimen/app_margin"
-                style="@style/TextAppearance.AppCompat.Body1"/>
+                android:paddingTop="@dimen/app_margin_xx"
+                android:paddingBottom="@dimen/app_margin_xx"
+                android:textColor="@color/text_black"/>
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/alertDetailEnableSwitch"
@@ -75,18 +87,22 @@
                 android:layout_height="wrap_content"
                 android:text="@string/alert_detail_params"
                 app:layout_constraintTop_toBottomOf="@+id/alertDetailEnableText"
-                android:layout_marginTop="@dimen/app_margin_xx"
-                android:gravity="center_horizontal"
-                style="@style/TextAppearance.AppCompat.Headline"/>
+                android:layout_marginTop="@dimen/app_margin_xxx"
+                android:layout_marginStart="@dimen/app_margin_xx"
+                android:layout_marginEnd="@dimen/app_margin_xx"
+                android:textColor="@color/text_black"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
 
             <LinearLayout
                 android:id="@+id/alertDetailParamsList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/alertDetailParamsTitle"/>
+                app:layout_constraintTop_toBottomOf="@+id/alertDetailParamsTitle"
+                android:layout_marginTop="@dimen/app_margin"/>
 
-            <Button
+            <com.tragicfruit.kindweather.components.WButton
                 android:id="@+id/alertDetailReset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

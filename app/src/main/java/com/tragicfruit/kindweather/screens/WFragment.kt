@@ -14,7 +14,7 @@ open class WFragment : Fragment() {
         get() = activity as? WActivity
 
     @ColorRes
-    open var statusBarColor = R.color.white
+    open var statusBarColor = R.color.background
     open var lightStatusBar = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
