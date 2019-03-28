@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_alert_list.*
 
 class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listener {
 
-    override var statusBarColor = R.color.alert_list_background
+    override var statusBarColor = R.color.background
 
     private val presenter = AlertListPresenter(this)
     private val adapter = AlertListAdapter(this)

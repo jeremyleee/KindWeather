@@ -29,6 +29,10 @@ class FeedPresenter(override var view: FeedContract.View) : FeedContract.Present
         }
     }
 
+    override fun onSetupConditionsClicked() {
+        view.showConditionsScreen()
+    }
+
     override fun resume() {
         updateFeedView()
         feedData.addChangeListener(this)

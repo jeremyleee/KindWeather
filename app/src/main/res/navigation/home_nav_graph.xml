@@ -10,6 +10,9 @@
         <action
             android:id="@+id/action_feedFragment_to_forecastFragment"
             app:destination="@id/forecastFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_alertListFragment"
+            app:destination="@id/alertListFragment" />
     </fragment>
     <fragment
         android:id="@+id/alertListFragment"

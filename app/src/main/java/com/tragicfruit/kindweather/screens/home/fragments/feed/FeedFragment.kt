@@ -33,11 +33,19 @@ class FeedFragment : WFragment(), FeedContract.View, FeedCell.Listener {
         feedRecyclerView.layoutManager = LinearLayoutManager(context)
 
         feedEmpty.isVisible = feedData.isEmpty()
+
+        feedSetupButton.setOnClickListener {
+            presenter.onSetupConditionsClicked()
+        }
     }
 
     override fun showForecastScreen(forecast: ForecastPeriod, timeCreatedMillis: Long) {
         val action = FeedFragmentDirections.actionFeedFragmentToForecastFragment(forecast.id, timeCreatedMillis)
         findNavController().navigate(action)
+    }
+
+    override fun showConditionsScreen() {
+        findNavController().navigate(R.id.action_feedFragment_to_alertListFragment)
     }
 
     override fun refreshFeed() {

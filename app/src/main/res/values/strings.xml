@@ -28,7 +28,8 @@
     <string name="home_conditions">Conditions</string>
     <string name="home_settings">Settings</string>
 
-    <string name="feed_empty">Nothing to see here, yet…</string>
+    <string name="feed_empty">Hmm… looks like you have no items in your feed yet. There’ll be something tomorrow!</string>
+    <string name="feed_empty_button">Set up some conditions</string>
     <string name="feed_entry_default">No notifications for today</string>
 
     <string name="forecast_high_temp">High</string>
