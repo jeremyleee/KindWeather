@@ -38,11 +38,17 @@
     <string name="forecast_location_not_found">Lat: %1$f\nLon: %2$f</string>
 
     <string name="alert_umbrella">Bring your brolly today</string>
+    <string name="alert_umbrella_short">Bring your brolly today</string>
     <string name="alert_jacket">It’s a bit chilly, put a layer (or two) on</string>
+    <string name="alert_jacket_short">It’s a bit chilly</string>
     <string name="alert_tshirt">It’s a tee and shorts day</string>
+    <string name="alert_tshirt_short">It’s a tee and shorts day</string>
     <string name="alert_rain_jacket">Stormy skies ahead, put your rain jacket on</string>
+    <string name="alert_rain_jacket_short">Stormy skies ahead</string>
     <string name="alert_sunscreen">It’s hot! Slap on some sunscreen</string>
+    <string name="alert_sunscreen_short">It’s hot!</string>
     <string name="alert_thick_jacket">Brrrr! Put on your thickest jacket today</string>
+    <string name="alert_thick_jacket_short">Brrrr!</string>
 
     <string name="forecast_type_temp_high">Temperature (high)</string>
     <string name="forecast_type_temp_low">Temperature (low)</string>

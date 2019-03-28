@@ -4,7 +4,6 @@ import android.content.Context
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
@@ -27,7 +26,7 @@ class AlertDetailParamView(context: Context) : RelativeLayout(context) {
     init {
         setPadding(ViewHelper.parsePx(R.dimen.app_margin_xx))
 
-        paramTitle.typeface = ResourcesCompat.getFont(context, R.font.lato_bold)
+        paramTitle.setTextColor(ContextCompat.getColor(context, R.color.text_black))
         addView(paramTitle, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
 
         addView(slider, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {

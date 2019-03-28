@@ -47,7 +47,7 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
     }
 
     override fun initView(alert: WeatherAlert) {
-        alertDetailCollapsingToolbar.title = getString(alert.getInfo().title)
+        alertDetailCollapsingToolbar.title = getString(alert.getInfo().shortTitle)
 
         val color = context?.let {
             ContextCompat.getColor(it, alert.getInfo().color)
