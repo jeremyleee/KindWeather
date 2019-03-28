@@ -85,7 +85,7 @@ object NotificationController {
 
         val builder = NotificationCompat.Builder(context, WEATHER_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle(context.getString(alert.getInfo().message))
+            .setContentTitle(context.getString(alert.getInfo().title))
             .setContentText(context.getString(R.string.notification_weather_tap))
             .setStyle(NotificationCompat.BigTextStyle()
                 .bigText(context.getString(R.string.notification_weather_tap)))

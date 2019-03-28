@@ -58,26 +58,38 @@ open class WeatherAlert : RealmObject() {
     }
 
     enum class Info(@StringRes val title: Int = 0,
-                    @StringRes val message: Int = 0,
                     @ColorRes val color: Int = 0,
                     @DrawableRes val image: Int = 0) {
 
         UMBRELLA(
-            R.string.alert_umbrella_title,
-            R.string.alert_umbrella_notification,
+            R.string.alert_umbrella,
             R.color.alert_umbrella,
-            R.drawable.umbrella),
+            R.drawable.alert_umbrella),
+
+        JACKET(
+            R.string.alert_jacket,
+            R.color.alert_jacket,
+            R.drawable.alert_jacket),
+
+        TSHIRT(
+            R.string.alert_tshirt,
+            R.color.alert_tshirt,
+            R.drawable.alert_tshirt),
 
         RAIN_JACKET(
-            R.string.alert_rain_jacket_title,
-            R.string.alert_rain_jacket_notification,
+            R.string.alert_rain_jacket,
             R.color.alert_rain_jacket,
-            R.drawable.jacket),
+            R.drawable.alert_rain_jacket),
 
         SUNSCREEN(
-            R.string.alert_sunscreen_title,
-            R.string.alert_sunscreen_notification,
-            R.color.alert_sunscreen),
+            R.string.alert_sunscreen,
+            R.color.alert_sunscreen,
+            R.drawable.alert_sunscreen),
+
+        THICK_JACKET(
+            R.string.alert_thick_jacket,
+            R.color.alert_thick_jacket,
+            R.drawable.alert_thick_jacket),
 
         UNKNOWN;
 

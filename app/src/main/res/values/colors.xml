@@ -12,6 +12,9 @@
     <color name="alert_list_background">#FCF9ED</color>
     <color name="alert_title">#25293E</color>
     <color name="alert_umbrella">#C4DBE7</color>
-    <color name="alert_rain_jacket">#E6C7C9</color>
-    <color name="alert_sunscreen">#C7E6C8</color>
+    <color name="alert_jacket">#E6C7C9</color>
+    <color name="alert_tshirt">#D1E6C7</color>
+    <color name="alert_rain_jacket">#CfC4E7</color>
+    <color name="alert_sunscreen">#E6E3C7</color>
+    <color name="alert_thick_jacket">#E6D5C7</color>
 </resources>

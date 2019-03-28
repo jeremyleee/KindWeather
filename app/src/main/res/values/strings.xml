@@ -36,12 +36,12 @@
     <string name="forecast_precip">Precip</string>
     <string name="forecast_location_not_found">Lat: %1$f\nLon: %2$f</string>
 
-    <string name="alert_umbrella_title">Bring an umbrella</string>
-    <string name="alert_umbrella_notification">Remember to bring your umbrella</string>
-    <string name="alert_rain_jacket_title">Wear a thick jacket</string>
-    <string name="alert_rain_jacket_notification">Bring your thick jacket today</string>
-    <string name="alert_sunscreen_title">Sunscreen</string>
-    <string name="alert_sunscreen_notification">Put on some sunscreen before you go out</string>
+    <string name="alert_umbrella">Bring your brolly today</string>
+    <string name="alert_jacket">It’s a bit chilly, put a layer (or two) on</string>
+    <string name="alert_tshirt">It’s a tee and shorts day</string>
+    <string name="alert_rain_jacket">Stormy skies ahead, put your rain jacket on</string>
+    <string name="alert_sunscreen">Stormy skies ahead, put your rain jacket on</string>
+    <string name="alert_thick_jacket">Brrrr! Put on your thickest jacket today</string>
 
     <string name="forecast_type_temp_high">Temperature (high)</string>
     <string name="forecast_type_temp_low">Temperature (low)</string>
