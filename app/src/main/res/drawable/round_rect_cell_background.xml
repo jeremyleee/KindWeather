@@ -3,6 +3,6 @@
     android:shape="rectangle">
 
     <corners
-        android:radius="10dp"/>
+        android:radius="@dimen/round_rect_cell_radius"/>
 
 </shape>

@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.model.WeatherAlert
+import com.tragicfruit.kindweather.utils.RoundRectOutlineProvider
 import com.tragicfruit.kindweather.utils.ViewHelper
 import com.tragicfruit.kindweather.utils.getViewId
 import com.tragicfruit.kindweather.utils.setMargins
@@ -28,7 +29,9 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Cons
             setMargins(ViewHelper.parsePx(R.dimen.app_margin_xx), ViewHelper.parsePx(R.dimen.app_margin))
         }
 
-        setBackgroundResource(R.drawable.alert_cell_background)
+        setBackgroundResource(R.drawable.round_rect_cell_background)
+        elevation = ViewHelper.parsePx(R.dimen.app_margin).toFloat()
+        outlineProvider = RoundRectOutlineProvider(ViewHelper.parsePx(R.dimen.round_rect_cell_radius).toFloat())
 
         illustrationView.adjustViewBounds = true
         illustrationView.scaleType = ImageView.ScaleType.FIT_XY

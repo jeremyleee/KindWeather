@@ -9,7 +9,7 @@
     <dimen name="onboarding_indicator_size">8dp</dimen>
 
     <dimen name="weather_icon_size">50dp</dimen>
-    <dimen name="alert_cell_height">200dp</dimen>
+    <dimen name="round_rect_cell_radius">10dp</dimen>
 
     <dimen name="seekbar_thumb_size">60dp</dimen>
 </resources>
