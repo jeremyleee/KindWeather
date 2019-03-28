@@ -10,4 +10,6 @@
 
     <dimen name="weather_icon_size">50dp</dimen>
     <dimen name="alert_cell_height">200dp</dimen>
+
+    <dimen name="seekbar_thumb_size">60dp</dimen>
 </resources>
