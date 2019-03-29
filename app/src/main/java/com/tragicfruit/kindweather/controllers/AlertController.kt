@@ -38,7 +38,7 @@ object AlertController {
             }
 
             WeatherAlert.create(2, WeatherAlert.Info.JACKET, realm).also { alert ->
-                WeatherAlert.addParam(alert, ForecastType.TEMP_HIGH, null, 10.0, realm)
+                WeatherAlert.addParam(alert, ForecastType.TEMP_HIGH, 4.0, 10.0, realm)
             }
 
             WeatherAlert.create(3, WeatherAlert.Info.TSHIRT, realm).also { alert ->
