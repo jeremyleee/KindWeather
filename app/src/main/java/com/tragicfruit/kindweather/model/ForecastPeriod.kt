@@ -25,7 +25,7 @@ open class ForecastPeriod : RealmObject() {
 
     var fetchedTime: Long = 0; private set
 
-    var isDisplayed = false; private set
+    var displayOnly = false; private set
 
     fun satisfiesParam(param: WeatherAlertParam): Boolean {
         val lowerBound = param.lowerBound
@@ -76,7 +76,7 @@ open class ForecastPeriod : RealmObject() {
         }
 
         fun setDisplayed(forecast: ForecastPeriod, displayed: Boolean, realm: Realm) {
-            forecast.isDisplayed = displayed
+            forecast.displayOnly = displayed
             forecast.data.forEach { data ->
                 ForecastData.setDisplayed(data, displayed, realm)
             }

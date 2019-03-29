@@ -12,7 +12,7 @@ open class ForecastData : RealmObject() {
         get() = ForecastType.fromString(type).fromRawValue(field)
 
     var fetchedTime: Long = 0; private set
-    var isDisplayed = false; private set
+    var displayOnly = false; private set
 
     fun getType() = ForecastType.fromString(type)
     fun getDisplayString() = DisplayUtils.getMeasurementString(value.toFloat(), getType().units, 0)
@@ -29,7 +29,7 @@ open class ForecastData : RealmObject() {
         }
 
         fun setDisplayed(data: ForecastData, displayed: Boolean, realm: Realm) {
-            data.isDisplayed = displayed
+            data.displayOnly = displayed
         }
     }
 

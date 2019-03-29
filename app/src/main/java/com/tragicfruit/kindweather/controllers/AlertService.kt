@@ -47,6 +47,7 @@ class AlertService : IntentService(AlertService::javaClass.name) {
         val todaysForecast = realm.where<ForecastPeriod>()
             .greaterThan("time", TimeUnit.MILLISECONDS.toSeconds(yesterday.time))
             .lessThanOrEqualTo("time", TimeUnit.MILLISECONDS.toSeconds(now.time))
+            .equalTo("displayOnly", false)
             .findFirst()
 
         todaysForecast?.let { forecast ->
