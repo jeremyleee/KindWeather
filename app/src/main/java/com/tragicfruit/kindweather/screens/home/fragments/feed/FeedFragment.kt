@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.components.FeedCell
 import com.tragicfruit.kindweather.model.ForecastPeriod
@@ -35,6 +36,10 @@ class FeedFragment : WFragment(), FeedContract.View, FeedCell.Listener {
         feedRecyclerView.layoutManager = LinearLayoutManager(context)
 
         feedEmpty.isVisible = feedData.isEmpty()
+
+        Glide.with(this)
+            .load(R.drawable.feed_empty)
+            .into(feedEmptyImage)
 
         feedSetupButton.setOnClickListener {
             presenter.onSetupConditionsClicked()

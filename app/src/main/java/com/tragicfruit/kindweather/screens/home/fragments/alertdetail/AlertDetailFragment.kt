@@ -12,6 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.components.AlertDetailParamView
 import com.tragicfruit.kindweather.model.WeatherAlert
@@ -60,7 +61,10 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         alertDetailCollapsingToolbar.setContentScrimColor(color)
 
         alertDetailHeader.setBackgroundColor(color)
-        alertDetailImage.setImageResource(alert.getInfo().image)
+        Glide.with(this)
+            .load(alert.getInfo().image)
+            .centerCrop()
+            .into(alertDetailImage)
 
         val gradient = GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, intArrayOf(color, Color.TRANSPARENT))
         alertDetailImageOverlay.setImageDrawable(gradient)

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
+import com.bumptech.glide.Glide
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.screens.WFragment
 import kotlinx.android.synthetic.main.fragment_onboarding.*
@@ -30,7 +31,9 @@ class OnboardingFragment : WFragment(), OnboardingContract.View {
     }
 
     override fun setImage(imageRes: Int) {
-        onboardingImage.setImageResource(imageRes)
+        Glide.with(this)
+            .load(imageRes)
+            .into(onboardingImage)
     }
 
     override fun setTitle(titleRes: Int) {

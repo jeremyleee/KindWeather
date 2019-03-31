@@ -66,37 +66,37 @@ open class WeatherAlert : RealmObject() {
             R.string.alert_umbrella,
             R.string.alert_umbrella_short,
             R.color.alert_umbrella,
-            R.drawable.alert_umbrella),
+            R.drawable.umbrella),
 
         JACKET(
             R.string.alert_jacket,
             R.string.alert_jacket_short,
             R.color.alert_jacket,
-            R.drawable.alert_jacket),
+            R.drawable.warm_clothing),
 
         TSHIRT(
             R.string.alert_tshirt,
             R.string.alert_tshirt_short,
             R.color.alert_tshirt,
-            R.drawable.alert_tshirt),
+            R.drawable.tshirt_shorts),
 
         RAIN_JACKET(
             R.string.alert_rain_jacket,
             R.string.alert_rain_jacket_short,
             R.color.alert_rain_jacket,
-            R.drawable.alert_rain_jacket),
+            R.drawable.rain_jacket),
 
         SUNSCREEN(
             R.string.alert_sunscreen,
             R.string.alert_sunscreen_short,
             R.color.alert_sunscreen,
-            R.drawable.alert_sunscreen),
+            R.drawable.sunscreen),
 
         THICK_JACKET(
             R.string.alert_thick_jacket,
             R.string.alert_thick_jacket_short,
             R.color.alert_thick_jacket,
-            R.drawable.alert_thick_jacket),
+            R.drawable.winter_clothing),
 
         UNKNOWN;
 

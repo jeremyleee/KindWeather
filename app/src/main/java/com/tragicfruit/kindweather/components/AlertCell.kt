@@ -1,9 +1,11 @@
 package com.tragicfruit.kindweather.components
 
 import android.content.Context
-import android.graphics.Color
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.graphics.PorterDuff
 import android.view.Gravity
+import android.view.ViewTreeObserver
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -11,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.Guideline
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import com.bumptech.glide.Glide
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.utils.RoundRectOutlineProvider
@@ -33,8 +36,6 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Cons
         elevation = ViewHelper.parsePx(R.dimen.app_margin).toFloat()
         outlineProvider = RoundRectOutlineProvider(ViewHelper.parsePx(R.dimen.round_rect_cell_radius).toFloat())
 
-        illustrationView.adjustViewBounds = true
-        illustrationView.scaleType = ImageView.ScaleType.FIT_XY
         addView(illustrationView, LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT))
 
         titleView.textSize = 26f
@@ -58,9 +59,9 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Cons
         val illustrationSet = ConstraintSet().also {
             it.create(imageGuidelineId, ConstraintSet.VERTICAL_GUIDELINE)
             it.setGuidelinePercent(imageGuidelineId, 0.4f)
-            it.connect(illustrationView.getViewId(), ConstraintSet.TOP, this.getViewId(), ConstraintSet.TOP, ViewHelper.parsePx(R.dimen.app_margin))
+            it.connect(illustrationView.getViewId(), ConstraintSet.TOP, this.getViewId(), ConstraintSet.TOP)
             it.connect(illustrationView.getViewId(), ConstraintSet.START, imageGuidelineId, ConstraintSet.END)
-            it.connect(illustrationView.getViewId(), ConstraintSet.END, this.getViewId(), ConstraintSet.END, ViewHelper.parsePx(R.dimen.app_margin_xx))
+            it.connect(illustrationView.getViewId(), ConstraintSet.END, this.getViewId(), ConstraintSet.END)
         }
 
         titleSet.applyTo(this)
@@ -80,11 +81,22 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Cons
         } else {
             background.setColorFilter(ContextCompat.getColor(context, R.color.alert_disabled), PorterDuff.Mode.SRC_IN)
             titleView.setTextColor(ContextCompat.getColor(context, R.color.alert_title_disabled))
-            // TODO: greyscale illustration
         }
 
-        if (alert.getInfo().image != 0) {
-            illustrationView.setImageResource(alert.getInfo().image)
+        with (illustrationView) {
+            viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    Glide.with(context)
+                        .load(alert.getInfo().image)
+                        .override(width)
+                        .into(this@with)
+                }
+            })
+
+            colorFilter = ColorMatrixColorFilter(ColorMatrix().apply {
+                setSaturation(if (alert.enabled) 1f else 0f)
+            })
         }
     }
 
