@@ -37,7 +37,7 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Cons
         illustrationView.scaleType = ImageView.ScaleType.FIT_XY
         addView(illustrationView, LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT))
 
-        titleView.textSize = 28f
+        titleView.textSize = 26f
         titleView.setLineSpacing(ViewHelper.toPx(-4).toFloat(), 1f)
         titleView.typeface = ResourcesCompat.getFont(context, R.font.playfair_bold)
         titleView.setTextColor(ContextCompat.getColor(context, R.color.alert_title))

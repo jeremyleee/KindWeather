@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -70,8 +69,9 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         val states = arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked))
         val thumbColors = intArrayOf(ContextCompat.getColor(context, R.color.switch_unchecked), color)
         val trackColors = intArrayOf(ContextCompat.getColor(context, R.color.switch_unchecked_track), ColorHelper.darkenColor(color, 0.8f))
-        DrawableCompat.setTintList(DrawableCompat.wrap(alertDetailEnableSwitch.thumbDrawable), ColorStateList(states, thumbColors))
-        DrawableCompat.setTintList(DrawableCompat.wrap(alertDetailEnableSwitch.trackDrawable), ColorStateList(states, trackColors))
+        alertDetailEnableSwitch.thumbDrawable.setTintList(ColorStateList(states, thumbColors))
+        alertDetailEnableSwitch.trackDrawable.setTintList(ColorStateList(states, trackColors))
+        alertDetailEnableSwitch.background = null
 
         alertDetailEnableSwitch.isChecked = alert.enabled
         alertDetailReset.isEnabled = alert.areParamsEdited()
