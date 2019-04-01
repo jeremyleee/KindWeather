@@ -15,11 +15,13 @@
     </style>
 
     <style name="ToolbarTitle" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/text_black</item>
     </style>
 
     <style name="ExpandedToolbarTitle" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
+        <item name="android:textStyle">bold</item>
         <item name="android:textSize">28sp</item>
         <item name="android:textColor">@color/text_black</item>
     </style>
