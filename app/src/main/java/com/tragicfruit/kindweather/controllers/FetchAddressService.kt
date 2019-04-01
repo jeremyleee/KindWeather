@@ -7,6 +7,7 @@ import android.location.Geocoder
 import android.os.Bundle
 import android.os.ResultReceiver
 import com.tragicfruit.kindweather.R
+import java.io.IOException
 import java.util.*
 
 class FetchAddressService : IntentService(FetchAddressService::javaClass.name) {
@@ -21,12 +22,23 @@ class FetchAddressService : IntentService(FetchAddressService::javaClass.name) {
         val longitude = extras.getDouble(LONGITUDE_KEY)
 
         val geocoder = Geocoder(this, Locale.getDefault())
-        val addresses = geocoder.getFromLocation(latitude, longitude, 1)
 
-        addresses.firstOrNull()?.let {
-            deliverResultToReceiver(SUCCESS_RESULT, it.locality)
-        } ?: run {
-            deliverResultToReceiver(FAILURE_RESULT, getString(R.string.forecast_location_not_found, latitude, longitude))
+        try {
+            val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+
+            addresses.firstOrNull()?.let {
+                deliverResultToReceiver(SUCCESS_RESULT, it.locality)
+            } ?: run {
+                deliverResultToReceiver(
+                    FAILURE_RESULT,
+                    getString(R.string.forecast_location_not_found, latitude, longitude)
+                )
+            }
+        } catch (e: IOException) {
+            deliverResultToReceiver(
+                FAILURE_RESULT,
+                getString(R.string.forecast_location_not_found, latitude, longitude)
+            )
         }
     }
 
