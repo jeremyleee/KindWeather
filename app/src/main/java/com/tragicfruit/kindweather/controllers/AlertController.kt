@@ -45,13 +45,13 @@ object AlertController {
                 WeatherAlert.addParam(alert, ForecastType.TEMP_HIGH, 25.0, null, realm)
             }
 
-            WeatherAlert.create(4, WeatherAlert.Info.RAIN_JACKET, realm).also { alert ->
-                WeatherAlert.addParam(alert, ForecastType.PRECIP_PROBABILITY, 0.5, null, realm)
-                WeatherAlert.addParam(alert, ForecastType.WIND_GUST, 10.8, null, realm)
+            WeatherAlert.create(4, WeatherAlert.Info.SUNSCREEN, realm).also { alert ->
+                WeatherAlert.addParam(alert, ForecastType.UV_INDEX, 6.0, null, realm)
             }
 
-            WeatherAlert.create(5, WeatherAlert.Info.SUNSCREEN, realm).also { alert ->
-                WeatherAlert.addParam(alert, ForecastType.UV_INDEX, 6.0, null, realm)
+            WeatherAlert.create(5, WeatherAlert.Info.RAIN_JACKET, realm).also { alert ->
+                WeatherAlert.addParam(alert, ForecastType.PRECIP_PROBABILITY, 0.5, null, realm)
+                WeatherAlert.addParam(alert, ForecastType.WIND_GUST, 10.8, null, realm)
             }
 
             WeatherAlert.create(6, WeatherAlert.Info.THICK_JACKET, realm).also { alert ->
