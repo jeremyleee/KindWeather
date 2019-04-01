@@ -8,8 +8,8 @@ object DisplayUtils {
 
     private val calendar = Calendar.getInstance()
     private val shortTimeFormatter = DateFormat.getTimeInstance(DateFormat.SHORT)
-    private val summaryDateFormatter = SimpleDateFormat("MMMM dd", Locale.ENGLISH)
-    private val dateFormatter = SimpleDateFormat("EEEE, MMMM dd", Locale.ENGLISH)
+    private val summaryDateFormatter = SimpleDateFormat("MMMM d", Locale.ENGLISH)
+    private val dateFormatter = SimpleDateFormat("EEEE, MMMM d", Locale.ENGLISH)
 
     fun getMeasurementString(value: Float, units: String, decimalPlaces: Int = 1): String {
         return "${value.format(decimalPlaces)}$units"
