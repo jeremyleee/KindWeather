@@ -14,7 +14,7 @@ class SplashActivity : WActivity() {
         setContentView(R.layout.activity_splash)
 
         if (SharedPrefsHelper.isOnboardingCompleted()) {
-            HomeActivity.show(this)
+            HomeActivity.show(this, false)
         } else {
             WelcomeActivity.show(this)
         }

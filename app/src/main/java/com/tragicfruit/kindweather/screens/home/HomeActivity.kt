@@ -17,11 +17,20 @@ class HomeActivity : WActivity() {
 
         val navController = findNavController(R.id.homeNavHostFragment)
         homeBottomNavigation.setupWithNavController(navController)
+
+        // Show the conditions screen first if user has just onboarded
+        if (intent.extras?.getBoolean(FROM_ONBOARDING_KEY) == true) {
+            navController.navigate(R.id.alertListFragment)
+        }
     }
 
     companion object {
-        fun show(context: Context) {
-            context.startActivity(Intent(context, HomeActivity::class.java))
+        private const val FROM_ONBOARDING_KEY = "from-onboarding"
+
+        fun show(context: Context, fromOnboarding: Boolean) {
+            context.startActivity(Intent(context, HomeActivity::class.java).apply {
+                putExtra(FROM_ONBOARDING_KEY, fromOnboarding)
+            })
         }
     }
 }

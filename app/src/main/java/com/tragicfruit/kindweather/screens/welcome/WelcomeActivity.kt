@@ -35,7 +35,7 @@ class WelcomeActivity : WActivity(), AllowLocationContract.Callback, ViewPager.O
         AlertController.scheduleDailyAlert(this)
 
         // Finish onboarding
-        HomeActivity.show(this)
+        HomeActivity.show(this, true)
         finish()
     }
 
