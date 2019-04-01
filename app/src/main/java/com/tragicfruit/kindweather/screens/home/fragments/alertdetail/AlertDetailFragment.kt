@@ -56,8 +56,8 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         applyStatusBarColor(ColorHelper.darkenColor(color), lightStatusBar)
 
         alertDetailCollapsingToolbar.title = getString(alert.getInfo().shortTitle)
-        alertDetailCollapsingToolbar.setCollapsedTitleTypeface(ResourcesCompat.getFont(context, R.font.lato_bold))
-        alertDetailCollapsingToolbar.setExpandedTitleTypeface(ResourcesCompat.getFont(context, R.font.lato_bold))
+        alertDetailCollapsingToolbar.setCollapsedTitleTypeface(ResourcesCompat.getFont(context, R.font.playfair_bold))
+        alertDetailCollapsingToolbar.setExpandedTitleTypeface(ResourcesCompat.getFont(context, R.font.playfair_bold))
         alertDetailCollapsingToolbar.setContentScrimColor(color)
 
         alertDetailHeader.setBackgroundColor(color)

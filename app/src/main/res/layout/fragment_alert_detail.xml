@@ -26,7 +26,8 @@
                 <ImageView
                     android:id="@+id/alertDetailImage"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:alpha="0.5"/>
 
                 <ImageView
                     android:id="@+id/alertDetailImageOverlay"
