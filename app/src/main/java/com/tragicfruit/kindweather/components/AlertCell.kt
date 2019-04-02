@@ -48,7 +48,7 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Cons
         val titleGuidelineId = Guideline(context).getViewId()
         val titleSet = ConstraintSet().also {
             it.create(titleGuidelineId, ConstraintSet.VERTICAL_GUIDELINE)
-            it.setGuidelinePercent(titleGuidelineId, 0.5f)
+            it.setGuidelinePercent(titleGuidelineId, 0.6f)
             it.connect(titleView.getViewId(), ConstraintSet.START, this.getViewId(), ConstraintSet.START, ViewHelper.parsePx(R.dimen.app_margin_xxx))
             it.connect(titleView.getViewId(), ConstraintSet.END, titleGuidelineId, ConstraintSet.START)
             it.connect(titleView.getViewId(), ConstraintSet.TOP, this.getViewId(), ConstraintSet.TOP)
