@@ -37,7 +37,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
-    implementation 'android.arch.work:work-runtime-ktx:1.0.0'
+    implementation 'android.arch.work:work-runtime-ktx:1.0.1'
     implementation 'androidx.concurrent:concurrent-futures:1.0.0-alpha03'
     implementation 'com.github.Jay-Goo:RangeSeekBar:v2.0.4'
     implementation "com.microsoft.appcenter:appcenter-analytics:$app_center_version"
