@@ -26,8 +26,8 @@ class FetchAddressService : IntentService(FetchAddressService::javaClass.name) {
         try {
             val addresses = geocoder.getFromLocation(latitude, longitude, 1)
 
-            addresses.firstOrNull()?.let {
-                deliverResultToReceiver(SUCCESS_RESULT, it.locality)
+            addresses.firstOrNull()?.locality?.let {
+                deliverResultToReceiver(SUCCESS_RESULT, it)
             } ?: run {
                 deliverResultToReceiver(
                     FAILURE_RESULT,
