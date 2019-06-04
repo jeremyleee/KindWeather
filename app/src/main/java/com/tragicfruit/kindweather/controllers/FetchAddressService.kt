@@ -7,6 +7,7 @@ import android.location.Geocoder
 import android.os.Bundle
 import android.os.ResultReceiver
 import com.tragicfruit.kindweather.R
+import timber.log.Timber
 import java.io.IOException
 import java.util.*
 
@@ -24,16 +25,20 @@ class FetchAddressService : IntentService(FetchAddressService::javaClass.name) {
         val geocoder = Geocoder(this, Locale.getDefault())
 
         try {
-            val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            val address = geocoder.getFromLocation(latitude, longitude, 1).firstOrNull()
 
-            addresses.firstOrNull()?.locality?.let {
-                deliverResultToReceiver(SUCCESS_RESULT, it)
-            } ?: run {
+            Timber.d(address?.toString())
+
+            val displayLocation = address?.locality ?: address?.subAdminArea
+            if (displayLocation != null) {
+                deliverResultToReceiver(SUCCESS_RESULT, displayLocation)
+            } else {
                 deliverResultToReceiver(
                     FAILURE_RESULT,
                     getString(R.string.forecast_location_not_found, latitude, longitude)
                 )
             }
+
         } catch (e: IOException) {
             deliverResultToReceiver(
                 FAILURE_RESULT,
