@@ -4,8 +4,10 @@ import android.Manifest
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationRequest
@@ -78,6 +80,13 @@ object AlertController {
 
         Timber.i("Daily alert scheduled for ${calendar.time}")
         alarmManager?.setRepeating(AlarmManager.RTC, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
+
+        // Enable boot completed receiver
+        val receiver = ComponentName(context, BootReceiver::class.java)
+        context.packageManager.setComponentEnabledSetting(
+            receiver,
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+            PackageManager.DONT_KILL_APP)
     }
 
 }
@@ -86,27 +95,27 @@ class AlertReceiver : BroadcastReceiver() {
 
     @SuppressWarnings("MissingPermission")
     override fun onReceive(context: Context?, intent: Intent?) {
-        val validContext = context ?: return
+        context ?: return
 
-        if (PermissionHelper.hasPermission(validContext, Manifest.permission.ACCESS_FINE_LOCATION)) {
+        if (PermissionHelper.hasPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)) {
             Timber.d("Requesting current location")
 
             // Request current location
-            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(validContext)
+            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
             val locationRequest = LocationRequest.create().setNumUpdates(1)
 
-            val serviceIntent = AlertService.getIntent(validContext)
+            val serviceIntent = AlertService.getIntent(context)
             val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                PendingIntent.getForegroundService(validContext, ALERT_SERVICE_REQUEST, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.getForegroundService(context, ALERT_SERVICE_REQUEST, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             } else {
-                PendingIntent.getService(validContext, ALERT_SERVICE_REQUEST, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.getService(context, ALERT_SERVICE_REQUEST, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             }
 
             fusedLocationClient.requestLocationUpdates(locationRequest, pendingIntent)
 
         } else {
             // No location permission, display notification
-            NotificationController.notifyLocationPermissionsRequired(validContext)
+            NotificationController.notifyLocationPermissionsRequired(context)
         }
     }
 
@@ -114,6 +123,18 @@ class AlertReceiver : BroadcastReceiver() {
         const val ALERT_SERVICE_REQUEST = 301
 
         fun getIntent(context: Context) = Intent(context, AlertReceiver::class.java)
+    }
+
+}
+
+class BootReceiver : BroadcastReceiver() {
+
+    override fun onReceive(context: Context?, intent: Intent?) {
+        context ?: return
+
+        if (intent?.action == Intent.ACTION_BOOT_COMPLETED) {
+            AlertController.scheduleDailyAlert(context)
+        }
     }
 
 }
