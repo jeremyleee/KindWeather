@@ -30,16 +30,16 @@ data class ForecastResponse(val latitude: Double, val longitude: Double, val tim
 }
 
 enum class ForecastIcon(@DrawableRes val iconRes: Int = 0) {
-    clearday(R.drawable.ic_sun),
-    clearnight(R.drawable.ic_moon),
-    rain(R.drawable.ic_umbrella),
+    clearday(R.drawable.ic_sunny),
+    clearnight(R.drawable.ic_sunny),
+    rain(R.drawable.ic_rain),
     snow(R.drawable.ic_snow),
-    sleet(R.drawable.ic_umbrella),
-    wind(R.drawable.ic_forecast),
-    fog(R.drawable.ic_cloud_fog),
-    cloudy(R.drawable.ic_cloud),
-    partlycloudyday(R.drawable.ic_cloud_sun),
-    partlycloudynight(R.drawable.ic_cloud_moon),
+    sleet(R.drawable.ic_snow),
+    wind(R.drawable.ic_windy),
+    fog(R.drawable.ic_fog),
+    cloudy(R.drawable.ic_cloudy),
+    partlycloudyday(R.drawable.ic_partly_cloudy),
+    partlycloudynight(R.drawable.ic_partly_cloudy),
 
     unknown;
 
