@@ -1,54 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:id="@+id/alertListScrollView">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/alertListToolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:animateLayoutChanges="true">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white"
+        android:elevation="4dp"
+        app:title="@string/home_conditions"
+        app:titleTextAppearance="@style/ToolbarTitle"/>
 
-        <RelativeLayout
-            android:id="@+id/alertListAllowLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/app_margin_xxx"
-            android:paddingStart="@dimen/app_margin_xx"
-            android:paddingEnd="@dimen/app_margin_xx">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/background"
+        android:id="@+id/alertListScrollView"
+        app:layout_constraintTop_toBottomOf="@id/alertListToolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-            <com.tragicfruit.kindweather.components.WButton
-                android:id="@+id/alertListAllowLocationButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/alert_list_allow_location_button"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/alert_list_allow_location_text"
-                android:layout_toStartOf="@id/alertListAllowLocationButton"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/app_margin"
-                android:layout_marginEnd="@dimen/app_margin"/>
-
-        </RelativeLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/alertListRecyclerView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="25dp"
-            android:paddingBottom="25dp"
-            android:nestedScrollingEnabled="false"/>
+            android:orientation="vertical"
+            android:animateLayoutChanges="true">
 
-    </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/alertListAllowLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/app_margin_xxx"
+                android:paddingStart="@dimen/app_margin_xx"
+                android:paddingEnd="@dimen/app_margin_xx">
 
-</androidx.core.widget.NestedScrollView>
+                <com.tragicfruit.kindweather.components.WButton
+                    android:id="@+id/alertListAllowLocationButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/alert_list_allow_location_button"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/alert_list_allow_location_text"
+                    android:layout_toStartOf="@id/alertListAllowLocationButton"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/app_margin"
+                    android:layout_marginEnd="@dimen/app_margin"/>
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/alertListRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingTop="25dp"
+                android:paddingBottom="25dp"
+                android:nestedScrollingEnabled="false"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
