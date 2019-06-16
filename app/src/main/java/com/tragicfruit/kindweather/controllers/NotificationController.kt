@@ -63,7 +63,7 @@ object NotificationController {
         val pendingIntent = PendingIntent.getActivity(context, APP_SETTINGS_ACTION, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val builder = NotificationCompat.Builder(context, LOCATION_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.notification_location_permission_title))
             .setContentText(context.getString(R.string.notification_location_permission_text))
             .setStyle(NotificationCompat.BigTextStyle()
@@ -71,6 +71,7 @@ object NotificationController {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
+            .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
 
         NotificationManagerCompat.from(context)
             .notify(LOCATION_PERMISSIONS_ID, builder.build())
@@ -90,7 +91,7 @@ object NotificationController {
             .createPendingIntent()
 
         val builder = NotificationCompat.Builder(context, WEATHER_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(alert.getInfo().title))
             .setContentText(context.getString(R.string.notification_weather_tap))
             .setStyle(NotificationCompat.BigTextStyle()
@@ -98,6 +99,7 @@ object NotificationController {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
+            .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
 
         NotificationManagerCompat.from(context)
             .notify(WEATHER_ALERT_ID, builder.build())
@@ -105,9 +107,10 @@ object NotificationController {
 
     fun getAlertForegroundNotification(context: Context): Notification {
         return NotificationCompat.Builder(context, WEATHER_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.notification_alert_foreground))
             .setPriority(NotificationCompat.PRIORITY_MIN)
+            .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .build()
     }
 
