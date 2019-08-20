@@ -1,11 +1,11 @@
 package com.tragicfruit.kindweather.screens.welcome.fragments.allowlocation
 
-import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.screens.WFragment
 import com.tragicfruit.kindweather.utils.PermissionHelper
@@ -30,8 +30,8 @@ class AllowLocationFragment : WFragment(), AllowLocationContract.View {
 
     override fun requestLocationPermission() {
         activity?.let {
-            if (!PermissionHelper.hasPermission(it, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION)
+            if (!PermissionHelper.hasFullLocationPermission(it)) {
+                requestPermissions(PermissionHelper.FULL_LOCATION, REQUEST_LOCATION_PERMISSION)
             } else {
                 presenter.onPermissionAllowed()
             }
@@ -41,8 +41,10 @@ class AllowLocationFragment : WFragment(), AllowLocationContract.View {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             REQUEST_LOCATION_PERMISSION -> {
-                if (grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                     presenter.onPermissionAllowed()
+                } else {
+                    presenter.onPermissionDenied()
                 }
             }
         }
@@ -50,6 +52,10 @@ class AllowLocationFragment : WFragment(), AllowLocationContract.View {
 
     override fun showNextScreen() {
         callback?.onLocationPermissionGranted()
+    }
+
+    override fun showPermissionsRequiredError() {
+        Toast.makeText(context, R.string.allow_location_permission_error, Toast.LENGTH_LONG).show()
     }
 
     companion object {

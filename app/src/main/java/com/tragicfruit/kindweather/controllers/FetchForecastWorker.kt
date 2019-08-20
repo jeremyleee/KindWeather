@@ -1,6 +1,5 @@
 package com.tragicfruit.kindweather.controllers
 
-import android.Manifest
 import android.content.Context
 import android.os.Looper
 import androidx.concurrent.futures.CallbackToFutureAdapter
@@ -22,7 +21,7 @@ class FetchForecastWorker(context: Context, workerParams: WorkerParameters) : Li
     @SuppressWarnings("MissingPermission")
     override fun startWork(): ListenableFuture<Result> {
         val callback = CallbackToFutureAdapter.Resolver<Result> { completer ->
-            if (PermissionHelper.hasPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            if (PermissionHelper.hasFullLocationPermission(applicationContext)) {
                 Timber.d("Requesting current location")
 
 

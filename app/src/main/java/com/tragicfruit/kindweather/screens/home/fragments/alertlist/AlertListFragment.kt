@@ -1,6 +1,5 @@
 package com.tragicfruit.kindweather.screens.home.fragments.alertlist
 
-import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -51,14 +50,14 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
     }
 
     override fun requestLocationPermission() {
-        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION)
+        requestPermissions(PermissionHelper.FULL_LOCATION, REQUEST_LOCATION_PERMISSION)
     }
 
     override fun refreshList() {
         adapter.notifyDataSetChanged()
 
         context?.let {
-            alertListAllowLocation.isVisible = !PermissionHelper.hasPermission(it, Manifest.permission.ACCESS_FINE_LOCATION)
+            alertListAllowLocation.isVisible = !PermissionHelper.hasFullLocationPermission(it)
         }
     }
 

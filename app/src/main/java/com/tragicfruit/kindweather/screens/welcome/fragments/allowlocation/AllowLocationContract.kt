@@ -8,11 +8,13 @@ interface AllowLocationContract {
     interface View : WView {
         fun requestLocationPermission()
         fun showNextScreen()
+        fun showPermissionsRequiredError()
     }
 
     interface Presenter : WPresenter<View> {
         fun onAllowClicked()
         fun onPermissionAllowed()
+        fun onPermissionDenied()
     }
 
     interface Callback {

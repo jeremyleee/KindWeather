@@ -10,4 +10,8 @@ class AllowLocationPresenter(override var view: AllowLocationContract.View) : Al
         view.showNextScreen()
     }
 
+    override fun onPermissionDenied() {
+        view.showPermissionsRequiredError()
+    }
+
 }

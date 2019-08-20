@@ -1,6 +1,5 @@
 package com.tragicfruit.kindweather.controllers
 
-import android.Manifest
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -97,7 +96,7 @@ class AlertReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         context ?: return
 
-        if (PermissionHelper.hasPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)) {
+        if (PermissionHelper.hasFullLocationPermission(context)) {
             Timber.d("Requesting current location")
 
             // Request current location
