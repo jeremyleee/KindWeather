@@ -55,7 +55,7 @@ class ForecastFragment : WFragment(), ForecastContract.View {
         context?.let {
             FetchAddressService.start(it, latitude, longitude, object : ResultReceiver(Handler(Looper.getMainLooper())) {
                 override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
-                    if (!isDetached) {
+                    if (isAdded) {
                         presenter.onAddressFetched(resultData?.getString(FetchAddressService.RESULT_DATA))
                     }
                 }
