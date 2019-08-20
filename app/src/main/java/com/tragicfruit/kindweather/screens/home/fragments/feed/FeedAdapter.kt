@@ -24,6 +24,10 @@ class FeedAdapter(private val feedList: RealmResults<WeatherNotification>,
         }
     }
 
+    override fun getItemId(position: Int): Long {
+        return feedList[position]?.createdAt?.time ?: 0
+    }
+
     override fun getItemCount() = feedList.count()
 
 }

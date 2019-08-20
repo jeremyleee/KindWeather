@@ -12,6 +12,7 @@ import com.tragicfruit.kindweather.components.AlertCell
 import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.screens.WFragment
 import com.tragicfruit.kindweather.utils.PermissionHelper
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_alert_list.*
 
 class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listener {
@@ -19,7 +20,7 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
     override var statusBarColor = R.color.white
 
     private val presenter = AlertListPresenter(this)
-    private val adapter = AlertListAdapter(this)
+    private lateinit var adapter: AlertListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_alert_list, container, false)
@@ -27,7 +28,11 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        presenter.init()
+    }
 
+    override fun initView(alertList: RealmResults<WeatherAlert>) {
+        adapter = AlertListAdapter(alertList, this)
         alertListRecyclerView.adapter = adapter
         alertListRecyclerView.layoutManager = LinearLayoutManager(context)
 

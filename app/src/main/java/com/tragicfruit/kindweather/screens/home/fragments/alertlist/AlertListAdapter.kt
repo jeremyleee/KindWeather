@@ -4,23 +4,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tragicfruit.kindweather.components.AlertCell
 import com.tragicfruit.kindweather.model.WeatherAlert
-import io.realm.Realm
 import io.realm.RealmResults
-import io.realm.Sort
-import io.realm.kotlin.where
 
-class AlertListAdapter(private val listener: AlertCell.Listener) : RecyclerView.Adapter<AlertViewHolder>() {
-
-    private val alertList: RealmResults<WeatherAlert>
-
-    init {
-        setHasStableIds(true)
-
-        alertList = Realm.getDefaultInstance()
-            .where<WeatherAlert>()
-            .sort("enabled", Sort.DESCENDING, "priority", Sort.ASCENDING)
-            .findAll()
-    }
+class AlertListAdapter(private val alertList: RealmResults<WeatherAlert>,
+    private val listener: AlertCell.Listener) : RecyclerView.Adapter<AlertViewHolder>() {
 
     fun getItemPosition(alert: WeatherAlert): Int {
         return alertList.indexOf(alert)
