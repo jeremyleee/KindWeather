@@ -4,10 +4,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.tragicfruit.kindweather.R
+import com.tragicfruit.kindweather.screens.welcome.fragments.allowlocation.AllowLocationContract
 import com.tragicfruit.kindweather.screens.welcome.fragments.allowlocation.AllowLocationFragment
 import com.tragicfruit.kindweather.screens.welcome.fragments.onboarding.OnboardingFragment
 
-class WelcomeAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+class WelcomeAdapter(fragmentManager: FragmentManager, private val callback: AllowLocationContract.Callback)
+    : FragmentPagerAdapter(fragmentManager) {
 
     enum class Page {
         PAGE_1,
@@ -21,7 +23,7 @@ class WelcomeAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fr
             Page.PAGE_1 -> OnboardingFragment.newInstance(R.drawable.onboarding_1, R.string.onboarding_1_title, R.string.onboarding_1_desc)
             Page.PAGE_2 -> OnboardingFragment.newInstance(R.drawable.onboarding_2, R.string.onboarding_2_title, R.string.onboarding_2_desc)
             Page.PAGE_3 -> OnboardingFragment.newInstance(R.drawable.onboarding_3, R.string.onboarding_3_title, R.string.onboarding_3_desc)
-            Page.ALLOW_LOCATION -> AllowLocationFragment()
+            Page.ALLOW_LOCATION -> AllowLocationFragment.newInstance(callback)
         }
     }
 

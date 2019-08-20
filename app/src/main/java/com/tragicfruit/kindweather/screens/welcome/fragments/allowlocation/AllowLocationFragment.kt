@@ -1,7 +1,6 @@
 package com.tragicfruit.kindweather.screens.welcome.fragments.allowlocation
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -53,18 +52,14 @@ class AllowLocationFragment : WFragment(), AllowLocationContract.View {
         callback?.onLocationPermissionGranted()
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        callback = context as? AllowLocationContract.Callback
-    }
-
-    override fun onDetach() {
-        callback = null
-        super.onDetach()
-    }
-
     companion object {
         private const val REQUEST_LOCATION_PERMISSION = 700
+
+        fun newInstance(callback: AllowLocationContract.Callback): AllowLocationFragment {
+            return AllowLocationFragment().also {
+                it.callback = callback
+            }
+        }
     }
 
 }

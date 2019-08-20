@@ -16,24 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".screens.splash.SplashActivity"
+        <activity android:name=".screens.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
+                <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
 
-        <activity android:name=".screens.welcome.WelcomeActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".screens.home.HomeActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-            </intent-filter>
         </activity>
 
         <receiver android:name=".controllers.AlertReceiver"/>

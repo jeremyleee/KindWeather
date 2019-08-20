@@ -10,8 +10,8 @@ import com.tragicfruit.kindweather.R
 
 open class WFragment : Fragment() {
 
-    val baseActivity: WActivity?
-        get() = activity as? WActivity
+    val baseActivity: MainActivity?
+        get() = activity as? MainActivity
 
     @ColorRes
     open var statusBarColor = R.color.background
