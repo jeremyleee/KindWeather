@@ -11,8 +11,8 @@ android {
         applicationId "com.tragicfruit.kindweather"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 15
-        versionName "1.0.1"
+        versionCode 16
+        versionName "1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "API_URL", "\"https://api.darksky.net/\""
         buildConfigField "String", "API_KEY", "\"ae62b8856a633e788d34e86ad6aa15d9\""
