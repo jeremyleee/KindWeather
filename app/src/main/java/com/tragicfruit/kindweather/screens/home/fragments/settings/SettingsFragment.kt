@@ -45,7 +45,7 @@ class SettingsFragment : WFragment(), SettingsContract.View, TimePickerDialog.On
 
     override fun showAlertTimeDialog(initialAlertHour: Int, initialAlertMinute: Int) {
         val fragment = TimePickerDialogFragment.newInstance(initialAlertHour, initialAlertMinute, this)
-        fragment.show(fragmentManager, fragment.javaClass.name)
+        fragment.show(parentFragmentManager, fragment.javaClass.name)
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
@@ -70,7 +70,7 @@ class SettingsFragment : WFragment(), SettingsContract.View, TimePickerDialog.On
     override fun showChangeUnitsDialog(usesImperial: Boolean) {
         val units = if (usesImperial) UnitsDialogFragment.Units.IMPERIAL else UnitsDialogFragment.Units.METRIC
         val fragment = UnitsDialogFragment.newInstance(units, this)
-        fragment.show(fragmentManager, fragment.javaClass.name)
+        fragment.show(parentFragmentManager, fragment.javaClass.name)
     }
 
     override fun onUnitsChanged(units: UnitsDialogFragment.Units) {

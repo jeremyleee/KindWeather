@@ -30,7 +30,7 @@ object WeatherController {
 
                 override fun onResponse(call: Call<ForecastResponse>, response: Response<ForecastResponse>) {
                     if (response.isSuccessful) {
-                        Realm.getDefaultInstance().executeTransaction { realm ->
+                        Realm.getDefaultInstance().executeTransactionAsync { realm ->
                             response.body()?.let { forecastResponse ->
                                 val timestamp = System.currentTimeMillis()
 

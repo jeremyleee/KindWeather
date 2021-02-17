@@ -21,13 +21,13 @@ class AlertDetailPresenter(override var view: AlertDetailContract.View) : AlertD
     }
 
     override fun onAlertEnabled(enabled: Boolean) {
-        Realm.getDefaultInstance().executeTransaction {
+        Realm.getDefaultInstance().executeTransactionAsync {
             WeatherAlert.setEnabled(alert, enabled, it)
         }
     }
 
     override fun onLowerBoundChanged(param: WeatherAlertParam, value: Double?) {
-        Realm.getDefaultInstance().executeTransaction {
+        Realm.getDefaultInstance().executeTransactionAsync {
             WeatherAlertParam.setLowerBound(param, value, it)
         }
 
@@ -35,7 +35,7 @@ class AlertDetailPresenter(override var view: AlertDetailContract.View) : AlertD
     }
 
     override fun onUpperBoundChanged(param: WeatherAlertParam, value: Double?) {
-        Realm.getDefaultInstance().executeTransaction {
+        Realm.getDefaultInstance().executeTransactionAsync {
             WeatherAlertParam.setUpperBound(param, value, it)
         }
 
@@ -43,7 +43,7 @@ class AlertDetailPresenter(override var view: AlertDetailContract.View) : AlertD
     }
 
     override fun onResetToDefaultClicked() {
-        Realm.getDefaultInstance().executeTransaction { realm ->
+        Realm.getDefaultInstance().executeTransactionAsync { realm ->
             alert.params.forEach { param ->
                 WeatherAlertParam.resetToDefault(param, realm)
             }

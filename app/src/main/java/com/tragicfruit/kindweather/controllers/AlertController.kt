@@ -32,7 +32,7 @@ object AlertController {
             return
         }
 
-        Realm.getDefaultInstance().executeTransaction { realm ->
+        Realm.getDefaultInstance().executeTransactionAsync { realm ->
             WeatherAlert.create(1, WeatherAlert.Info.UMBRELLA, realm).also { alert ->
                 WeatherAlert.addParam(alert, ForecastType.PRECIP_PROBABILITY, 0.5, null, realm)
                 WeatherAlert.addParam(alert, ForecastType.WIND_GUST, null, 10.8, realm)

@@ -70,7 +70,7 @@ class AlertService : IntentService(AlertService::javaClass.name) {
             }
 
             // Create model object for feed
-            realm.executeTransaction { realm ->
+            realm.executeTransactionAsync { realm ->
                 WeatherNotification.create(message, forecast, color, realm)
                 ForecastPeriod.setDisplayed(forecast, true, realm)
             }
