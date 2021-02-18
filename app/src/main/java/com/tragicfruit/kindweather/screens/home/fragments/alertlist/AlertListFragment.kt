@@ -11,6 +11,7 @@ import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.components.AlertCell
 import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.screens.WFragment
+import com.tragicfruit.kindweather.screens.home.fragments.requestlocation.RequestLocationDialogFragment
 import com.tragicfruit.kindweather.utils.PermissionHelper
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_alert_list.*
@@ -55,7 +56,8 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
     }
 
     override fun requestBackgroundLocationPermission() {
-        requestPermissions(PermissionHelper.BACKGROUND_LOCATION, REQUEST_LOCATION_PERMISSION)
+        val dialog = RequestLocationDialogFragment()
+        dialog.show(childFragmentManager, RequestLocationDialogFragment.TAG)
     }
 
     override fun refreshList() {
@@ -75,9 +77,4 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
         super.onPause()
         presenter.pause()
     }
-
-    companion object {
-        private const val REQUEST_LOCATION_PERMISSION = 800
-    }
-
 }
