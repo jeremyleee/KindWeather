@@ -55,14 +55,14 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
     }
 
     override fun requestLocationPermission() {
-        requestPermissions(PermissionHelper.FULL_LOCATION, REQUEST_LOCATION_PERMISSION)
+        requestPermissions(PermissionHelper.BACKGROUND_LOCATION, REQUEST_LOCATION_PERMISSION)
     }
 
     override fun refreshList() {
         adapter.notifyDataSetChanged()
 
         context?.let {
-            alertListAllowLocation.isVisible = !PermissionHelper.hasFullLocationPermission(it)
+            alertListAllowLocation.isVisible = !PermissionHelper.hasBackgroundLocationPermission(it)
         }
     }
 
