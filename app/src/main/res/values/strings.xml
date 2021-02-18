@@ -65,7 +65,7 @@
     <string name="alert_detail_params">Parameters</string>
     <string name="alert_detail_reset">Reset to default</string>
 
-    <string name="settings_alert_time">Notify time</string>
+    <string name="settings_alert_time">Notification time</string>
     <string name="settings_units">Measurement units</string>
     <string name="settings_units_metric">Metric</string>
     <string name="settings_units_imperial">Imperial</string>

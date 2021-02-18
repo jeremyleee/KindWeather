@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/alertListToolbar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,8 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/background"
-        android:id="@+id/alertListScrollView"
-        app:layout_constraintTop_toBottomOf="@id/alertListToolbar"
+        android:id="@+id/scroll_view"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
@@ -29,7 +29,7 @@
             android:animateLayoutChanges="true">
 
             <RelativeLayout
-                android:id="@+id/alertListAllowLocation"
+                android:id="@+id/allow_location_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
@@ -38,7 +38,7 @@
                 android:paddingEnd="@dimen/app_margin_xx">
 
                 <com.tragicfruit.kindweather.components.WButton
-                    android:id="@+id/alertListAllowLocationButton"
+                    android:id="@+id/allow_location_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/alert_list_allow_location_button"
@@ -49,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/alert_list_allow_location_text"
-                    android:layout_toStartOf="@id/alertListAllowLocationButton"
+                    android:layout_toStartOf="@id/allow_location_button"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/app_margin"
                     android:layout_marginEnd="@dimen/app_margin"/>
@@ -57,7 +57,7 @@
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/alertListRecyclerView"
+                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"

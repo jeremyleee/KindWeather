@@ -1,5 +1,6 @@
 package com.tragicfruit.kindweather.screens.home.fragments.alertdetail
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
@@ -7,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
@@ -15,11 +17,11 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.components.AlertDetailParamView
+import com.tragicfruit.kindweather.databinding.FragmentAlertDetailBinding
 import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.model.WeatherAlertParam
 import com.tragicfruit.kindweather.screens.WFragment
 import com.tragicfruit.kindweather.utils.ColorHelper
-import kotlinx.android.synthetic.main.fragment_alert_detail.*
 
 class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailParamView.Listener {
 
@@ -27,72 +29,90 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
 
     private val args: AlertDetailFragmentArgs by navArgs()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_alert_detail, container, false)
+    private var _binding: FragmentAlertDetailBinding? = null
+    private val binding get() = requireNotNull(_binding)
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentAlertDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.init(args.alertId)
 
-        alertDetailToolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             presenter.onBackClicked()
         }
 
-        alertDetailEnableSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.enableSwitch.setOnCheckedChangeListener { _, isChecked ->
             presenter.onAlertEnabled(isChecked)
         }
 
-        alertDetailReset.setOnClickListener {
+        binding.resetButton.setOnClickListener {
             presenter.onResetToDefaultClicked()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun initView(alert: WeatherAlert) {
         val context = context ?: return
         val color = ContextCompat.getColor(context, alert.getInfo().color)
 
-        // Header
-        applyStatusBarColor(ColorHelper.darkenColor(color), lightStatusBar)
-
-        alertDetailCollapsingToolbar.title = getString(alert.getInfo().shortTitle)
-        alertDetailCollapsingToolbar.setCollapsedTitleTypeface(ResourcesCompat.getFont(context, R.font.playfair_bold))
-        alertDetailCollapsingToolbar.setExpandedTitleTypeface(ResourcesCompat.getFont(context, R.font.playfair_bold))
-        alertDetailCollapsingToolbar.setContentScrimColor(color)
-
-        alertDetailHeader.setBackgroundColor(color)
-        Glide.with(this)
-            .load(alert.getInfo().image)
-            .centerCrop()
-            .into(alertDetailImage)
-
-        val gradient = GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, intArrayOf(color, Color.TRANSPARENT))
-        alertDetailImageOverlay.setImageDrawable(gradient)
-
-        // Content
-        val states = arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked))
-        val thumbColors = intArrayOf(ContextCompat.getColor(context, R.color.switch_unchecked), color)
-        val trackColors = intArrayOf(ContextCompat.getColor(context, R.color.switch_unchecked_track), ColorHelper.darkenColor(color, 0.8f))
-        alertDetailEnableSwitch.thumbDrawable.setTintList(ColorStateList(states, thumbColors))
-        alertDetailEnableSwitch.trackDrawable.setTintList(ColorStateList(states, trackColors))
-        alertDetailEnableSwitch.background = null
-
-        alertDetailEnableSwitch.isChecked = alert.enabled
-        alertDetailReset.isEnabled = alert.areParamsEdited()
-
+        initHeaderView(alert, color)
+        initContentViews(alert, color, context)
         initParamList(alert)
     }
 
-    private fun initParamList(alert: WeatherAlert) {
-        alertDetailParamsTitle.isVisible = alert.params.isNotEmpty()
+    private fun initHeaderView(alert: WeatherAlert, @ColorInt color: Int) {
+        applyStatusBarColor(ColorHelper.darkenColor(color), lightStatusBar)
 
-        context?.let {
-            alertDetailParamsList.removeAllViews()
-            for (param in alert.params) {
-                val paramView = AlertDetailParamView(it)
-                paramView.setData(ContextCompat.getColor(it, alert.getInfo().color), param, this)
-                alertDetailParamsList.addView(paramView)
-            }
+        binding.collapsingToolbar.apply {
+            title = getString(alert.getInfo().shortTitle)
+            setCollapsedTitleTypeface(ResourcesCompat.getFont(context, R.font.playfair_bold))
+            setExpandedTitleTypeface(ResourcesCompat.getFont(context, R.font.playfair_bold))
+            setContentScrimColor(color)
+        }
+
+        binding.header.setBackgroundColor(color)
+        Glide.with(this)
+            .load(alert.getInfo().image)
+            .centerCrop()
+            .into(binding.headerImage)
+
+        val gradient = GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, intArrayOf(color, Color.TRANSPARENT))
+        binding.headerImageOverlay.setImageDrawable(gradient)
+    }
+
+    private fun initContentViews(alert: WeatherAlert, @ColorInt color: Int, context: Context) {
+        val states = arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked))
+        val thumbColors = intArrayOf(ContextCompat.getColor(context, R.color.switch_unchecked), color)
+        val trackColors = intArrayOf(ContextCompat.getColor(context, R.color.switch_unchecked_track), ColorHelper.darkenColor(color, 0.8f))
+        binding.enableSwitch.apply {
+            thumbDrawable.setTintList(ColorStateList(states, thumbColors))
+            trackDrawable.setTintList(ColorStateList(states, trackColors))
+            background = null
+            isChecked = alert.enabled
+        }
+
+        binding.resetButton.isEnabled = alert.areParamsEdited()
+    }
+
+    private fun initParamList(alert: WeatherAlert) {
+        binding.paramsTitle.isVisible = alert.params.isNotEmpty()
+        binding.paramsList.removeAllViews()
+        alert.params.forEach { param ->
+            val paramView = AlertDetailParamView(binding.paramsList.context)
+            paramView.setData(ContextCompat.getColor(paramView.context, alert.getInfo().color), param, this)
+            binding.paramsList.addView(paramView)
         }
     }
 
@@ -109,7 +129,7 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
     }
 
     override fun setResetButtonEnabled(enabled: Boolean) {
-        alertDetailReset.isEnabled = enabled
+        binding.resetButton.isEnabled = enabled
     }
 
     override fun closeScreen() {

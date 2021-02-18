@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.components.FeedCell
+import com.tragicfruit.kindweather.databinding.FragmentFeedBinding
 import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.model.WeatherNotification
 import com.tragicfruit.kindweather.screens.WFragment
 import io.realm.RealmResults
-import kotlinx.android.synthetic.main.fragment_feed.*
 
 class FeedFragment : WFragment(), FeedContract.View, FeedCell.Listener {
 
@@ -22,8 +22,21 @@ class FeedFragment : WFragment(), FeedContract.View, FeedCell.Listener {
 
     private val presenter = FeedPresenter(this)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_feed, container, false)
+    private var _binding: FragmentFeedBinding? = null
+    private val binding get() = requireNotNull(_binding)
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentFeedBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,16 +45,16 @@ class FeedFragment : WFragment(), FeedContract.View, FeedCell.Listener {
     }
 
     override fun initView(feedData: RealmResults<WeatherNotification>) {
-        feedRecyclerView.adapter = FeedAdapter(feedData, this)
-        feedRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recyclerView.adapter = FeedAdapter(feedData, this)
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
-        feedEmpty.isVisible = feedData.isEmpty()
+        binding.emptyView.isVisible = feedData.isEmpty()
 
         Glide.with(this)
             .load(R.drawable.feed_empty)
-            .into(feedEmptyImage)
+            .into(binding.emptyImage)
 
-        feedSetupButton.setOnClickListener {
+        binding.setupButton.setOnClickListener {
             presenter.onSetupConditionsClicked()
         }
     }
@@ -56,11 +69,11 @@ class FeedFragment : WFragment(), FeedContract.View, FeedCell.Listener {
     }
 
     override fun refreshFeed() {
-        feedRecyclerView.adapter?.notifyDataSetChanged()
+        binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 
     override fun showEmptyState(show: Boolean) {
-        feedEmpty.isVisible = show
+        binding.emptyView.isVisible = show
     }
 
     override fun onFeedItemClicked(notification: WeatherNotification) {

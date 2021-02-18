@@ -10,11 +10,11 @@ import android.view.ViewGroup
 import android.widget.TimePicker
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.controllers.AlertController
+import com.tragicfruit.kindweather.databinding.FragmentSettingsBinding
 import com.tragicfruit.kindweather.screens.WFragment
 import com.tragicfruit.kindweather.screens.home.fragments.settings.dialogs.TimePickerDialogFragment
 import com.tragicfruit.kindweather.screens.home.fragments.settings.dialogs.UnitsDialogFragment
 import com.tragicfruit.kindweather.utils.DisplayUtils
-import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment : WFragment(), SettingsContract.View, TimePickerDialog.OnTimeSetListener, UnitsDialogFragment.Listener {
 
@@ -22,23 +22,36 @@ class SettingsFragment : WFragment(), SettingsContract.View, TimePickerDialog.On
 
     private val presenter = SettingsPresenter(this)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = requireNotNull(_binding)
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.init()
 
-        settingsListAlertTime.setOnClickListener {
+        binding.alertTimeItem.setOnClickListener {
             presenter.onAlertTimeClicked()
         }
 
-        settingsListUnits.setOnClickListener {
+        binding.unitsItem.setOnClickListener {
             presenter.onUnitsClicked()
         }
 
-        settingsListDarkSky.setOnClickListener {
+        binding.darkSkyDisclaimer.setOnClickListener {
             presenter.onDarkSkyDisclaimerClicked()
         }
     }
@@ -53,12 +66,12 @@ class SettingsFragment : WFragment(), SettingsContract.View, TimePickerDialog.On
     }
 
     override fun updateAlertTimeText(alertHour: Int, alertMinute: Int) {
-        settingsListAlertTime.setSubtitle(DisplayUtils.getTimeString(alertHour, alertMinute, 0))
+        binding.alertTimeItem.setSubtitle(DisplayUtils.getTimeString(alertHour, alertMinute, 0))
     }
 
     override fun updateUnitsText(usesImperial: Boolean) {
         val units = getString(if (usesImperial) R.string.settings_units_imperial else R.string.settings_units_metric)
-        settingsListUnits.setSubtitle(units)
+        binding.unitsItem.setSubtitle(units)
     }
 
     override fun restartAlertService() {

@@ -3,6 +3,7 @@ package com.tragicfruit.kindweather.screens.home.fragments.settings.dialogs
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 
 class TimePickerDialogFragment : DialogFragment() {
@@ -21,10 +22,10 @@ class TimePickerDialogFragment : DialogFragment() {
 
         fun newInstance(initialHour: Int, initialMinute: Int, listener: TimePickerDialog.OnTimeSetListener) =
             TimePickerDialogFragment().also {
-                it.arguments = Bundle().apply {
-                    putInt(INITIAL_HOUR, initialHour)
-                    putInt(INITIAL_MINUTE, initialMinute)
-                }
+                it.arguments = bundleOf(
+                    INITIAL_HOUR to initialHour,
+                    INITIAL_MINUTE to initialMinute
+                )
                 it.listener = listener
             }
     }

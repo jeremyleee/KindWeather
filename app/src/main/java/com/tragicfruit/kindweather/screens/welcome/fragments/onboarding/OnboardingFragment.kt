@@ -8,16 +8,28 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import com.bumptech.glide.Glide
-import com.tragicfruit.kindweather.R
+import com.tragicfruit.kindweather.databinding.FragmentOnboardingBinding
 import com.tragicfruit.kindweather.screens.WFragment
-import kotlinx.android.synthetic.main.fragment_onboarding.*
 
 class OnboardingFragment : WFragment(), OnboardingContract.View {
 
     private val presenter = OnboardingPresenter(this)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_onboarding, container, false)
+    private var _binding: FragmentOnboardingBinding? = null
+    private val binding get() = requireNotNull(_binding)
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentOnboardingBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,15 +45,15 @@ class OnboardingFragment : WFragment(), OnboardingContract.View {
     override fun setImage(imageRes: Int) {
         Glide.with(this)
             .load(imageRes)
-            .into(onboardingImage)
+            .into(binding.mainImage)
     }
 
     override fun setTitle(titleRes: Int) {
-        onboardingTitle.setText(titleRes)
+        binding.titleText.setText(titleRes)
     }
 
     override fun setDescription(descRes: Int) {
-        onboardingDesc.setText(descRes)
+        binding.descText.setText(descRes)
     }
 
     companion object {

@@ -7,27 +7,36 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.tragicfruit.kindweather.R
+import com.tragicfruit.kindweather.databinding.FragmentAllowLocationBinding
 import com.tragicfruit.kindweather.screens.WFragment
 import com.tragicfruit.kindweather.utils.PermissionHelper
-import kotlinx.android.synthetic.main.fragment_allow_location.*
 
 class AllowLocationFragment : WFragment(), AllowLocationContract.View {
 
     private val presenter = AllowLocationPresenter(this)
     private var callback: AllowLocationContract.Callback? = null
 
+    private var _binding: FragmentAllowLocationBinding? = null
+    private val binding get() = requireNotNull(_binding)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_allow_location, container, false)
+    ): View {
+        _binding = FragmentAllowLocationBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        allowLocationButton.setOnClickListener {
+        binding.allowButton.setOnClickListener {
             presenter.onAllowClicked()
         }
     }

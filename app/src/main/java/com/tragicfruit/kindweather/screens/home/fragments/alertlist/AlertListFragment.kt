@@ -9,12 +9,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.components.AlertCell
+import com.tragicfruit.kindweather.databinding.FragmentAlertListBinding
 import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.screens.WFragment
 import com.tragicfruit.kindweather.screens.home.fragments.requestlocation.RequestLocationDialogFragment
 import com.tragicfruit.kindweather.utils.PermissionHelper
 import io.realm.RealmResults
-import kotlinx.android.synthetic.main.fragment_alert_list.*
 
 class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listener {
 
@@ -23,8 +23,21 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
     private val presenter = AlertListPresenter(this)
     private lateinit var adapter: AlertListAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_alert_list, container, false)
+    private var _binding: FragmentAlertListBinding? = null
+    private val binding get() = requireNotNull(_binding)
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentAlertListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,10 +47,10 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
 
     override fun initView(alertList: RealmResults<WeatherAlert>) {
         adapter = AlertListAdapter(alertList, this)
-        alertListRecyclerView.adapter = adapter
-        alertListRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
-        alertListAllowLocationButton.setOnClickListener {
+        binding.allowLocationButton.setOnClickListener {
             presenter.onAllowLocationClicked()
         }
     }
@@ -64,7 +77,7 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
         adapter.notifyDataSetChanged()
 
         context?.let {
-            alertListAllowLocation.isVisible = !PermissionHelper.hasBackgroundLocationPermission(it)
+            binding.allowLocationHeader.isVisible = !PermissionHelper.hasBackgroundLocationPermission(it)
         }
     }
 

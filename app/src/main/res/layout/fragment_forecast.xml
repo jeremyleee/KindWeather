@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/forecastToolbar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -15,19 +15,19 @@
         app:titleTextAppearance="@style/ToolbarTitle"/>
 
     <ImageView
-        android:id="@+id/forecastImage"
+        android:id="@+id/main_image"
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/forecastToolbar"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         android:layout_marginTop="@dimen/app_margin_xxxx"/>
 
     <TextView
-        android:id="@+id/forecastAddress"
+        android:id="@+id/address_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/forecastImage"
+        app:layout_constraintTop_toBottomOf="@id/main_image"
         android:gravity="center_horizontal"
         android:layout_marginTop="@dimen/app_margin_xx"
         android:layout_marginStart="@dimen/app_margin_xxxx"
@@ -36,11 +36,11 @@
         android:textColor="@color/text_black"/>
 
     <TextView
-        android:id="@+id/forecastHighTemp"
+        android:id="@+id/high_temp_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/forecastAddress"
-        app:layout_constraintEnd_toStartOf="@id/forecastLowTemp"
+        app:layout_constraintTop_toBottomOf="@id/address_text"
+        app:layout_constraintEnd_toStartOf="@id/low_temp_text"
         android:text="@string/forecast_high_temp"
         android:layout_marginTop="@dimen/app_margin_xxxx"
         android:paddingStart="@dimen/app_margin_xxxx"
@@ -49,22 +49,22 @@
         android:textSize="14sp"/>
 
     <TextView
-        android:id="@+id/forecastHighTempValue"
+        android:id="@+id/high_temp_value_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/forecastHighTemp"
-        app:layout_constraintStart_toStartOf="@id/forecastHighTemp"
-        app:layout_constraintEnd_toEndOf="@id/forecastHighTemp"
+        app:layout_constraintTop_toBottomOf="@id/high_temp_text"
+        app:layout_constraintStart_toStartOf="@id/high_temp_text"
+        app:layout_constraintEnd_toEndOf="@id/high_temp_text"
         android:gravity="center_horizontal"
         android:layout_marginTop="@dimen/app_margin"
         android:textColor="@color/text_grey"
         android:textSize="24sp"/>
 
     <TextView
-        android:id="@+id/forecastLowTemp"
+        android:id="@+id/low_temp_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/forecastAddress"
+        app:layout_constraintTop_toBottomOf="@id/address_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/forecast_low_temp"
@@ -75,23 +75,23 @@
         android:textSize="14sp"/>
 
     <TextView
-        android:id="@+id/forecastLowTempValue"
+        android:id="@+id/low_temp_value_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/forecastLowTemp"
-        app:layout_constraintStart_toStartOf="@id/forecastLowTemp"
-        app:layout_constraintEnd_toEndOf="@id/forecastLowTemp"
+        app:layout_constraintTop_toBottomOf="@id/low_temp_text"
+        app:layout_constraintStart_toStartOf="@id/low_temp_text"
+        app:layout_constraintEnd_toEndOf="@id/low_temp_text"
         android:gravity="center_horizontal"
         android:layout_marginTop="@dimen/app_margin"
         android:textColor="@color/text_grey"
         android:textSize="24sp"/>
 
     <TextView
-        android:id="@+id/forecastPrecip"
+        android:id="@+id/precip_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/forecastAddress"
-        app:layout_constraintStart_toEndOf="@id/forecastLowTemp"
+        app:layout_constraintTop_toBottomOf="@id/address_text"
+        app:layout_constraintStart_toEndOf="@id/low_temp_text"
         android:text="@string/forecast_precip"
         android:layout_marginTop="@dimen/app_margin_xxxx"
         android:paddingStart="@dimen/app_margin_xxxx"
@@ -100,12 +100,12 @@
         android:textSize="14sp"/>
 
     <TextView
-        android:id="@+id/forecastPrecipValue"
+        android:id="@+id/precip_value_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/forecastPrecip"
-        app:layout_constraintStart_toStartOf="@id/forecastPrecip"
-        app:layout_constraintEnd_toEndOf="@id/forecastPrecip"
+        app:layout_constraintTop_toBottomOf="@id/precip_text"
+        app:layout_constraintStart_toStartOf="@id/precip_text"
+        app:layout_constraintEnd_toEndOf="@id/precip_text"
         android:gravity="center_horizontal"
         android:layout_marginTop="@dimen/app_margin"
         android:textColor="@color/text_grey"
