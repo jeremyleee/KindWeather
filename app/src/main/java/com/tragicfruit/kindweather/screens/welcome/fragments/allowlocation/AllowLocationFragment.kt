@@ -30,8 +30,8 @@ class AllowLocationFragment : WFragment(), AllowLocationContract.View {
 
     override fun requestLocationPermission() {
         activity?.let {
-            if (!PermissionHelper.hasFullLocationPermission(it)) {
-                requestPermissions(PermissionHelper.FULL_LOCATION, REQUEST_LOCATION_PERMISSION)
+            if (!PermissionHelper.hasFineLocationPermission(it)) {
+                requestPermissions(PermissionHelper.FINE_LOCATION, REQUEST_LOCATION_PERMISSION)
             } else {
                 presenter.onPermissionAllowed()
             }

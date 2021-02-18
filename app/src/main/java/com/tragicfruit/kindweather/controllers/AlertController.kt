@@ -96,7 +96,7 @@ class AlertReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         context ?: return
 
-        if (PermissionHelper.hasFullLocationPermission(context)) {
+        if (PermissionHelper.hasBackgroundLocationPermission(context)) {
             Timber.d("Requesting current location")
 
             // Request current location

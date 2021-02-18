@@ -21,7 +21,7 @@ class FetchForecastWorker(context: Context, workerParams: WorkerParameters) : Li
     @SuppressWarnings("MissingPermission")
     override fun startWork(): ListenableFuture<Result> {
         val callback = CallbackToFutureAdapter.Resolver<Result> { completer ->
-            if (PermissionHelper.hasFullLocationPermission(applicationContext)) {
+            if (PermissionHelper.hasBackgroundLocationPermission(applicationContext)) {
                 Timber.d("Requesting current location")
 
 

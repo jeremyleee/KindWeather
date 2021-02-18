@@ -20,9 +20,9 @@
     <string name="allow_location_title">Allow location permissions</string>
     <string name="allow_location_desc">To get started, please allow location permissions so we can figure out the forecast for your current location.</string>
     <string name="allow_location_allow">Allow</string>
-    <string name="allow_location_permission_error">Please allow full location permissions to continue</string>
+    <string name="allow_location_permission_error">Please allow location permissions to continue</string>
 
-    <string name="alert_list_allow_location_text">Notifications disabled! Please allow full location permissions.</string>
+    <string name="alert_list_allow_location_text">Notifications disabled! Please allow background location permissions.</string>
     <string name="alert_list_allow_location_button">Allow</string>
     
     <string name="home_feed">Feed</string>
