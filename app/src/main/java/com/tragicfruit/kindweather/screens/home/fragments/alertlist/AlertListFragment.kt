@@ -54,7 +54,7 @@ class AlertListFragment : WFragment(), AlertListContract.View, AlertCell.Listene
         findNavController().navigate(action)
     }
 
-    override fun requestLocationPermission() {
+    override fun requestBackgroundLocationPermission() {
         requestPermissions(PermissionHelper.BACKGROUND_LOCATION, REQUEST_LOCATION_PERMISSION)
     }
 

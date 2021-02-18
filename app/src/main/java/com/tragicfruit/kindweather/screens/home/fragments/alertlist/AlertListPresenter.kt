@@ -24,7 +24,7 @@ class AlertListPresenter(override var view: AlertListContract.View) : AlertListC
     }
 
     override fun onAllowLocationClicked() {
-        view.requestLocationPermission()
+        view.requestBackgroundLocationPermission()
     }
 
     override fun resume() {

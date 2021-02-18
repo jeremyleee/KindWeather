@@ -21,10 +21,11 @@ class WApplication : Application() {
 
         Realm.init(this)
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()
-                .name("KindWeatherDB")
-                .schemaVersion(1)
-                .deleteRealmIfMigrationNeeded() // TODO: remove on production
-                .build())
+            .name("KindWeatherDB")
+            .schemaVersion(1)
+            .allowWritesOnUiThread(true)
+            .deleteRealmIfMigrationNeeded() // TODO: remove on production
+            .build())
 
         SharedPrefsHelper.init(this)
         ViewHelper.init(this)

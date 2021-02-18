@@ -11,7 +11,7 @@ interface AlertListContract {
         fun initView(alertList: RealmResults<WeatherAlert>)
         fun showAlertDetailScreen(alert: WeatherAlert, position: Int)
         fun refreshList()
-        fun requestLocationPermission()
+        fun requestBackgroundLocationPermission()
     }
 
     interface Presenter : WPresenter<View> {

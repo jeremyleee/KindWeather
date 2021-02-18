@@ -16,7 +16,11 @@ class AllowLocationFragment : WFragment(), AllowLocationContract.View {
     private val presenter = AllowLocationPresenter(this)
     private var callback: AllowLocationContract.Callback? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_allow_location, container, false)
     }
 
@@ -29,7 +33,7 @@ class AllowLocationFragment : WFragment(), AllowLocationContract.View {
     }
 
     override fun requestLocationPermission() {
-        activity?.let {
+        context?.let {
             if (!PermissionHelper.hasFineLocationPermission(it)) {
                 requestPermissions(PermissionHelper.FINE_LOCATION, REQUEST_LOCATION_PERMISSION)
             } else {
@@ -38,7 +42,11 @@ class AllowLocationFragment : WFragment(), AllowLocationContract.View {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         when (requestCode) {
             REQUEST_LOCATION_PERMISSION -> {
                 if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
