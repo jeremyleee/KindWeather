@@ -12,8 +12,8 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.components.AlertDetailParamView
@@ -22,12 +22,12 @@ import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.model.WeatherAlertParam
 import com.tragicfruit.kindweather.screens.WFragment
 import com.tragicfruit.kindweather.utils.ColorHelper
+import dagger.hilt.android.AndroidEntryPoint
 
-class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailParamView.Listener {
+@AndroidEntryPoint
+class AlertDetailFragment : WFragment(), AlertDetailParamView.Listener {
 
-    private val presenter = AlertDetailPresenter(this)
-
-    private val args: AlertDetailFragmentArgs by navArgs()
+    private val viewModel: AlertDetailViewModel by viewModels()
 
     private var _binding: FragmentAlertDetailBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -43,33 +43,35 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.init(args.alertId)
+        val color = ContextCompat.getColor(requireContext(), viewModel.alert.getInfo().color)
+
+        initHeaderView(viewModel.alert, color)
+        initContentViews(viewModel.alert, color, requireContext())
+
+        viewModel.resetButtonEnabled.observe(viewLifecycleOwner) { enabled ->
+            binding.resetButton.isEnabled = enabled
+        }
+
+        viewModel.alertParams.observe(viewLifecycleOwner) { params ->
+            updateParamListView(params)
+        }
 
         binding.toolbar.setNavigationOnClickListener {
-            presenter.onBackClicked()
+            findNavController().navigateUp()
         }
 
         binding.enableSwitch.setOnCheckedChangeListener { _, isChecked ->
-            presenter.onAlertEnabled(isChecked)
+            viewModel.enableAlert(isChecked)
         }
 
         binding.resetButton.setOnClickListener {
-            presenter.onResetToDefaultClicked()
+            viewModel.resetParams()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun initView(alert: WeatherAlert) {
-        val context = context ?: return
-        val color = ContextCompat.getColor(context, alert.getInfo().color)
-
-        initHeaderView(alert, color)
-        initContentViews(alert, color, context)
-        initParamList(alert)
     }
 
     private fun initHeaderView(alert: WeatherAlert, @ColorInt color: Int) {
@@ -106,34 +108,22 @@ class AlertDetailFragment : WFragment(), AlertDetailContract.View, AlertDetailPa
         binding.resetButton.isEnabled = alert.areParamsEdited()
     }
 
-    private fun initParamList(alert: WeatherAlert) {
-        binding.paramsTitle.isVisible = alert.params.isNotEmpty()
+    private fun updateParamListView(params: List<WeatherAlertParam>) {
+        binding.paramsTitle.isVisible = params.isNotEmpty()
         binding.paramsList.removeAllViews()
-        alert.params.forEach { param ->
+        params.forEach { param ->
             val paramView = AlertDetailParamView(binding.paramsList.context)
-            paramView.setData(ContextCompat.getColor(paramView.context, alert.getInfo().color), param, this)
+            val alertColor = ContextCompat.getColor(paramView.context, viewModel.alert.getInfo().color)
+            paramView.setData(alertColor, param, this)
             binding.paramsList.addView(paramView)
         }
     }
 
-    override fun refreshParamList(alert: WeatherAlert) {
-        initParamList(alert)
-    }
-
     override fun onLowerBoundChanged(param: WeatherAlertParam, value: Double?) {
-        presenter.onLowerBoundChanged(param, value)
+        viewModel.onLowerBoundChanged(param, value)
     }
 
     override fun onUpperBoundChanged(param: WeatherAlertParam, value: Double?) {
-        presenter.onUpperBoundChanged(param, value)
+        viewModel.onUpperBoundChanged(param, value)
     }
-
-    override fun setResetButtonEnabled(enabled: Boolean) {
-        binding.resetButton.isEnabled = enabled
-    }
-
-    override fun closeScreen() {
-        findNavController().navigateUp()
-    }
-
 }
