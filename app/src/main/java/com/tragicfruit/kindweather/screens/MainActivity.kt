@@ -14,7 +14,9 @@ import com.microsoft.appcenter.crashes.Crashes
 import com.microsoft.appcenter.distribute.Distribute
 import com.tragicfruit.kindweather.BuildConfig
 import com.tragicfruit.kindweather.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     @ColorRes

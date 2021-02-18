@@ -31,5 +31,4 @@ open class WFragment : Fragment() {
             applyStatusBarColor(ContextCompat.getColor(it, colorRes), lightStatusBar)
         }
     }
-
 }

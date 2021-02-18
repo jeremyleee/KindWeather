@@ -6,11 +6,13 @@ import com.tragicfruit.kindweather.controllers.NotificationController
 import com.tragicfruit.kindweather.controllers.WeatherController
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import com.tragicfruit.kindweather.utils.ViewHelper
+import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import timber.log.Timber
 
-class WApplication : Application() {
+@HiltAndroidApp
+class KindWeatherApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
