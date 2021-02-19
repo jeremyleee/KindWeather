@@ -23,8 +23,7 @@ class AlertListFragment : WFragment(), AlertCell.Listener {
     override var statusBarColor = R.color.white
 
     private val viewModel: AlertListViewModel by viewModels()
-
-    private lateinit var adapter: AlertListAdapter
+    private val adapter = AlertListAdapter(this)
 
     private var _binding: FragmentAlertListBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -45,7 +44,6 @@ class AlertListFragment : WFragment(), AlertCell.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = AlertListAdapter(this)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
