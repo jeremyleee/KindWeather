@@ -8,13 +8,20 @@ import androidx.core.content.res.ResourcesCompat
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.utils.ViewHelper
 import com.tragicfruit.kindweather.utils.setPadding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class WButton : TextView {
+@AndroidEntryPoint
+class WButton @JvmOverloads constructor(
+    context: Context,
+    attributeSet: AttributeSet? = null,
+    style: Int = 0
+) : TextView(context, attributeSet, style) {
 
-    @JvmOverloads
-    constructor(context: Context, attributeSet: AttributeSet? = null, style: Int = 0): super(context, attributeSet, style) {
-        setPadding(ViewHelper.toPx(28), ViewHelper.toPx(14))
+    @Inject lateinit var viewHelper: ViewHelper
 
+    init {
+        setPadding(viewHelper.toPx(28), viewHelper.toPx(14))
         typeface = ResourcesCompat.getFont(context, R.font.lato_bold)
         textSize = 12f
         letterSpacing = 0.1f

@@ -7,13 +7,20 @@ import android.widget.LinearLayout
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.utils.ViewHelper
 import com.tragicfruit.kindweather.utils.setMargins
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class OnboardingIndicator : LinearLayout {
+@AndroidEntryPoint
+class OnboardingIndicator @JvmOverloads constructor(
+    context: Context,
+    attributeSet: AttributeSet? = null,
+    style: Int = 0
+) : LinearLayout(context, attributeSet, style) {
 
-    @JvmOverloads
-    constructor(context: Context, attributeSet: AttributeSet? = null, style: Int = 0): super(context, attributeSet, style) {
+    @Inject lateinit var viewHelper: ViewHelper
+
+    init {
         orientation = HORIZONTAL
-
         val pageCount = attributeSet?.let {
             val typedArray = context.obtainStyledAttributes(it, R.styleable.OnboardingIndicator)
 
@@ -23,7 +30,6 @@ class OnboardingIndicator : LinearLayout {
                 typedArray.recycle()
             }
         } ?: 0
-
         setPageCount(pageCount)
     }
 
@@ -33,9 +39,9 @@ class OnboardingIndicator : LinearLayout {
             val indicator = OnboardingPageIndicator(context)
             indicator.setCurrent(i == initialPage, false)
             addView(indicator, LayoutParams(
-                ViewHelper.parsePx(R.dimen.onboarding_indicator_size),
-                ViewHelper.parsePx(R.dimen.onboarding_indicator_size)).apply {
-                setMargins(ViewHelper.parsePx(R.dimen.app_margin), 0)
+                viewHelper.parsePx(R.dimen.onboarding_indicator_size),
+                viewHelper.parsePx(R.dimen.onboarding_indicator_size)).apply {
+                setMargins(viewHelper.parsePx(R.dimen.app_margin), 0)
             })
         }
     }

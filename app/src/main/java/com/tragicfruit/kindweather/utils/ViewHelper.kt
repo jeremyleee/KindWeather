@@ -4,13 +4,9 @@ import android.content.Context
 import android.content.res.Resources
 import androidx.annotation.DimenRes
 
-object ViewHelper {
+class ViewHelper(context: Context) {
 
-    private var resources: Resources? = null
-
-    fun init(context: Context) {
-        this.resources = context.resources
-    }
+    private val resources = context.resources
 
     fun toPx(dp: Int): Int {
         resources?.let { res ->
@@ -21,5 +17,4 @@ object ViewHelper {
     fun parsePx(@DimenRes dimen: Int): Int {
         return resources?.getDimension(dimen)?.toInt() ?: 0
     }
-
 }

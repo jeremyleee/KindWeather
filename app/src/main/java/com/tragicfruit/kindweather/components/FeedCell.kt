@@ -23,6 +23,7 @@ import javax.inject.Inject
 class FeedCell(context: Context, private val listener: Listener? = null) : LinearLayout(context) {
 
     @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
+    @Inject lateinit var viewHelper: ViewHelper
 
     private val dateView = TextView(context)
     private val cellContainer = RelativeLayout(context)
@@ -36,22 +37,22 @@ class FeedCell(context: Context, private val listener: Listener? = null) : Linea
         dateView.setTextColor(ContextCompat.getColor(context, R.color.text_lt_grey))
         addView(dateView, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
             setMargins(
-                ViewHelper.parsePx(R.dimen.app_margin_xx),
-                ViewHelper.parsePx(R.dimen.app_margin_xx),
-                ViewHelper.parsePx(R.dimen.app_margin_xx),
+                viewHelper.parsePx(R.dimen.app_margin_xx),
+                viewHelper.parsePx(R.dimen.app_margin_xx),
+                viewHelper.parsePx(R.dimen.app_margin_xx),
                 0)
         })
 
         cellContainer.setBackgroundResource(R.drawable.round_rect_cell_background)
-        cellContainer.elevation = ViewHelper.parsePx(R.dimen.app_margin).toFloat()
-        cellContainer.outlineProvider = RoundRectOutlineProvider(ViewHelper.parsePx(R.dimen.round_rect_cell_radius).toFloat())
-        cellContainer.setPadding(ViewHelper.parsePx(R.dimen.app_margin_xx))
+        cellContainer.elevation = viewHelper.parsePx(R.dimen.app_margin).toFloat()
+        cellContainer.outlineProvider = RoundRectOutlineProvider(viewHelper.parsePx(R.dimen.round_rect_cell_radius).toFloat())
+        cellContainer.setPadding(viewHelper.parsePx(R.dimen.app_margin_xx))
         addView(cellContainer, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
-            setMargins(ViewHelper.parsePx(R.dimen.app_margin_xx))
+            setMargins(viewHelper.parsePx(R.dimen.app_margin_xx))
         })
 
         icon.scaleType = ImageView.ScaleType.FIT_CENTER
-        cellContainer.addView(icon, ViewHelper.parsePx(R.dimen.weather_icon_size), ViewHelper.parsePx(R.dimen.weather_icon_size))
+        cellContainer.addView(icon, viewHelper.parsePx(R.dimen.weather_icon_size), viewHelper.parsePx(R.dimen.weather_icon_size))
 
         highTempView.setTextColor(ContextCompat.getColor(context, R.color.text_grey))
         highTempView.gravity = Gravity.CENTER_HORIZONTAL
@@ -59,7 +60,7 @@ class FeedCell(context: Context, private val listener: Listener? = null) : Linea
             addRule(RelativeLayout.ALIGN_START, icon.getViewId())
             addRule(RelativeLayout.ALIGN_END, icon.getViewId())
             addRule(RelativeLayout.BELOW, icon.getViewId())
-            setMargins(0, ViewHelper.parsePx(R.dimen.app_margin), 0, 0)
+            setMargins(0, viewHelper.parsePx(R.dimen.app_margin), 0, 0)
         })
 
         descriptionView.textSize = 20f
@@ -68,7 +69,7 @@ class FeedCell(context: Context, private val listener: Listener? = null) : Linea
         cellContainer.addView(descriptionView, RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT).apply {
             addRule(RelativeLayout.END_OF, icon.getViewId())
             addRule(RelativeLayout.CENTER_VERTICAL)
-            setMargins(ViewHelper.parsePx(R.dimen.app_margin_xxx), 0, 0, 0)
+            setMargins(viewHelper.parsePx(R.dimen.app_margin_xxx), 0, 0, 0)
         })
     }
 
