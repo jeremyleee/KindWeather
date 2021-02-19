@@ -1,12 +1,8 @@
 package com.tragicfruit.kindweather.model
 
-import com.tragicfruit.kindweather.controllers.ForecastResponse
-import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmObject
-import io.realm.kotlin.createObject
 import timber.log.Timber
-import java.util.*
 
 /**
  * Forecast for a day

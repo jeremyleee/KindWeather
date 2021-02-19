@@ -1,7 +1,7 @@
 package com.tragicfruit.kindweather.di
 
 import com.tragicfruit.kindweather.BuildConfig
-import com.tragicfruit.kindweather.controllers.DarkSkyAPIService
+import com.tragicfruit.kindweather.api.DarkSkyAPIService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

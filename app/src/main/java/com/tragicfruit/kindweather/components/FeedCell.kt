@@ -12,7 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setMargins
 import androidx.core.view.setPadding
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.controllers.ForecastIcon
+import com.tragicfruit.kindweather.api.ForecastIcon
 import com.tragicfruit.kindweather.model.ForecastType
 import com.tragicfruit.kindweather.model.WeatherNotification
 import com.tragicfruit.kindweather.utils.DisplayUtils

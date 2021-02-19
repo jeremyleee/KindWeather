@@ -1,7 +1,7 @@
 package com.tragicfruit.kindweather.data
 
-import com.tragicfruit.kindweather.controllers.DarkSkyAPIService
-import com.tragicfruit.kindweather.controllers.ForecastResponse
+import com.tragicfruit.kindweather.api.DarkSkyAPIService
+import com.tragicfruit.kindweather.api.ForecastResponse
 import com.tragicfruit.kindweather.model.ForecastData
 import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.model.ForecastType

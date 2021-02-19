@@ -1,6 +1,6 @@
 package com.tragicfruit.kindweather.ui.home.fragments.forecast
 
-import com.tragicfruit.kindweather.controllers.ForecastIcon
+import com.tragicfruit.kindweather.api.ForecastIcon
 import com.tragicfruit.kindweather.ui.WPresenter
 import com.tragicfruit.kindweather.ui.WView
 

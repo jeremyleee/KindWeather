@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.tragicfruit.kindweather.controllers.FetchAddressService
-import com.tragicfruit.kindweather.controllers.ForecastIcon
+import com.tragicfruit.kindweather.api.ForecastIcon
 import com.tragicfruit.kindweather.databinding.FragmentForecastBinding
 import com.tragicfruit.kindweather.ui.WFragment
 import com.tragicfruit.kindweather.utils.ColorHelper
