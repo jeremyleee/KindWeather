@@ -8,28 +8,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TimePicker
+import androidx.fragment.app.viewModels
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.controllers.AlertController
 import com.tragicfruit.kindweather.databinding.FragmentSettingsBinding
 import com.tragicfruit.kindweather.ui.WFragment
 import com.tragicfruit.kindweather.ui.home.settings.dialogs.TimePickerDialogFragment
 import com.tragicfruit.kindweather.ui.home.settings.dialogs.UnitsDialogFragment
 import com.tragicfruit.kindweather.utils.DisplayUtils
-import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class SettingsFragment : WFragment(), SettingsContract.View, TimePickerDialog.OnTimeSetListener, UnitsDialogFragment.Listener {
-
-    @Inject lateinit var alertController: AlertController
-    @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
+class SettingsFragment : WFragment(), TimePickerDialog.OnTimeSetListener, UnitsDialogFragment.Listener {
 
     override var statusBarColor = R.color.white
 
-    private val presenter: SettingsPresenter by lazy {
-        SettingsPresenter(this, sharedPrefsHelper)
-    }
+    private val viewModel: SettingsViewModel by viewModels()
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -50,63 +43,62 @@ class SettingsFragment : WFragment(), SettingsContract.View, TimePickerDialog.On
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.init()
+        viewModel.alertTime.observe(viewLifecycleOwner) { time ->
+            binding.alertTimeItem.setSubtitle(DisplayUtils.getTimeString(time.hour, time.minute, 0))
+        }
+
+        viewModel.useImperialUnits.observe(viewLifecycleOwner) { useImperial ->
+            binding.unitsItem.setSubtitle(if (useImperial) {
+                R.string.settings_units_imperial
+            } else {
+                R.string.settings_units_metric
+            })
+        }
 
         binding.alertTimeItem.setOnClickListener {
-            presenter.onAlertTimeClicked()
+            showAlertTimeDialog()
         }
 
         binding.unitsItem.setOnClickListener {
-            presenter.onUnitsClicked()
+            showChangeUnitsDialog()
         }
 
         binding.darkSkyDisclaimer.setOnClickListener {
-            presenter.onDarkSkyDisclaimerClicked()
+            openDarkSkyWebPage()
         }
     }
 
-    override fun showAlertTimeDialog(initialAlertHour: Int, initialAlertMinute: Int) {
-        val fragment = TimePickerDialogFragment.newInstance(initialAlertHour, initialAlertMinute, this)
-        fragment.show(parentFragmentManager, fragment.javaClass.name)
+    private fun showAlertTimeDialog() {
+        viewModel.alertTime.value?.let {
+            val fragment = TimePickerDialogFragment.newInstance(it.hour, it.minute, this)
+            fragment.show(childFragmentManager, fragment.javaClass.name)
+        }
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        presenter.onAlertTimeChanged(hourOfDay, minute)
-    }
-
-    override fun updateAlertTimeText(alertHour: Int, alertMinute: Int) {
-        binding.alertTimeItem.setSubtitle(DisplayUtils.getTimeString(alertHour, alertMinute, 0))
-    }
-
-    override fun updateUnitsText(usesImperial: Boolean) {
-        val units = getString(if (usesImperial) R.string.settings_units_imperial else R.string.settings_units_metric)
-        binding.unitsItem.setSubtitle(units)
-    }
-
-    override fun restartAlertService() {
         context?.let {
-            alertController.scheduleDailyAlert(it)
+            viewModel.updateAlertTime(it, hourOfDay, minute)
         }
     }
 
-    override fun showChangeUnitsDialog(usesImperial: Boolean) {
-        val units = if (usesImperial) UnitsDialogFragment.Units.IMPERIAL else UnitsDialogFragment.Units.METRIC
-        val fragment = UnitsDialogFragment.newInstance(units, this)
-        fragment.show(parentFragmentManager, fragment.javaClass.name)
+    private fun showChangeUnitsDialog() {
+        viewModel.useImperialUnits.value?.let {
+            val units = if (it) {
+                UnitsDialogFragment.Units.IMPERIAL
+            } else {
+                UnitsDialogFragment.Units.METRIC
+            }
+            val fragment = UnitsDialogFragment.newInstance(units, this)
+            fragment.show(childFragmentManager, fragment.javaClass.name)
+        }
     }
 
     override fun onUnitsChanged(units: UnitsDialogFragment.Units) {
-        presenter.onUnitsChanged(units == UnitsDialogFragment.Units.IMPERIAL)
+        viewModel.updateUnits(units == UnitsDialogFragment.Units.IMPERIAL)
     }
 
-    override fun openWebPage(url: String) {
-        context?.let {
-            val webpage = Uri.parse(url)
-            val intent = Intent(Intent.ACTION_VIEW, webpage)
-            if (intent.resolveActivity(it.packageManager) != null) {
-                startActivity(intent)
-            }
-        }
+    private fun openDarkSkyWebPage() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(SettingsViewModel.DARK_SKY_URL))
+        startActivity(intent)
     }
-
 }
