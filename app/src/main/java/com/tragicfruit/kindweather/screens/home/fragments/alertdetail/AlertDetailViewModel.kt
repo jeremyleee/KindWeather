@@ -37,12 +37,12 @@ class AlertDetailViewModel @Inject constructor(
         resetButtonEnabled.value = false
     }
 
-    fun onLowerBoundChanged(param: WeatherAlertParam, value: Double?) {
+    fun updateLowerBound(param: WeatherAlertParam, value: Double?) {
         repository.setParamLowerBound(param, value)
         resetButtonEnabled.value = true
     }
 
-    fun onUpperBoundChanged(param: WeatherAlertParam, value: Double?) {
+    fun updateUpperBound(param: WeatherAlertParam, value: Double?) {
         repository.setParamUpperBound(param, value)
         resetButtonEnabled.value = true
     }

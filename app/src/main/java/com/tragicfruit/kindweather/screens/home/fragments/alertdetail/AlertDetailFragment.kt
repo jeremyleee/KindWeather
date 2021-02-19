@@ -120,10 +120,10 @@ class AlertDetailFragment : WFragment(), AlertDetailParamView.Listener {
     }
 
     override fun onLowerBoundChanged(param: WeatherAlertParam, value: Double?) {
-        viewModel.onLowerBoundChanged(param, value)
+        viewModel.updateLowerBound(param, value)
     }
 
     override fun onUpperBoundChanged(param: WeatherAlertParam, value: Double?) {
-        viewModel.onUpperBoundChanged(param, value)
+        viewModel.updateUpperBound(param, value)
     }
 }
