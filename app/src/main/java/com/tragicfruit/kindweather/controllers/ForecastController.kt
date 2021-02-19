@@ -15,77 +15,16 @@ import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class ForecastController constructor(
+class ForecastController @Inject constructor(
     private val forecastRepository: ForecastRepository
 ) {
 
-    private var service: DarkSkyAPIService
 
-    init {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.API_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        service = retrofit.create()
-    }
-
-    fun fetchForecast(latitude: Double, longitude: Double, callback: WCallback) {
-        service.fetchForecast(latitude, longitude).enqueue(object : Callback<ForecastResponse> {
-
-                override fun onResponse(call: Call<ForecastResponse>, response: Response<ForecastResponse>) {
-                    if (response.isSuccessful) {
-                        Realm.getDefaultInstance().executeTransaction { realm ->
-                            response.body()?.let { forecastResponse ->
-                                val timestamp = System.currentTimeMillis()
-
-                                for (dailyItem in forecastResponse.daily.data) {
-                                    forecastRepository.fromResponse(dailyItem, forecastResponse.latitude, forecastResponse.longitude, realm)
-                                }
-                                Timber.d("${forecastResponse.daily.data.count()} forecast data fetched")
-
-                                // Clean up old forecasts
-                                if (forecastResponse.daily.data.isNotEmpty()) {
-                                    deleteForecastsBefore(timestamp, realm)
-                                }
-                            }
-                        }
-                    }
-
-                    callback(response.isSuccessful, response.code(), response.message())
-                }
-
-                override fun onFailure(call: Call<ForecastResponse>, t: Throwable) {
-                    callback(false, null, null)
-                }
-
-            })
-    }
-
-    private fun deleteForecastsBefore(timestamp: Long, realm: Realm) {
-        val oldForecasts = realm.where<ForecastPeriod>()
-            .lessThan("fetchedTime", timestamp)
-            .equalTo("displayOnly", false)
-            .findAll()
-
-        Timber.d("${oldForecasts.count()} old forecasts deleted")
-
-        val oldForecastData = realm.where<ForecastData>()
-            .lessThan("fetchedTime", timestamp)
-            .equalTo("displayOnly", false)
-            .findAll()
-
-        Timber.d("${oldForecastData.count()} old forecast data deleted")
-
-        oldForecasts.deleteAllFromRealm()
-        oldForecastData.deleteAllFromRealm()
-    }
 
 }
 
-private interface DarkSkyAPIService {
+interface DarkSkyAPIService {
 
     @GET("forecast/${BuildConfig.API_KEY}/{latitude},{longitude}?exclude=currently,minutely,hourly&units=si")
     fun fetchForecast(@Path("latitude") latitude: Double, @Path("longitude") longitude: Double): Call<ForecastResponse>
-
 }

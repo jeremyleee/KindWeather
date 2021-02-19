@@ -15,9 +15,12 @@ import com.tragicfruit.kindweather.screens.welcome.fragments.allowlocation.Allow
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class WelcomeFragment : WFragment(), AllowLocationContract.Callback, ViewPager.OnPageChangeListener {
+
+    @Inject lateinit var alertController: AlertController
 
     private var _binding: FragmentWelcomeBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -52,7 +55,7 @@ class WelcomeFragment : WFragment(), AllowLocationContract.Callback, ViewPager.O
     override fun onLocationPermissionGranted() {
         SharedPrefsHelper.setOnboardingCompleted(true)
         enqueueFetchWork()
-        context?.let { AlertController.scheduleDailyAlert(it) }
+        context?.let { alertController.scheduleDailyAlert(it) }
 
         // Finish onboarding
         val directions = WelcomeFragmentDirections.actionWelcomeFragmentToHomeFragment(true)

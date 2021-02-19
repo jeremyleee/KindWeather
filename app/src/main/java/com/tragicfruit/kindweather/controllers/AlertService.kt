@@ -25,18 +25,18 @@ class AlertService : IntentService(AlertService::javaClass.name) {
     @Inject lateinit var notificationRepository: NotificationRepository
     @Inject lateinit var forecastRepository: ForecastRepository
 
-    @Inject lateinit var forecastController: ForecastController
+    @Inject lateinit var notificationContext: NotificationController
 
     private val calendar = Calendar.getInstance().apply {
         timeInMillis = System.currentTimeMillis()
     }
 
     override fun onHandleIntent(intent: Intent?) {
-        startForeground(FOREGROUND_ID, NotificationController.getAlertForegroundNotification(this))
+        startForeground(FOREGROUND_ID, notificationContext.getAlertForegroundNotification(this))
 
         if (LocationResult.hasResult(intent)) {
             val location = LocationResult.extractResult(intent).lastLocation
-            forecastController.fetchForecast(location.latitude, location.longitude) { success, code, message ->
+            forecastRepository.fetchForecast(location.latitude, location.longitude) { success, code, message ->
                 if (!success) {
                     // TODO: logic for comparing cached forecasts with current location
                 }
@@ -75,7 +75,7 @@ class AlertService : IntentService(AlertService::javaClass.name) {
                 message = getString(alert.getInfo().title)
                 color = ContextCompat.getColor(this, alert.getInfo().color)
                 Timber.i("Showing push notification: $message")
-                NotificationController.notifyWeatherAlert(this, alert, forecast)
+                notificationContext.notifyWeatherAlert(this, alert, forecast)
             }
 
             // Create model object for feed

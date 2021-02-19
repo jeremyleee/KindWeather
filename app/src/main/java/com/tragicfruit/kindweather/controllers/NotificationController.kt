@@ -20,18 +20,11 @@ import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.screens.home.fragments.forecast.ForecastFragmentArgs
+import javax.inject.Inject
 
-object NotificationController {
+class NotificationController @Inject constructor() {
 
-    private const val LOCATION_CHANNEL_ID = "location"
-    private const val WEATHER_CHANNEL_ID = "weather"
-
-    private const val LOCATION_PERMISSIONS_ID = 600
-    private const val WEATHER_ALERT_ID = 601
-
-    private const val APP_SETTINGS_ACTION = 601
-
-    fun init(context: Context) {
+    fun setupNotificationChannels(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Location notifications
             createNotificationChannel(context,
@@ -114,4 +107,13 @@ object NotificationController {
             .build()
     }
 
+    companion object {
+        private const val LOCATION_CHANNEL_ID = "location"
+        private const val WEATHER_CHANNEL_ID = "weather"
+
+        private const val LOCATION_PERMISSIONS_ID = 600
+        private const val WEATHER_ALERT_ID = 601
+
+        private const val APP_SETTINGS_ACTION = 1255
+    }
 }

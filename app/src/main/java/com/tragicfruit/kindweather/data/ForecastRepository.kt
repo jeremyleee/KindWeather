@@ -1,15 +1,75 @@
 package com.tragicfruit.kindweather.data
 
+import com.tragicfruit.kindweather.controllers.DarkSkyAPIService
 import com.tragicfruit.kindweather.controllers.ForecastResponse
 import com.tragicfruit.kindweather.model.ForecastData
 import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.model.ForecastType
+import com.tragicfruit.kindweather.utils.WCallback
 import io.realm.Realm
 import io.realm.kotlin.createObject
+import io.realm.kotlin.where
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
-class ForecastRepository @Inject constructor() {
+class ForecastRepository @Inject constructor(
+    private val apiService: DarkSkyAPIService
+) {
+
+    fun fetchForecast(latitude: Double, longitude: Double, callback: WCallback) {
+        apiService.fetchForecast(latitude, longitude).enqueue(object : Callback<ForecastResponse> {
+
+            override fun onResponse(call: Call<ForecastResponse>, response: Response<ForecastResponse>) {
+                if (response.isSuccessful) {
+                    Realm.getDefaultInstance().executeTransaction { realm ->
+                        response.body()?.let { forecastResponse ->
+                            val timestamp = System.currentTimeMillis()
+
+                            for (dailyItem in forecastResponse.daily.data) {
+                                fromResponse(dailyItem, forecastResponse.latitude, forecastResponse.longitude, realm)
+                            }
+                            Timber.d("${forecastResponse.daily.data.count()} forecast data fetched")
+
+                            // Clean up old forecasts
+                            if (forecastResponse.daily.data.isNotEmpty()) {
+                                deleteForecastsBefore(timestamp, realm)
+                            }
+                        }
+                    }
+                }
+
+                callback(response.isSuccessful, response.code(), response.message())
+            }
+
+            override fun onFailure(call: Call<ForecastResponse>, t: Throwable) {
+                callback(false, null, null)
+            }
+
+        })
+    }
+
+    private fun deleteForecastsBefore(timestamp: Long, realm: Realm) {
+        val oldForecasts = realm.where<ForecastPeriod>()
+            .lessThan("fetchedTime", timestamp)
+            .equalTo("displayOnly", false)
+            .findAll()
+
+        Timber.d("${oldForecasts.count()} old forecasts deleted")
+
+        val oldForecastData = realm.where<ForecastData>()
+            .lessThan("fetchedTime", timestamp)
+            .equalTo("displayOnly", false)
+            .findAll()
+
+        Timber.d("${oldForecastData.count()} old forecast data deleted")
+
+        oldForecasts.deleteAllFromRealm()
+        oldForecastData.deleteAllFromRealm()
+    }
 
     fun createData(type: ForecastType, rawValue: Double?, realm: Realm): ForecastData? {
         val value = rawValue ?: return null

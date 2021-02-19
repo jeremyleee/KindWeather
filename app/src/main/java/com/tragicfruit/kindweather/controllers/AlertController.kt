@@ -11,18 +11,14 @@ import android.os.Build
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-import com.tragicfruit.kindweather.model.ForecastType
-import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.utils.PermissionHelper
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
-import io.realm.Realm
-import io.realm.kotlin.where
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.util.*
+import javax.inject.Inject
 
-object AlertController {
-
-    private const val ALERT_RECEIVER_REQUEST = 300
+class AlertController @Inject constructor() {
 
     private val calendar = Calendar.getInstance()
 
@@ -53,9 +49,15 @@ object AlertController {
             PackageManager.DONT_KILL_APP)
     }
 
+    companion object {
+        private const val ALERT_RECEIVER_REQUEST = 300
+    }
 }
 
+@AndroidEntryPoint
 class AlertReceiver : BroadcastReceiver() {
+
+    @Inject lateinit var notificationController: NotificationController
 
     @SuppressWarnings("MissingPermission")
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -79,7 +81,7 @@ class AlertReceiver : BroadcastReceiver() {
 
         } else {
             // No location permission, display notification
-            NotificationController.notifyLocationPermissionsRequired(context)
+            notificationController.notifyLocationPermissionsRequired(context)
         }
     }
 
@@ -91,13 +93,16 @@ class AlertReceiver : BroadcastReceiver() {
 
 }
 
+@AndroidEntryPoint
 class BootReceiver : BroadcastReceiver() {
+
+    @Inject lateinit var alertController: AlertController
 
     override fun onReceive(context: Context?, intent: Intent?) {
         context ?: return
 
         if (intent?.action == Intent.ACTION_BOOT_COMPLETED) {
-            AlertController.scheduleDailyAlert(context)
+            alertController.scheduleDailyAlert(context)
         }
     }
 

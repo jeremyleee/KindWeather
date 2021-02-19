@@ -4,8 +4,8 @@ import android.app.IntentService
 import android.content.Context
 import android.content.Intent
 import android.location.Geocoder
-import android.os.Bundle
 import android.os.ResultReceiver
+import androidx.core.os.bundleOf
 import com.tragicfruit.kindweather.R
 import timber.log.Timber
 import java.io.IOException
@@ -48,8 +48,7 @@ class FetchAddressService : IntentService(FetchAddressService::javaClass.name) {
     }
 
     private fun deliverResultToReceiver(resultCode: Int, message: String) {
-        val bundle = Bundle().apply { putString(RESULT_DATA, message) }
-        receiver?.send(resultCode, bundle)
+        receiver?.send(resultCode, bundleOf(RESULT_DATA to message))
     }
 
     companion object {
@@ -63,9 +62,11 @@ class FetchAddressService : IntentService(FetchAddressService::javaClass.name) {
 
         fun start(context: Context, latitude: Double, longitude: Double, receiver: ResultReceiver) {
             context.startService(Intent(context, FetchAddressService::class.java).apply {
-                putExtra(LATITUDE_KEY, latitude)
-                putExtra(LONGITUDE_KEY, longitude)
-                putExtra(RECEIVER_KEY, receiver)
+                putExtras(bundleOf(
+                    LATITUDE_KEY to latitude,
+                    LONGITUDE_KEY to longitude,
+                    RECEIVER_KEY to receiver,
+                ))
             })
         }
     }

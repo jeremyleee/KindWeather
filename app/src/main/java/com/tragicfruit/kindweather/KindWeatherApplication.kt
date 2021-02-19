@@ -17,6 +17,7 @@ import javax.inject.Inject
 class KindWeatherApplication : Application() {
 
     @Inject lateinit var alertRepository: AlertRepository
+    @Inject lateinit var notificationController: NotificationController
 
     override fun onCreate() {
         super.onCreate()
@@ -36,7 +37,7 @@ class KindWeatherApplication : Application() {
         SharedPrefsHelper.init(this)
         ViewHelper.init(this)
 
-        NotificationController.init(this)
+        notificationController.setupNotificationChannels(this)
 
         createInitialAlerts()
     }

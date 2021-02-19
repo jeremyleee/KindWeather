@@ -15,8 +15,13 @@ import com.tragicfruit.kindweather.screens.WFragment
 import com.tragicfruit.kindweather.screens.home.fragments.settings.dialogs.TimePickerDialogFragment
 import com.tragicfruit.kindweather.screens.home.fragments.settings.dialogs.UnitsDialogFragment
 import com.tragicfruit.kindweather.utils.DisplayUtils
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SettingsFragment : WFragment(), SettingsContract.View, TimePickerDialog.OnTimeSetListener, UnitsDialogFragment.Listener {
+
+    @Inject lateinit var alertController: AlertController
 
     override var statusBarColor = R.color.white
 
@@ -76,7 +81,7 @@ class SettingsFragment : WFragment(), SettingsContract.View, TimePickerDialog.On
 
     override fun restartAlertService() {
         context?.let {
-            AlertController.scheduleDailyAlert(it)
+            alertController.scheduleDailyAlert(it)
         }
     }
 
