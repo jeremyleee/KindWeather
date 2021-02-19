@@ -15,15 +15,18 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SettingsListItemView : RelativeLayout {
+class SettingsListItemView @JvmOverloads constructor(
+    context: Context,
+    attributeSet: AttributeSet? = null,
+    style: Int = 0
+) : RelativeLayout(context, attributeSet, style) {
 
     @Inject lateinit var viewHelper: ViewHelper
 
     private val title = TextView(context)
     private val subtitle = TextView(context)
 
-    @JvmOverloads
-    constructor(context: Context, attributeSet: AttributeSet? = null, style: Int = 0): super(context, attributeSet, style) {
+    init {
         setPadding(viewHelper.parsePx(R.dimen.app_margin_xx))
 
         title.typeface = ResourcesCompat.getFont(context, R.font.lato_bold)

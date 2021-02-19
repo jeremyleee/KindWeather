@@ -24,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AlertCell(context: Context, private val listener: Listener? = null) : ConstraintLayout(context) {
+class AlertCell(context: Context) : ConstraintLayout(context) {
     
     @Inject lateinit var viewHelper: ViewHelper
 
@@ -72,7 +72,7 @@ class AlertCell(context: Context, private val listener: Listener? = null) : Cons
         illustrationSet.applyTo(this)
     }
 
-    fun setData(alert: WeatherAlert) {
+    fun setData(alert: WeatherAlert, listener: Listener? = null) {
         setOnClickListener {
             listener?.onAlertClicked(alert)
         }

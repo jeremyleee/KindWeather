@@ -22,10 +22,12 @@ class WButton @JvmOverloads constructor(
 
     init {
         setPadding(viewHelper.toPx(28), viewHelper.toPx(14))
+
         typeface = ResourcesCompat.getFont(context, R.font.lato_bold)
         textSize = 12f
         letterSpacing = 0.1f
         isAllCaps = true
+
         setTextColor(ContextCompat.getColor(context, R.color.text_black))
         setBackgroundResource(R.drawable.button_background)
     }

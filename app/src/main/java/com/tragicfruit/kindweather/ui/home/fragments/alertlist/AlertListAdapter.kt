@@ -12,13 +12,13 @@ class AlertListAdapter(
 ) : ListAdapter<WeatherAlert, AlertViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlertViewHolder {
-        return AlertViewHolder(AlertCell(parent.context, listener))
+        return AlertViewHolder(AlertCell(parent.context))
     }
 
     override fun onBindViewHolder(holder: AlertViewHolder, position: Int) {
         val alert = getItem(position)
         val cell = holder.itemView as AlertCell
-        cell.setData(alert)
+        cell.setData(alert, listener)
     }
 
     companion object {

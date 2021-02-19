@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FeedCell(context: Context, private val listener: Listener? = null) : LinearLayout(context) {
+class FeedCell(context: Context) : LinearLayout(context) {
 
     @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
     @Inject lateinit var viewHelper: ViewHelper
@@ -73,7 +73,7 @@ class FeedCell(context: Context, private val listener: Listener? = null) : Linea
         })
     }
 
-    fun setData(notification: WeatherNotification) {
+    fun setData(notification: WeatherNotification, listener: Listener? = null) {
         setOnClickListener {
             listener?.onFeedItemClicked(notification)
         }
