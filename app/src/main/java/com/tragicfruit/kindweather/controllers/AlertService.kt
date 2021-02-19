@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationResult
 import com.tragicfruit.kindweather.R
+import com.tragicfruit.kindweather.data.NotificationRepository
 import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.model.WeatherNotification
@@ -15,8 +16,12 @@ import io.realm.kotlin.where
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 class AlertService : IntentService(AlertService::javaClass.name) {
+
+    @Inject
+    lateinit var notificationRepository: NotificationRepository
 
     private val calendar = Calendar.getInstance().apply {
         timeInMillis = System.currentTimeMillis()
@@ -70,8 +75,8 @@ class AlertService : IntentService(AlertService::javaClass.name) {
             }
 
             // Create model object for feed
+            notificationRepository.createNotification(message, forecast, color)
             realm.executeTransaction { realm ->
-                WeatherNotification.create(message, forecast, color, realm)
                 ForecastPeriod.setDisplayed(forecast, true, realm)
             }
         }
