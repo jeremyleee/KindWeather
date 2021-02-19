@@ -26,41 +26,6 @@ object AlertController {
 
     private val calendar = Calendar.getInstance()
 
-    fun createAlerts() {
-        if (Realm.getDefaultInstance().where<WeatherAlert>().count() > 0) {
-            // Alerts already created
-            return
-        }
-
-        Realm.getDefaultInstance().executeTransaction { realm ->
-            WeatherAlert.create(1, WeatherAlert.Info.UMBRELLA, realm).also { alert ->
-                WeatherAlert.addParam(alert, ForecastType.PRECIP_PROBABILITY, 0.5, null, realm)
-                WeatherAlert.addParam(alert, ForecastType.WIND_GUST, null, 10.8, realm)
-            }
-
-            WeatherAlert.create(2, WeatherAlert.Info.JACKET, realm).also { alert ->
-                WeatherAlert.addParam(alert, ForecastType.TEMP_HIGH, 4.0, 12.0, realm)
-            }
-
-            WeatherAlert.create(3, WeatherAlert.Info.TSHIRT, realm).also { alert ->
-                WeatherAlert.addParam(alert, ForecastType.TEMP_HIGH, 25.0, null, realm)
-            }
-
-            WeatherAlert.create(4, WeatherAlert.Info.SUNSCREEN, realm).also { alert ->
-                WeatherAlert.addParam(alert, ForecastType.UV_INDEX, 6.0, null, realm)
-            }
-
-            WeatherAlert.create(5, WeatherAlert.Info.RAIN_JACKET, realm).also { alert ->
-                WeatherAlert.addParam(alert, ForecastType.PRECIP_PROBABILITY, 0.5, null, realm)
-                WeatherAlert.addParam(alert, ForecastType.WIND_GUST, 10.8, null, realm)
-            }
-
-            WeatherAlert.create(6, WeatherAlert.Info.THICK_JACKET, realm).also { alert ->
-                WeatherAlert.addParam(alert, ForecastType.TEMP_HIGH, null, 4.0, realm)
-            }
-        }
-    }
-
     fun scheduleDailyAlert(context: Context) {
         val alarmManager = ContextCompat.getSystemService(context, AlarmManager::class.java)
 

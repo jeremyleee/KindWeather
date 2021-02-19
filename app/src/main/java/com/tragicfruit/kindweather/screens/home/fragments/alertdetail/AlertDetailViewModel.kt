@@ -3,21 +3,21 @@ package com.tragicfruit.kindweather.screens.home.fragments.alertdetail
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.tragicfruit.kindweather.model.WeatherAlert
+import com.tragicfruit.kindweather.data.AlertRepository
 import com.tragicfruit.kindweather.model.WeatherAlertParam
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.realm.Realm
 import javax.inject.Inject
 
 @HiltViewModel
 class AlertDetailViewModel @Inject constructor(
+    private val alertRepository: AlertRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     // TODO: update when Hilt supports navArgs
     val alert = requireNotNull(
         savedStateHandle.get<Int>("alertId")?.let { id ->
-            WeatherAlert.fromId(id, Realm.getDefaultInstance())
+            alertRepository.findAlert(id)
         }
     )
 
@@ -25,16 +25,12 @@ class AlertDetailViewModel @Inject constructor(
     val alertParams: MutableLiveData<List<WeatherAlertParam>> by lazy { MutableLiveData(alert.params) }
 
     fun enableAlert(enabled: Boolean) {
-        Realm.getDefaultInstance().executeTransaction {
-            WeatherAlert.setEnabled(alert, enabled, it)
-        }
+        alertRepository.setAlertEnabled(alert, enabled)
     }
 
     fun resetParams() {
-        Realm.getDefaultInstance().executeTransaction { realm ->
-            alert.params.forEach { param ->
-                WeatherAlertParam.resetToDefault(param, realm)
-            }
+        alert.params.forEach { param ->
+            alertRepository.resetParamsToDefault(param)
         }
 
         alertParams.value = alert.params
@@ -42,18 +38,12 @@ class AlertDetailViewModel @Inject constructor(
     }
 
     fun onLowerBoundChanged(param: WeatherAlertParam, value: Double?) {
-        Realm.getDefaultInstance().executeTransaction {
-            WeatherAlertParam.setLowerBound(param, value, it)
-        }
-
+        alertRepository.setParamLowerBound(param, value)
         resetButtonEnabled.value = true
     }
 
     fun onUpperBoundChanged(param: WeatherAlertParam, value: Double?) {
-        Realm.getDefaultInstance().executeTransaction {
-            WeatherAlertParam.setUpperBound(param, value, it)
-        }
-
+        alertRepository.setParamUpperBound(param, value)
         resetButtonEnabled.value = true
     }
 }
