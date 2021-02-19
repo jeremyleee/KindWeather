@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/feedFragment"
-        android:name="com.tragicfruit.kindweather.screens.home.fragments.feed.FeedFragment"
+        android:name="com.tragicfruit.kindweather.ui.home.fragments.feed.FeedFragment"
         android:label="@string/home_feed" >
         <action
             android:id="@+id/action_feedFragment_to_forecastFragment"
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/alertListFragment"
-        android:name="com.tragicfruit.kindweather.screens.home.fragments.alertlist.AlertListFragment"
+        android:name="com.tragicfruit.kindweather.ui.home.fragments.alertlist.AlertListFragment"
         android:label="@string/home_conditions" >
         <action
             android:id="@+id/action_alertsFragment_to_alertDetailFragment"
@@ -36,11 +36,11 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.tragicfruit.kindweather.screens.home.fragments.settings.SettingsFragment"
+        android:name="com.tragicfruit.kindweather.ui.home.fragments.settings.SettingsFragment"
         android:label="@string/home_settings" />
     <fragment
         android:id="@+id/alertDetailFragment"
-        android:name="com.tragicfruit.kindweather.screens.home.fragments.alertdetail.AlertDetailFragment"
+        android:name="com.tragicfruit.kindweather.ui.home.fragments.alertdetail.AlertDetailFragment"
         android:label="AlertDetailFragment" >
         <argument
             android:name="alertId"
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/forecastFragment"
-        android:name="com.tragicfruit.kindweather.screens.home.fragments.forecast.ForecastFragment"
+        android:name="com.tragicfruit.kindweather.ui.home.fragments.forecast.ForecastFragment"
         android:label="ForecastFragment" >
         <argument
             android:name="forecastId"

@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.tragicfruit.kindweather.screens.splash.SplashFragment"
+        android:name="com.tragicfruit.kindweather.ui.splash.SplashFragment"
         android:label="SplashFragment" >
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.tragicfruit.kindweather.screens.welcome.WelcomeFragment"
+        android:name="com.tragicfruit.kindweather.ui.welcome.WelcomeFragment"
         android:label="WelcomeFragment" >
         <action
             android:id="@+id/action_welcomeFragment_to_homeFragment"
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.tragicfruit.kindweather.screens.home.HomeFragment"
+        android:name="com.tragicfruit.kindweather.ui.home.HomeFragment"
         android:label="HomeFragment" >
         <argument
             android:name="fromOnboarding"

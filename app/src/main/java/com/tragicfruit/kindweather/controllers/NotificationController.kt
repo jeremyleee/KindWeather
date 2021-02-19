@@ -14,12 +14,11 @@ import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.navigation.NavDeepLinkBuilder
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.model.WeatherAlert
-import com.tragicfruit.kindweather.screens.home.fragments.forecast.ForecastFragmentArgs
+import com.tragicfruit.kindweather.ui.home.fragments.forecast.ForecastFragmentArgs
 import javax.inject.Inject
 
 class NotificationController @Inject constructor() {
