@@ -1,31 +1,37 @@
 package com.tragicfruit.kindweather.screens.home.fragments.alertlist
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tragicfruit.kindweather.components.AlertCell
 import com.tragicfruit.kindweather.model.WeatherAlert
-import io.realm.RealmResults
 
-class AlertListAdapter(private val alertList: RealmResults<WeatherAlert>,
-    private val listener: AlertCell.Listener) : RecyclerView.Adapter<AlertViewHolder>() {
-
-    fun getItemPosition(alert: WeatherAlert): Int {
-        return alertList.indexOf(alert)
-    }
+class AlertListAdapter(
+    private val listener: AlertCell.Listener
+) : ListAdapter<WeatherAlert, AlertViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlertViewHolder {
         return AlertViewHolder(AlertCell(parent.context, listener))
     }
 
     override fun onBindViewHolder(holder: AlertViewHolder, position: Int) {
-        alertList[position]?.let { alert ->
-            val cell = holder.itemView as AlertCell
-            cell.setData(alert)
-        }
+        val alert = getItem(position)
+        val cell = holder.itemView as AlertCell
+        cell.setData(alert)
     }
 
-    override fun getItemCount() = alertList.count()
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<WeatherAlert>() {
+            override fun areItemsTheSame(oldItem: WeatherAlert, newItem: WeatherAlert): Boolean {
+                return oldItem.id == newItem.id
+            }
 
+            override fun areContentsTheSame(oldItem: WeatherAlert, newItem: WeatherAlert): Boolean {
+                return oldItem.enabled == newItem.enabled
+            }
+        }
+    }
 }
 
 class AlertViewHolder(itemView: AlertCell) : RecyclerView.ViewHolder(itemView)

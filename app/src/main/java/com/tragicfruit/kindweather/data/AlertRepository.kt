@@ -4,6 +4,8 @@ import com.tragicfruit.kindweather.model.ForecastType
 import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.model.WeatherAlertParam
 import io.realm.Realm
+import io.realm.RealmResults
+import io.realm.Sort
 import io.realm.kotlin.createObject
 import io.realm.kotlin.where
 import javax.inject.Inject
@@ -38,6 +40,13 @@ class AlertRepository @Inject constructor() {
 
     fun findAlert(id: Int) =
         Realm.getDefaultInstance().where<WeatherAlert>().equalTo("id", id).findFirst()
+
+    fun getAllAlerts(): RealmResults<WeatherAlert> {
+        return Realm.getDefaultInstance()
+            .where<WeatherAlert>()
+            .sort("enabled", Sort.DESCENDING, "priority", Sort.ASCENDING)
+            .findAll()
+    }
 
     fun setAlertEnabled(alert: WeatherAlert, enabled: Boolean) {
         Realm.getDefaultInstance().executeTransaction {

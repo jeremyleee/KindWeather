@@ -10,14 +10,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AlertDetailViewModel @Inject constructor(
-    private val alertRepository: AlertRepository,
+    private val repository: AlertRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     // TODO: update when Hilt supports navArgs
     val alert = requireNotNull(
         savedStateHandle.get<Int>("alertId")?.let { id ->
-            alertRepository.findAlert(id)
+            repository.findAlert(id)
         }
     )
 
@@ -25,12 +25,12 @@ class AlertDetailViewModel @Inject constructor(
     val alertParams: MutableLiveData<List<WeatherAlertParam>> by lazy { MutableLiveData(alert.params) }
 
     fun enableAlert(enabled: Boolean) {
-        alertRepository.setAlertEnabled(alert, enabled)
+        repository.setAlertEnabled(alert, enabled)
     }
 
     fun resetParams() {
         alert.params.forEach { param ->
-            alertRepository.resetParamsToDefault(param)
+            repository.resetParamsToDefault(param)
         }
 
         alertParams.value = alert.params
@@ -38,12 +38,12 @@ class AlertDetailViewModel @Inject constructor(
     }
 
     fun onLowerBoundChanged(param: WeatherAlertParam, value: Double?) {
-        alertRepository.setParamLowerBound(param, value)
+        repository.setParamLowerBound(param, value)
         resetButtonEnabled.value = true
     }
 
     fun onUpperBoundChanged(param: WeatherAlertParam, value: Double?) {
-        alertRepository.setParamUpperBound(param, value)
+        repository.setParamUpperBound(param, value)
         resetButtonEnabled.value = true
     }
 }
