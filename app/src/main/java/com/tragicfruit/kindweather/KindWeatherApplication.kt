@@ -5,7 +5,6 @@ import com.tragicfruit.kindweather.controllers.NotificationController
 import com.tragicfruit.kindweather.data.AlertRepository
 import com.tragicfruit.kindweather.model.ForecastType
 import com.tragicfruit.kindweather.model.WeatherAlert
-import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import com.tragicfruit.kindweather.utils.ViewHelper
 import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
@@ -34,7 +33,6 @@ class KindWeatherApplication : Application() {
             .deleteRealmIfMigrationNeeded() // TODO: remove on production
             .build())
 
-        SharedPrefsHelper.init(this)
         ViewHelper.init(this)
 
         notificationController.setupNotificationChannels(this)

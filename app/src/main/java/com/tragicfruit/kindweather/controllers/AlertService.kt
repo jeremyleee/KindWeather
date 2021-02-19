@@ -10,6 +10,7 @@ import com.tragicfruit.kindweather.data.ForecastRepository
 import com.tragicfruit.kindweather.data.NotificationRepository
 import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.model.WeatherAlert
+import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
 import io.realm.Sort
@@ -24,15 +25,15 @@ class AlertService : IntentService(AlertService::javaClass.name) {
 
     @Inject lateinit var notificationRepository: NotificationRepository
     @Inject lateinit var forecastRepository: ForecastRepository
-
-    @Inject lateinit var notificationContext: NotificationController
+    @Inject lateinit var notificationController: NotificationController
+    @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
 
     private val calendar = Calendar.getInstance().apply {
         timeInMillis = System.currentTimeMillis()
     }
 
     override fun onHandleIntent(intent: Intent?) {
-        startForeground(FOREGROUND_ID, notificationContext.getAlertForegroundNotification(this))
+        startForeground(FOREGROUND_ID, notificationController.getAlertForegroundNotification(this))
 
         if (LocationResult.hasResult(intent)) {
             val location = LocationResult.extractResult(intent).lastLocation
@@ -66,7 +67,9 @@ class AlertService : IntentService(AlertService::javaClass.name) {
                 .findAll()
 
             // Highest priority alert
-            val showAlert = enabledAlerts.firstOrNull { it.shouldShowAlert(forecast) }
+            val showAlert = enabledAlerts.firstOrNull {
+                it.shouldShowAlert(forecast, sharedPrefsHelper.usesImperialUnits())
+            }
 
             var message = getString(R.string.feed_entry_default)
             var color = ContextCompat.getColor(this, R.color.alert_no_notification)
@@ -75,7 +78,7 @@ class AlertService : IntentService(AlertService::javaClass.name) {
                 message = getString(alert.getInfo().title)
                 color = ContextCompat.getColor(this, alert.getInfo().color)
                 Timber.i("Showing push notification: $message")
-                notificationContext.notifyWeatherAlert(this, alert, forecast)
+                notificationController.notifyWeatherAlert(this, alert, forecast)
             }
 
             // Create model object for feed

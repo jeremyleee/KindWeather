@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.setupWithNavController
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.databinding.FragmentHomeBinding
 import com.tragicfruit.kindweather.ui.WFragment

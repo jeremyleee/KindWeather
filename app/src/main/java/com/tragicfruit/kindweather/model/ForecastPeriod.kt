@@ -23,14 +23,14 @@ open class ForecastPeriod : RealmObject() {
 
     var displayOnly = false;
 
-    fun satisfiesParam(param: WeatherAlertParam): Boolean {
-        val lowerBound = param.lowerBound
-        val upperBound = param.upperBound
+    fun satisfiesParam(param: WeatherAlertParam, usesImperialUnits: Boolean): Boolean {
+        val lowerBound = param.getLowerBound(usesImperialUnits)
+        val upperBound = param.getUpperBound(usesImperialUnits)
 
         val data = getDataForType(param.getType())
 
         // If data doesn't exist, treat it as zero
-        val observedValue = data?.value ?: 0.0
+        val observedValue = data?.getValue(usesImperialUnits) ?: 0.0
 
         val satisfiesLowerBound = lowerBound == null || observedValue >= lowerBound
         val satisfiesUpperBound = upperBound == null || observedValue <= upperBound

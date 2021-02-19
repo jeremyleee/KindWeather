@@ -3,6 +3,7 @@ package com.tragicfruit.kindweather.data
 import com.tragicfruit.kindweather.model.ForecastType
 import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.model.WeatherAlertParam
+import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
@@ -10,7 +11,9 @@ import io.realm.kotlin.createObject
 import io.realm.kotlin.where
 import javax.inject.Inject
 
-class AlertRepository @Inject constructor() {
+class AlertRepository @Inject constructor(
+    private val sharedPrefsHelper: SharedPrefsHelper
+) {
 
     fun createAlert(id: Int, info: WeatherAlert.Info, realm: Realm): WeatherAlert {
         return realm.createObject<WeatherAlert>().apply {
@@ -29,10 +32,10 @@ class AlertRepository @Inject constructor() {
     ): WeatherAlertParam {
         return realm.createObject<WeatherAlertParam>().apply {
             this.type = type.name
-            this.defaultLowerBound = defaultLowerBoundRaw
-            this.defaultUpperBound = defaultUpperBoundRaw
-            this.lowerBound = this.defaultLowerBound
-            this.upperBound = this.defaultUpperBound
+            this.rawDefaultLowerBound = defaultLowerBoundRaw
+            this.rawDefaultUpperBound = defaultUpperBoundRaw
+            this.rawLowerBound = this.rawDefaultLowerBound
+            this.rawUpperBound = this.rawDefaultUpperBound
         }.also {
             alert.params.add(it)
         }
@@ -60,20 +63,20 @@ class AlertRepository @Inject constructor() {
 
     fun setParamLowerBound(param: WeatherAlertParam, lowerBound: Double?) {
         Realm.getDefaultInstance().executeTransaction {
-            param.lowerBound = lowerBound
+            param.setLowerBound(lowerBound, sharedPrefsHelper.usesImperialUnits())
         }
     }
 
     fun setParamUpperBound(param: WeatherAlertParam, upperBound: Double?) {
         Realm.getDefaultInstance().executeTransaction {
-            param.upperBound = upperBound
+            param.setUpperBound(upperBound, sharedPrefsHelper.usesImperialUnits())
         }
     }
 
     fun resetParamsToDefault(param: WeatherAlertParam) {
         Realm.getDefaultInstance().executeTransaction {
-            param.lowerBound = param.defaultLowerBound
-            param.upperBound = param.defaultUpperBound
+            param.rawLowerBound = param.rawDefaultLowerBound
+            param.rawUpperBound = param.rawDefaultUpperBound
         }
     }
 }

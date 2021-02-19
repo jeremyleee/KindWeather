@@ -23,16 +23,18 @@ open class WeatherAlert : RealmObject() {
 
     fun areParamsEdited() = params.any { it.isEdited() }
 
-    fun shouldShowAlert(forecast: ForecastPeriod): Boolean {
+    fun shouldShowAlert(forecast: ForecastPeriod, usesImperialUnits: Boolean): Boolean {
         return params.all {
-            forecast.satisfiesParam(it)
+            forecast.satisfiesParam(it, usesImperialUnits)
         }
     }
 
-    enum class Info(@StringRes val title: Int = 0,
-                    @StringRes val shortTitle: Int = 0,
-                    @ColorRes val color: Int = 0,
-                    @DrawableRes val image: Int = 0) {
+    enum class Info(
+        @StringRes val title: Int = 0,
+        @StringRes val shortTitle: Int = 0,
+        @ColorRes val color: Int = 0,
+        @DrawableRes val image: Int = 0
+    ) {
 
         UMBRELLA(
             R.string.alert_umbrella,

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -21,10 +22,14 @@ import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.model.WeatherAlertParam
 import com.tragicfruit.kindweather.ui.WFragment
 import com.tragicfruit.kindweather.utils.ColorHelper
+import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AlertDetailFragment : WFragment(), AlertDetailParamView.Listener {
+
+    @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
 
     private val viewModel: AlertDetailViewModel by viewModels()
 
@@ -113,7 +118,7 @@ class AlertDetailFragment : WFragment(), AlertDetailParamView.Listener {
         params.forEach { param ->
             val paramView = AlertDetailParamView(binding.paramsList.context)
             val alertColor = ContextCompat.getColor(paramView.context, viewModel.alert.getInfo().color)
-            paramView.setData(alertColor, param, this)
+            paramView.setData(alertColor, param, sharedPrefsHelper.usesImperialUnits(), this)
             binding.paramsList.addView(paramView)
         }
     }

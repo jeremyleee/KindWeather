@@ -21,6 +21,7 @@ import javax.inject.Inject
 class WelcomeFragment : WFragment(), AllowLocationContract.Callback, ViewPager.OnPageChangeListener {
 
     @Inject lateinit var alertController: AlertController
+    @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
 
     private var _binding: FragmentWelcomeBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -53,7 +54,7 @@ class WelcomeFragment : WFragment(), AllowLocationContract.Callback, ViewPager.O
     }
 
     override fun onLocationPermissionGranted() {
-        SharedPrefsHelper.setOnboardingCompleted(true)
+        sharedPrefsHelper.setOnboardingCompleted(true)
         enqueueFetchWork()
         context?.let { alertController.scheduleDailyAlert(it) }
 

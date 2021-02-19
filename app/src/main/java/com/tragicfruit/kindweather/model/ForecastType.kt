@@ -3,44 +3,100 @@ package com.tragicfruit.kindweather.model
 import androidx.annotation.StringRes
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.utils.Converter
-import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 
-enum class ForecastType(@StringRes val label: Int = -1,
-                        minValue: Double = 0.0,
-                        maxValue: Double = 100.0,
-                        private val metricUnits: String = "",
-                        private val imperialUnits: String = "",
-                        private val converter: Converter.Measurement = Converter.Default) {
+enum class ForecastType(
+    @StringRes val label: Int = -1,
+    private val minValue: Double = 0.0,
+    private val maxValue: Double = 100.0,
+    private val metricUnits: String = "",
+    private val imperialUnits: String = "",
+    private val converter: Converter.Measurement = Converter.Default
+) {
 
-    TEMP_HIGH(R.string.forecast_type_temp_high, -20.0, 60.0, "°C", "°F", Converter.Temperature),
-    TEMP_LOW(R.string.forecast_type_temp_low, -90.0, 40.0, "°C", "°F", Converter.Temperature),
-    PRECIP_INTENSITY(R.string.forecast_type_precip_intensity, 0.0, 100.0, "mm/h", "in/h", Converter.Precipitation),
-    PRECIP_PROBABILITY(R.string.forecast_type_precip_probability, 0.0, 1.0, "%", "%", Converter.Probability),
-    HUMIDITY(R.string.forecast_type_humidity, 0.0, 1.0, "%", "%", Converter.Humidity),
-    WIND_GUST(R.string.forecast_type_wind_gust, 0.0, 33.0, "km/h", "mph", Converter.WindSpeed),
-    UV_INDEX(R.string.forecast_type_uv, 0.0, 10.0),
+    TEMP_HIGH(
+        label = R.string.forecast_type_temp_high,
+        minValue = -20.0,
+        maxValue = 60.0,
+        metricUnits = "°C",
+        imperialUnits = "°F",
+        converter = Converter.Temperature
+    ),
+
+    TEMP_LOW(
+        label = R.string.forecast_type_temp_low,
+        minValue = -90.0,
+        maxValue = 40.0,
+        metricUnits = "°C",
+        imperialUnits = "°F",
+        converter = Converter.Temperature
+    ),
+
+    PRECIP_INTENSITY(
+        label = R.string.forecast_type_precip_intensity,
+        minValue = 0.0,
+        maxValue = 100.0,
+        metricUnits = "mm/h",
+        imperialUnits = "in/h",
+        converter = Converter.Precipitation
+    ),
+
+    PRECIP_PROBABILITY(
+        label = R.string.forecast_type_precip_probability,
+        minValue = 0.0,
+        maxValue = 1.0,
+        metricUnits = "%",
+        imperialUnits = "%",
+        converter = Converter.Probability
+    ),
+
+    HUMIDITY(
+        label = R.string.forecast_type_humidity,
+        minValue = 0.0,
+        maxValue = 1.0,
+        metricUnits = "%",
+        imperialUnits = "%",
+        converter = Converter.Humidity
+    ),
+
+    WIND_GUST(
+        label = R.string.forecast_type_wind_gust,
+        minValue = 0.0,
+        maxValue = 33.0,
+        metricUnits = "km/h",
+        imperialUnits = "mph",
+        converter = Converter.WindSpeed
+    ),
+
+    UV_INDEX(
+        label = R.string.forecast_type_uv,
+        minValue = 0.0,
+        maxValue = 10.0
+    ),
 
     UNKNOWN;
 
-    val minValue = minValue
-        get() = fromRawValue(field)
+    fun getMinValue(usesImperialUnits: Boolean) = fromRawValue(minValue, usesImperialUnits)
 
-    val maxValue = maxValue
-        get() = fromRawValue(field)
+    fun getMaxValue(usesImperialUnits: Boolean) = fromRawValue(maxValue, usesImperialUnits)
 
-    val units: String
-        get() = getUnits(this)
+    fun getUnits(usesImperialUnits: Boolean): String {
+        return if (usesImperialUnits) {
+            imperialUnits
+        } else {
+            metricUnits
+        }
+    }
 
-    fun toRawValue(value: Double): Double {
-        return if (SharedPrefsHelper.usesImperialUnits()) {
+    fun toRawValue(value: Double, usesImperialUnits: Boolean): Double {
+        return if (usesImperialUnits) {
             converter.fromImperial(value)
         } else {
             converter.fromMetric(value)
         }
     }
 
-    fun fromRawValue(value: Double): Double {
-        return if (SharedPrefsHelper.usesImperialUnits()) {
+    fun fromRawValue(value: Double, usesImperialUnits: Boolean): Double {
+        return if (usesImperialUnits) {
             converter.toImperial(value)
         } else {
             converter.toMetric(value)
@@ -52,14 +108,6 @@ enum class ForecastType(@StringRes val label: Int = -1,
             ForecastType.valueOf(type)
         } catch (e: Exception) {
             UNKNOWN
-        }
-
-        fun getUnits(type: ForecastType): String {
-            return if (SharedPrefsHelper.usesImperialUnits()) {
-                type.imperialUnits
-            } else {
-                type.metricUnits
-            }
         }
     }
 }

@@ -8,12 +8,22 @@ import io.realm.kotlin.createObject
 open class ForecastData : RealmObject() {
 
     internal var type = ""
-    var value = 0.0; internal set
-        get() = ForecastType.fromString(type).fromRawValue(field)
-
+    internal var rawValue = 0.0
     var fetchedTime: Long = 0; internal set
-    var displayOnly = false;
+    var displayOnly = false
+
+    fun getValue(usesImperialUnits: Boolean): Double {
+        return ForecastType.fromString(type).fromRawValue(rawValue, usesImperialUnits)
+    }
 
     private fun getType() = ForecastType.fromString(type)
-    fun getDisplayString() = DisplayUtils.getMeasurementString(value.toFloat(), getType().units, 0)
+
+    fun getDisplayString(usesImperialUnits: Boolean): String {
+        val convertedValue = getValue(usesImperialUnits)
+        return DisplayUtils.getMeasurementString(
+            value = convertedValue.toFloat(),
+            units = getType().getUnits(usesImperialUnits),
+            decimalPlaces = 0
+        )
+    }
 }

@@ -15,12 +15,14 @@ import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.api.ForecastIcon
 import com.tragicfruit.kindweather.model.ForecastType
 import com.tragicfruit.kindweather.model.WeatherNotification
-import com.tragicfruit.kindweather.utils.DisplayUtils
-import com.tragicfruit.kindweather.utils.RoundRectOutlineProvider
-import com.tragicfruit.kindweather.utils.ViewHelper
-import com.tragicfruit.kindweather.utils.getViewId
+import com.tragicfruit.kindweather.utils.*
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class FeedCell(context: Context, private val listener: Listener? = null) : LinearLayout(context) {
+
+    @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
 
     private val dateView = TextView(context)
     private val cellContainer = RelativeLayout(context)
@@ -79,7 +81,7 @@ class FeedCell(context: Context, private val listener: Listener? = null) : Linea
 
         cellContainer.background.setColorFilter(notification.color, PorterDuff.Mode.SRC_IN)
         icon.setImageResource(ForecastIcon.fromString(notification.forecast?.icon).iconRes)
-        highTempView.text = notification.forecast?.getDataForType(ForecastType.TEMP_HIGH)?.getDisplayString()
+        highTempView.text = notification.forecast?.getDataForType(ForecastType.TEMP_HIGH)?.getDisplayString(sharedPrefsHelper.usesImperialUnits())
         descriptionView.text = notification.description
     }
 

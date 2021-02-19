@@ -2,23 +2,25 @@ package com.tragicfruit.kindweather.ui.home.fragments.settings
 
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 
-class SettingsPresenter(override var view: SettingsContract.View) :
-    SettingsContract.Presenter {
+class SettingsPresenter(
+    override var view: SettingsContract.View,
+    private val sharedPrefsHelper: SharedPrefsHelper
+) : SettingsContract.Presenter {
 
     override fun init() {
-        view.updateAlertTimeText(SharedPrefsHelper.getAlertHour(), SharedPrefsHelper.getAlertMinute())
-        view.updateUnitsText(SharedPrefsHelper.usesImperialUnits())
+        view.updateAlertTimeText(sharedPrefsHelper.getAlertHour(), sharedPrefsHelper.getAlertMinute())
+        view.updateUnitsText(sharedPrefsHelper.usesImperialUnits())
     }
 
     override fun onAlertTimeClicked() {
         view.showAlertTimeDialog(
-            SharedPrefsHelper.getAlertHour(),
-            SharedPrefsHelper.getAlertMinute())
+            sharedPrefsHelper.getAlertHour(),
+            sharedPrefsHelper.getAlertMinute())
     }
 
     override fun onAlertTimeChanged(hourOfDay: Int, minute: Int) {
-        SharedPrefsHelper.setAlertHour(hourOfDay)
-        SharedPrefsHelper.setAlertMinute(minute)
+        sharedPrefsHelper.setAlertHour(hourOfDay)
+        sharedPrefsHelper.setAlertMinute(minute)
         view.updateAlertTimeText(hourOfDay, minute)
 
         // Restart alert service for new alert time
@@ -26,16 +28,15 @@ class SettingsPresenter(override var view: SettingsContract.View) :
     }
 
     override fun onUnitsClicked() {
-        view.showChangeUnitsDialog(SharedPrefsHelper.usesImperialUnits())
+        view.showChangeUnitsDialog(sharedPrefsHelper.usesImperialUnits())
     }
 
     override fun onUnitsChanged(imperial: Boolean) {
-        SharedPrefsHelper.setUsesImperialUnits(imperial)
+        sharedPrefsHelper.setUsesImperialUnits(imperial)
         view.updateUnitsText(imperial)
     }
 
     override fun onDarkSkyDisclaimerClicked() {
         view.openWebPage("https://darksky.net/poweredby/")
     }
-
 }

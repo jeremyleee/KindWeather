@@ -15,6 +15,7 @@ import com.tragicfruit.kindweather.ui.WFragment
 import com.tragicfruit.kindweather.ui.home.fragments.settings.dialogs.TimePickerDialogFragment
 import com.tragicfruit.kindweather.ui.home.fragments.settings.dialogs.UnitsDialogFragment
 import com.tragicfruit.kindweather.utils.DisplayUtils
+import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,10 +23,13 @@ import javax.inject.Inject
 class SettingsFragment : WFragment(), SettingsContract.View, TimePickerDialog.OnTimeSetListener, UnitsDialogFragment.Listener {
 
     @Inject lateinit var alertController: AlertController
+    @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
 
     override var statusBarColor = R.color.white
 
-    private val presenter = SettingsPresenter(this)
+    private val presenter: SettingsPresenter by lazy {
+        SettingsPresenter(this, sharedPrefsHelper)
+    }
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = requireNotNull(_binding)

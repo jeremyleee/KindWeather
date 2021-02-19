@@ -52,22 +52,22 @@ class AlertDetailParamView(context: Context) : RelativeLayout(context) {
         })
     }
 
-    fun setData(color: Int, param: WeatherAlertParam, listener: Listener?) {
+    fun setData(color: Int, param: WeatherAlertParam, usesImperialUnits: Boolean, listener: Listener?) {
         val type = param.getType()
 
         paramTitle.setText(type.label)
         slider.progressColor = color
 
-        val minValue = type.minValue.toFloat()
-        val maxValue = type.maxValue.toFloat()
+        val minValue = type.getMinValue(usesImperialUnits).toFloat()
+        val maxValue = type.getMaxValue(usesImperialUnits).toFloat()
         slider.setRange(minValue, maxValue)
 
         // Configure slider for bounds
-        val leftValue = param.lowerBound?.toFloat() ?: minValue
-        val rightValue = param.upperBound?.toFloat() ?: maxValue
+        val leftValue = param.getLowerBound(usesImperialUnits)?.toFloat() ?: minValue
+        val rightValue = param.getUpperBound(usesImperialUnits)?.toFloat() ?: maxValue
         slider.setValue(leftValue, rightValue)
-        lowerBoundText.text = DisplayUtils.getMeasurementString(leftValue, type.units)
-        upperBoundText.text = DisplayUtils.getMeasurementString(rightValue, type.units)
+        lowerBoundText.text = DisplayUtils.getMeasurementString(leftValue, type.getUnits(usesImperialUnits))
+        upperBoundText.text = DisplayUtils.getMeasurementString(rightValue, type.getUnits(usesImperialUnits))
 
         slider.setOnRangeChangedListener(object : OnRangeChangedListener {
             override fun onStartTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {
@@ -78,8 +78,8 @@ class AlertDetailParamView(context: Context) : RelativeLayout(context) {
                 lowerBound = if (leftValue > minValue) leftValue.toDouble() else null
                 upperBound = if (rightValue < maxValue) rightValue.toDouble() else null
 
-                lowerBoundText.text = DisplayUtils.getMeasurementString(leftValue, type.units)
-                upperBoundText.text = DisplayUtils.getMeasurementString(rightValue, type.units)
+                lowerBoundText.text = DisplayUtils.getMeasurementString(leftValue, type.getUnits(usesImperialUnits))
+                upperBoundText.text = DisplayUtils.getMeasurementString(rightValue, type.getUnits(usesImperialUnits))
             }
 
             override fun onStopTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {

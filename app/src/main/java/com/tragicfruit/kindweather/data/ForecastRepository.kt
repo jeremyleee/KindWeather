@@ -72,11 +72,11 @@ class ForecastRepository @Inject constructor(
     }
 
     fun createData(type: ForecastType, rawValue: Double?, realm: Realm): ForecastData? {
-        val value = rawValue ?: return null
+        rawValue ?: return null
 
         val data = realm.createObject<ForecastData>()
         data.type = type.name
-        data.value = value
+        data.rawValue = rawValue
         data.fetchedTime = System.currentTimeMillis()
         return data
     }

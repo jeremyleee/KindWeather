@@ -14,11 +14,19 @@ import com.tragicfruit.kindweather.api.ForecastIcon
 import com.tragicfruit.kindweather.databinding.FragmentForecastBinding
 import com.tragicfruit.kindweather.ui.WFragment
 import com.tragicfruit.kindweather.utils.ColorHelper
+import com.tragicfruit.kindweather.utils.SharedPrefsHelper
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ForecastFragment : WFragment(), ForecastContract.View {
 
+    @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
+
     private val args: ForecastFragmentArgs by navArgs()
-    private val presenter = ForecastPresenter(this)
+    private val presenter: ForecastPresenter by lazy {
+        ForecastPresenter(this, sharedPrefsHelper)
+    }
 
     private var _binding: FragmentForecastBinding? = null
     private val binding get() = requireNotNull(_binding)

@@ -18,7 +18,9 @@ import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
-class AlertController @Inject constructor() {
+class AlertController @Inject constructor(
+    private val sharedPrefsHelper: SharedPrefsHelper
+) {
 
     private val calendar = Calendar.getInstance()
 
@@ -29,8 +31,8 @@ class AlertController @Inject constructor() {
         val pendingIntent = PendingIntent.getBroadcast(context, ALERT_RECEIVER_REQUEST, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         calendar.timeInMillis = System.currentTimeMillis()
-        calendar.set(Calendar.HOUR_OF_DAY, SharedPrefsHelper.getAlertHour())
-        calendar.set(Calendar.MINUTE, SharedPrefsHelper.getAlertMinute())
+        calendar.set(Calendar.HOUR_OF_DAY, sharedPrefsHelper.getAlertHour())
+        calendar.set(Calendar.MINUTE, sharedPrefsHelper.getAlertMinute())
         calendar.set(Calendar.SECOND, 0)
 
         if (calendar.time.before(Date())) {
