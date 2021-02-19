@@ -4,9 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.ui.welcome.fragments.allowlocation.AllowLocationContract
-import com.tragicfruit.kindweather.ui.welcome.fragments.allowlocation.AllowLocationFragment
-import com.tragicfruit.kindweather.ui.welcome.fragments.onboarding.OnboardingFragment
+import com.tragicfruit.kindweather.ui.welcome.allowlocation.AllowLocationContract
+import com.tragicfruit.kindweather.ui.welcome.allowlocation.AllowLocationFragment
+import com.tragicfruit.kindweather.ui.welcome.onboarding.OnboardingFragment
 
 class WelcomeAdapter(fragmentManager: FragmentManager, private val callback: AllowLocationContract.Callback)
     : FragmentPagerAdapter(fragmentManager) {

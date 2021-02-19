@@ -18,7 +18,7 @@ import androidx.navigation.NavDeepLinkBuilder
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.model.WeatherAlert
-import com.tragicfruit.kindweather.ui.home.fragments.forecast.ForecastFragmentArgs
+import com.tragicfruit.kindweather.ui.home.forecast.ForecastFragmentArgs
 import javax.inject.Inject
 
 class NotificationController @Inject constructor() {

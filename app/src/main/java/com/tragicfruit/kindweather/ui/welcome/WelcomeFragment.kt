@@ -11,7 +11,7 @@ import com.tragicfruit.kindweather.controllers.AlertController
 import com.tragicfruit.kindweather.controllers.FetchForecastWorker
 import com.tragicfruit.kindweather.databinding.FragmentWelcomeBinding
 import com.tragicfruit.kindweather.ui.WFragment
-import com.tragicfruit.kindweather.ui.welcome.fragments.allowlocation.AllowLocationContract
+import com.tragicfruit.kindweather.ui.welcome.allowlocation.AllowLocationContract
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
