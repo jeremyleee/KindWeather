@@ -13,19 +13,19 @@ import java.util.*
  */
 open class ForecastPeriod : RealmObject() {
 
-    var id = ""; private set
+    var id = "";
 
-    var latitude = 0.0; private set
-    var longitude = 0.0; private set
+    var latitude = 0.0;
+    var longitude = 0.0;
 
-    var time: Long = 0; private set
-    var summary = ""; private set
-    var icon = ""; private set
+    var time: Long = 0;
+    var summary = "";
+    var icon = "";
     var data = RealmList<ForecastData>(); private set
 
-    var fetchedTime: Long = 0; private set
+    var fetchedTime: Long = 0;
 
-    var displayOnly = false; private set
+    var displayOnly = false;
 
     fun satisfiesParam(param: WeatherAlertParam): Boolean {
         val lowerBound = param.lowerBound
@@ -46,42 +46,4 @@ open class ForecastPeriod : RealmObject() {
 
     fun getDataForType(type: ForecastType) =
         data.where().equalTo("type", type.name).findFirst()
-
-    companion object {
-
-        fun fromResponse(responseData: ForecastResponse.Daily.DataPoint,
-                         latitude: Double, longitude: Double, realm: Realm): ForecastPeriod {
-            val forecastPeriod = realm.createObject<ForecastPeriod>()
-
-            forecastPeriod.id = UUID.randomUUID().toString()
-
-            forecastPeriod.latitude = latitude
-            forecastPeriod.longitude = longitude
-
-            forecastPeriod.time = responseData.time
-            forecastPeriod.summary = responseData.summary ?: forecastPeriod.summary
-            forecastPeriod.icon = responseData.icon ?: forecastPeriod.icon
-
-            forecastPeriod.data.add(ForecastData.create(ForecastType.TEMP_HIGH, responseData.temperatureHigh, realm))
-            forecastPeriod.data.add(ForecastData.create(ForecastType.TEMP_LOW, responseData.temperatureLow, realm))
-            forecastPeriod.data.add(ForecastData.create(ForecastType.PRECIP_INTENSITY, responseData.precipIntensity, realm))
-            forecastPeriod.data.add(ForecastData.create(ForecastType.PRECIP_PROBABILITY, responseData.precipProbability, realm))
-            forecastPeriod.data.add(ForecastData.create(ForecastType.HUMIDITY, responseData.humidity, realm))
-            forecastPeriod.data.add(ForecastData.create(ForecastType.WIND_GUST, responseData.windGust, realm))
-            forecastPeriod.data.add(ForecastData.create(ForecastType.UV_INDEX, responseData.uvIndex?.toDouble(), realm))
-
-            forecastPeriod.fetchedTime = System.currentTimeMillis()
-
-            return forecastPeriod
-        }
-
-        fun setDisplayed(forecast: ForecastPeriod, displayed: Boolean, realm: Realm) {
-            forecast.displayOnly = displayed
-            forecast.data.forEach { data ->
-                ForecastData.setDisplayed(data, displayed, realm)
-            }
-        }
-
-    }
-
 }

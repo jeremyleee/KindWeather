@@ -2,7 +2,6 @@ package com.tragicfruit.kindweather
 
 import android.app.Application
 import com.tragicfruit.kindweather.controllers.NotificationController
-import com.tragicfruit.kindweather.controllers.WeatherController
 import com.tragicfruit.kindweather.data.AlertRepository
 import com.tragicfruit.kindweather.model.ForecastType
 import com.tragicfruit.kindweather.model.WeatherAlert
@@ -17,8 +16,7 @@ import javax.inject.Inject
 @HiltAndroidApp
 class KindWeatherApplication : Application() {
 
-    @Inject
-    lateinit var alertRepository: AlertRepository
+    @Inject lateinit var alertRepository: AlertRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -38,7 +36,6 @@ class KindWeatherApplication : Application() {
         SharedPrefsHelper.init(this)
         ViewHelper.init(this)
 
-        WeatherController.init()
         NotificationController.init(this)
 
         createInitialAlerts()

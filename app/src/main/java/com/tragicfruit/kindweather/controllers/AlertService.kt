@@ -6,10 +6,11 @@ import android.content.Intent
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationResult
 import com.tragicfruit.kindweather.R
+import com.tragicfruit.kindweather.data.ForecastRepository
 import com.tragicfruit.kindweather.data.NotificationRepository
 import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.model.WeatherAlert
-import com.tragicfruit.kindweather.model.WeatherNotification
+import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
 import io.realm.Sort
 import io.realm.kotlin.where
@@ -18,10 +19,13 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class AlertService : IntentService(AlertService::javaClass.name) {
 
-    @Inject
-    lateinit var notificationRepository: NotificationRepository
+    @Inject lateinit var notificationRepository: NotificationRepository
+    @Inject lateinit var forecastRepository: ForecastRepository
+
+    @Inject lateinit var forecastController: ForecastController
 
     private val calendar = Calendar.getInstance().apply {
         timeInMillis = System.currentTimeMillis()
@@ -32,7 +36,7 @@ class AlertService : IntentService(AlertService::javaClass.name) {
 
         if (LocationResult.hasResult(intent)) {
             val location = LocationResult.extractResult(intent).lastLocation
-            WeatherController.fetchForecast(location.latitude, location.longitude) { success, code, message ->
+            forecastController.fetchForecast(location.latitude, location.longitude) { success, code, message ->
                 if (!success) {
                     // TODO: logic for comparing cached forecasts with current location
                 }
@@ -76,9 +80,7 @@ class AlertService : IntentService(AlertService::javaClass.name) {
 
             // Create model object for feed
             notificationRepository.createNotification(message, forecast, color)
-            realm.executeTransaction { realm ->
-                ForecastPeriod.setDisplayed(forecast, true, realm)
-            }
+            forecastRepository.setDisplayed(forecast, true)
         }
     }
 

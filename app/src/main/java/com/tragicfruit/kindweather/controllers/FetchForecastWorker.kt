@@ -11,12 +11,14 @@ import com.google.android.gms.location.LocationServices
 import com.google.common.util.concurrent.ListenableFuture
 import com.tragicfruit.kindweather.utils.PermissionHelper
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 /**
  * Regularly fetches forecast to keep local forecast data up to date
  */
 class FetchForecastWorker(context: Context, workerParams: WorkerParameters) : ListenableWorker(context, workerParams) {
+
+    @Inject lateinit var forecastController: ForecastController
 
     @SuppressWarnings("MissingPermission")
     override fun startWork(): ListenableFuture<Result> {
@@ -34,7 +36,7 @@ class FetchForecastWorker(context: Context, workerParams: WorkerParameters) : Li
                         result?.lastLocation?.let { location ->
                             Timber.d("Found location: $location")
 
-                            WeatherController.fetchForecast(location.latitude, location.longitude) { success, code, message ->
+                            forecastController.fetchForecast(location.latitude, location.longitude) { success, code, message ->
                                 if (success) {
                                     completer.set(Result.success())
                                 } else {
@@ -57,20 +59,6 @@ class FetchForecastWorker(context: Context, workerParams: WorkerParameters) : Li
     }
 
     companion object {
-        private const val PERIODIC_FETCH_FORECAST_WORK = "periodic-fetch-forecast"
-
-        fun enqueueWork() {
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-
-            val request = PeriodicWorkRequestBuilder<FetchForecastWorker>(6, TimeUnit.HOURS)
-                .setConstraints(constraints)
-                .build()
-
-            WorkManager.getInstance()
-                .enqueueUniquePeriodicWork(PERIODIC_FETCH_FORECAST_WORK, ExistingPeriodicWorkPolicy.REPLACE, request)
-        }
+        const val PERIODIC_FETCH_FORECAST_WORK = "periodic-fetch-forecast"
     }
-
 }

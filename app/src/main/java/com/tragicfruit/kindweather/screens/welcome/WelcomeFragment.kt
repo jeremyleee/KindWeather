@@ -6,13 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
+import androidx.work.*
 import com.tragicfruit.kindweather.controllers.AlertController
 import com.tragicfruit.kindweather.controllers.FetchForecastWorker
 import com.tragicfruit.kindweather.databinding.FragmentWelcomeBinding
 import com.tragicfruit.kindweather.screens.WFragment
 import com.tragicfruit.kindweather.screens.welcome.fragments.allowlocation.AllowLocationContract
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
+import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.TimeUnit
 
+@AndroidEntryPoint
 class WelcomeFragment : WFragment(), AllowLocationContract.Callback, ViewPager.OnPageChangeListener {
 
     private var _binding: FragmentWelcomeBinding? = null
@@ -47,12 +51,31 @@ class WelcomeFragment : WFragment(), AllowLocationContract.Callback, ViewPager.O
 
     override fun onLocationPermissionGranted() {
         SharedPrefsHelper.setOnboardingCompleted(true)
-        FetchForecastWorker.enqueueWork()
+        enqueueFetchWork()
         context?.let { AlertController.scheduleDailyAlert(it) }
 
         // Finish onboarding
         val directions = WelcomeFragmentDirections.actionWelcomeFragmentToHomeFragment(true)
         findNavController().navigate(directions)
+    }
+
+    private fun enqueueFetchWork() {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val request = PeriodicWorkRequestBuilder<FetchForecastWorker>(6, TimeUnit.HOURS)
+            .setConstraints(constraints)
+            .build()
+
+        context?.let {
+            WorkManager.getInstance(it)
+                .enqueueUniquePeriodicWork(
+                    FetchForecastWorker.PERIODIC_FETCH_FORECAST_WORK,
+                    ExistingPeriodicWorkPolicy.REPLACE,
+                    request
+                )
+        }
     }
 
     override fun onPageScrollStateChanged(state: Int) = Unit

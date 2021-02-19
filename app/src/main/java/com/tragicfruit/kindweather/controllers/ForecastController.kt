@@ -1,6 +1,7 @@
 package com.tragicfruit.kindweather.controllers
 
 import com.tragicfruit.kindweather.BuildConfig
+import com.tragicfruit.kindweather.data.ForecastRepository
 import com.tragicfruit.kindweather.model.ForecastData
 import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.utils.WCallback
@@ -11,12 +12,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import timber.log.Timber
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object WeatherController {
+class ForecastController constructor(
+    private val forecastRepository: ForecastRepository
+) {
 
-    private lateinit var service: DarkSkyAPIService
+    private var service: DarkSkyAPIService
 
-    fun init() {
+    init {
         val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.API_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -35,7 +40,7 @@ object WeatherController {
                                 val timestamp = System.currentTimeMillis()
 
                                 for (dailyItem in forecastResponse.daily.data) {
-                                    ForecastPeriod.fromResponse(dailyItem, forecastResponse.latitude, forecastResponse.longitude, realm)
+                                    forecastRepository.fromResponse(dailyItem, forecastResponse.latitude, forecastResponse.longitude, realm)
                                 }
                                 Timber.d("${forecastResponse.daily.data.count()} forecast data fetched")
 
