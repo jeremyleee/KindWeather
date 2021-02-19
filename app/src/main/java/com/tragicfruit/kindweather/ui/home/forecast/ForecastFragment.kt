@@ -1,32 +1,23 @@
 package com.tragicfruit.kindweather.ui.home.forecast
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.ResultReceiver
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.tragicfruit.kindweather.controllers.FetchAddressService
 import com.tragicfruit.kindweather.api.ForecastIcon
 import com.tragicfruit.kindweather.databinding.FragmentForecastBinding
+import com.tragicfruit.kindweather.model.ForecastType
 import com.tragicfruit.kindweather.ui.WFragment
 import com.tragicfruit.kindweather.utils.ColorHelper
-import com.tragicfruit.kindweather.utils.SharedPrefsHelper
+import com.tragicfruit.kindweather.utils.DisplayUtils
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class ForecastFragment : WFragment(), ForecastContract.View {
+class ForecastFragment : WFragment() {
 
-    @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
-
-    private val args: ForecastFragmentArgs by navArgs()
-    private val presenter: ForecastPresenter by lazy {
-        ForecastPresenter(this, sharedPrefsHelper)
-    }
+    private val viewModel: ForecastViewModel by viewModels()
 
     private var _binding: FragmentForecastBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -47,48 +38,30 @@ class ForecastFragment : WFragment(), ForecastContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.init(args.forecastId, args.timeCreatedMillis, args.color)
+        viewModel.mainColor.observe(viewLifecycleOwner) { color ->
+            binding.toolbar.setBackgroundColor(color)
+            applyStatusBarColor(ColorHelper.darkenColor(color), lightStatusBar)
+        }
+
+        viewModel.createdAt.observe(viewLifecycleOwner) { createdAt ->
+            binding.toolbar.title = DisplayUtils.getDateString(createdAt)
+        }
+
+        viewModel.forecast.observe(viewLifecycleOwner) { forecast ->
+            binding.mainImage.setImageResource(ForecastIcon.fromString(forecast.icon).iconRes)
+            binding.highTempValueText.text = forecast.getDataForType(ForecastType.TEMP_HIGH)?.getDisplayString(viewModel.useImperialUnits)
+            binding.lowTempValueText.text = forecast.getDataForType(ForecastType.TEMP_LOW)?.getDisplayString(viewModel.useImperialUnits)
+            binding.precipValueText.text = forecast.getDataForType(ForecastType.PRECIP_PROBABILITY)?.getDisplayString(viewModel.useImperialUnits)
+
+            viewModel.fetchAddress(view.context, forecast)
+        }
+
+        viewModel.addressString.observe(viewLifecycleOwner) { address ->
+            binding.addressText.text = address
+        }
 
         binding.toolbar.setNavigationOnClickListener {
-            presenter.onBackClicked()
+            findNavController().navigateUp()
         }
     }
-
-    override fun initView(color: Int,
-                          dateString: String,
-                          icon: ForecastIcon,
-                          highTempString: String?,
-                          lowTempString: String?,
-                          precipString: String?) {
-
-        binding.toolbar.setBackgroundColor(color)
-        applyStatusBarColor(ColorHelper.darkenColor(color), lightStatusBar)
-
-        binding.toolbar.title = dateString
-        binding.mainImage.setImageResource(icon.iconRes)
-        binding.highTempValueText.text = highTempString
-        binding.lowTempValueText.text = lowTempString
-        binding.precipValueText.text = precipString
-    }
-
-    override fun fetchAddress(latitude: Double, longitude: Double) {
-        context?.let {
-            FetchAddressService.start(it, latitude, longitude, object : ResultReceiver(Handler(Looper.getMainLooper())) {
-                override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
-                    if (isAdded) {
-                        presenter.onAddressFetched(resultData?.getString(FetchAddressService.RESULT_DATA))
-                    }
-                }
-            })
-        }
-    }
-
-    override fun showAddress(address: String?) {
-        binding.addressText.text = address
-    }
-
-    override fun closeScreen() {
-        findNavController().navigateUp()
-    }
-
 }

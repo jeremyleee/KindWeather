@@ -71,6 +71,13 @@ class ForecastRepository @Inject constructor(
         oldForecastData.deleteAllFromRealm()
     }
 
+    fun findForecastPeriod(id: String): ForecastPeriod? {
+        return Realm.getDefaultInstance()
+            .where<ForecastPeriod>()
+            .equalTo("id", id)
+            .findFirst()
+    }
+
     fun createData(type: ForecastType, rawValue: Double?, realm: Realm): ForecastData? {
         rawValue ?: return null
 
