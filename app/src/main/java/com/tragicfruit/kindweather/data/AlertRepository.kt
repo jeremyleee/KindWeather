@@ -1,95 +1,87 @@
 package com.tragicfruit.kindweather.data
 
-import com.tragicfruit.kindweather.data.model.ForecastType
-import com.tragicfruit.kindweather.data.model.WeatherAlert
-import com.tragicfruit.kindweather.data.model.WeatherAlertParam
+import androidx.lifecycle.LiveData
+import com.tragicfruit.kindweather.data.db.dao.AlertDao
+import com.tragicfruit.kindweather.data.db.dao.AlertParamDao
+import com.tragicfruit.kindweather.data.model.*
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
-import io.realm.Realm
-import io.realm.RealmResults
-import io.realm.Sort
-import io.realm.kotlin.createObject
-import io.realm.kotlin.where
+import java.util.*
 import javax.inject.Inject
 
 class AlertRepository @Inject constructor(
+    private val alertDao: AlertDao,
+    private val paramDao: AlertParamDao,
     private val sharedPrefsHelper: SharedPrefsHelper
 ) {
 
-    fun createAlert(id: Int, info: WeatherAlert.Info, realm: Realm): WeatherAlert {
-        return realm.createObject<WeatherAlert>().apply {
-            this.id = id
-            this.info = info.name
-            this.priority = id // TODO: determine a priority for alerts
+    suspend fun createAlert(priority: Int, type: WeatherAlertType): WeatherAlert {
+        return WeatherAlert(
+            id = UUID.randomUUID().toString(),
+            type = type,
+            priority = priority
+        ).also {
+            alertDao.insert(it)
         }
     }
 
-    fun createParam(
+    suspend fun createParam(
         alert: WeatherAlert,
         type: ForecastType,
-        defaultLowerBoundRaw: Double?,
-        defaultUpperBoundRaw: Double?,
-        realm: Realm
+        rawDefaultLowerBound: Double?,
+        rawDefaultUpperBound: Double?,
     ): WeatherAlertParam {
-        return realm.createObject<WeatherAlertParam>().apply {
-            this.type = type.name
-            this.rawDefaultLowerBound = defaultLowerBoundRaw
-            this.rawDefaultUpperBound = defaultUpperBoundRaw
-            this.rawLowerBound = this.rawDefaultLowerBound
-            this.rawUpperBound = this.rawDefaultUpperBound
-        }.also {
-            alert.params.add(it)
+        return WeatherAlertParam(
+            id = UUID.randomUUID().toString(),
+            alertId = alert.id,
+            type = type,
+            rawDefaultLowerBound = rawDefaultLowerBound,
+            rawDefaultUpperBound = rawDefaultUpperBound,
+            rawLowerBound = rawDefaultLowerBound,
+            rawUpperBound = rawDefaultUpperBound
+        ).also {
+            paramDao.insert(it)
         }
     }
 
-    fun findAlert(id: Int): WeatherAlert? {
-        return Realm.getDefaultInstance()
-            .where<WeatherAlert>()
-            .equalTo("id", id)
-            .findFirst()
+    fun findParamsForAlert(alertId: String): LiveData<WeatherAlertWithParams> {
+        return alertDao.loadAlertWithParams(alertId)
     }
 
-    fun getAllAlerts(): RealmResults<WeatherAlert> {
-        return Realm.getDefaultInstance()
-            .where<WeatherAlert>()
-            .sort("enabled", Sort.DESCENDING, "priority", Sort.ASCENDING)
-            .findAll()
+    fun getAllAlerts(): LiveData<List<WeatherAlert>> {
+        return alertDao.loadAll()
     }
 
-    fun getEnabledAlerts(): RealmResults<WeatherAlert> {
-        return Realm.getDefaultInstance().where<WeatherAlert>()
-            .equalTo("enabled", true)
-            .sort("priority", Sort.ASCENDING)
-            .findAll()
+    suspend fun setAlertEnabled(alert: WeatherAlert, enabled: Boolean) {
+        alert.enabled = enabled
+        alertDao.update(alert)
     }
 
-    fun setAlertEnabled(alert: WeatherAlert, enabled: Boolean) {
-        Realm.getDefaultInstance().executeTransaction {
-            alert.enabled = enabled
+    suspend fun getAlertCount(): Int {
+        return alertDao.loadCount()
+    }
+
+    suspend fun findAlertToShow(forecast: ForecastPeriod): WeatherAlert? {
+        // TODO: replace with join once forecast is migrated to room
+        return alertDao.loadEnabledAlertsWithParams().firstOrNull {
+            it.params.all { param -> forecast.satisfiesParam(param, sharedPrefsHelper.usesImperialUnits()) }
+        }?.alert
+    }
+
+    suspend fun setParamLowerBound(param: WeatherAlertParam, lowerBound: Double?) {
+        param.setLowerBound(lowerBound, sharedPrefsHelper.usesImperialUnits())
+        paramDao.update(param)
+    }
+
+    suspend fun setParamUpperBound(param: WeatherAlertParam, upperBound: Double?) {
+        param.setUpperBound(upperBound, sharedPrefsHelper.usesImperialUnits())
+        paramDao.update(param)
+    }
+
+    suspend fun resetParamsToDefault(params: List<WeatherAlertParam>) {
+        params.forEach {
+            it.rawLowerBound = it.rawDefaultLowerBound
+            it.rawUpperBound = it.rawDefaultUpperBound
         }
-    }
-
-    fun getAlertCount(): Long {
-        return Realm.getDefaultInstance().where<WeatherAlert>().count()
-    }
-
-    fun setParamLowerBound(param: WeatherAlertParam, lowerBound: Double?) {
-        Realm.getDefaultInstance().executeTransaction {
-            param.setLowerBound(lowerBound, sharedPrefsHelper.usesImperialUnits())
-        }
-    }
-
-    fun setParamUpperBound(param: WeatherAlertParam, upperBound: Double?) {
-        Realm.getDefaultInstance().executeTransaction {
-            param.setUpperBound(upperBound, sharedPrefsHelper.usesImperialUnits())
-        }
-    }
-
-    fun resetParamsToDefault(alert: WeatherAlert) {
-        Realm.getDefaultInstance().executeTransaction {
-            alert.params.forEach {
-                it.rawLowerBound = it.rawDefaultLowerBound
-                it.rawUpperBound = it.rawDefaultUpperBound
-            }
-        }
+        paramDao.updateAll(*params.toTypedArray())
     }
 }

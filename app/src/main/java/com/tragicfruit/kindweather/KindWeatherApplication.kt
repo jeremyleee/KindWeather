@@ -4,10 +4,14 @@ import android.app.Application
 import com.tragicfruit.kindweather.data.AlertRepository
 import com.tragicfruit.kindweather.data.model.ForecastType
 import com.tragicfruit.kindweather.data.model.WeatherAlert
+import com.tragicfruit.kindweather.data.model.WeatherAlertType
 import com.tragicfruit.kindweather.utils.controllers.NotificationController
 import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -36,37 +40,78 @@ class KindWeatherApplication : Application() {
         createInitialAlerts()
     }
 
+    // TODO: replace with init file from assets
     private fun createInitialAlerts() {
-        if (alertRepository.getAlertCount() > 0) {
-            // Alerts already created
-            return
-        }
-
-        Realm.getDefaultInstance().executeTransaction { realm ->
-            alertRepository.createAlert(1, WeatherAlert.Info.UMBRELLA, realm).also {
-                alertRepository.createParam(it, ForecastType.PRECIP_PROBABILITY, 0.5, null, realm)
-                alertRepository.createParam(it, ForecastType.WIND_GUST, null, 10.8, realm)
+        CoroutineScope(Dispatchers.IO).launch {
+            if (alertRepository.getAlertCount() > 0) {
+                // Alerts already created
+                return@launch
             }
 
-            alertRepository.createAlert(2, WeatherAlert.Info.JACKET, realm).also {
-                alertRepository.createParam(it, ForecastType.TEMP_HIGH, 4.0, 12.0, realm)
+            alertRepository.createAlert(1, WeatherAlertType.Umbrella).also {
+                alertRepository.createParam(
+                    alert = it,
+                    type = ForecastType.PrecipProbability,
+                    rawDefaultLowerBound = 0.5,
+                    rawDefaultUpperBound = null
+                )
+                alertRepository.createParam(
+                    alert = it,
+                    type = ForecastType.WindGust,
+                    rawDefaultLowerBound = null,
+                    rawDefaultUpperBound = 10.8
+                )
             }
 
-            alertRepository.createAlert(3, WeatherAlert.Info.TSHIRT, realm).also {
-                alertRepository.createParam(it, ForecastType.TEMP_HIGH, 25.0, null, realm)
+            alertRepository.createAlert(2, WeatherAlertType.Jacket).also {
+                alertRepository.createParam(
+                    alert = it,
+                    type = ForecastType.TempHigh,
+                    rawDefaultLowerBound = 4.0,
+                    rawDefaultUpperBound = 12.0
+                )
             }
 
-            alertRepository.createAlert(4, WeatherAlert.Info.SUNSCREEN, realm).also {
-                alertRepository.createParam(it, ForecastType.UV_INDEX, 6.0, null, realm)
+            alertRepository.createAlert(3, WeatherAlertType.TShirt).also {
+                alertRepository.createParam(
+                    alert = it,
+                    type = ForecastType.TempHigh,
+                    rawDefaultLowerBound = 25.0,
+                    rawDefaultUpperBound = null
+                )
             }
 
-            alertRepository.createAlert(5, WeatherAlert.Info.RAIN_JACKET, realm).also {
-                alertRepository.createParam(it, ForecastType.PRECIP_PROBABILITY, 0.5, null, realm)
-                alertRepository.createParam(it, ForecastType.WIND_GUST, 10.8, null, realm)
+            alertRepository.createAlert(4, WeatherAlertType.Sunscreen).also {
+                alertRepository.createParam(
+                    alert = it,
+                    type = ForecastType.UVIndex,
+                    rawDefaultLowerBound = 6.0,
+                    rawDefaultUpperBound = null
+                )
             }
 
-            alertRepository.createAlert(6, WeatherAlert.Info.THICK_JACKET, realm).also {
-                alertRepository.createParam(it, ForecastType.TEMP_HIGH, null, 4.0, realm)
+            alertRepository.createAlert(5, WeatherAlertType.RainJacket).also {
+                alertRepository.createParam(
+                    alert = it,
+                    type = ForecastType.PrecipProbability,
+                    rawDefaultLowerBound = 0.5,
+                    rawDefaultUpperBound = null
+                )
+                alertRepository.createParam(
+                    alert = it,
+                    type = ForecastType.WindGust,
+                    rawDefaultLowerBound = 10.8,
+                    rawDefaultUpperBound = null
+                )
+            }
+
+            alertRepository.createAlert(6, WeatherAlertType.ThickJacket).also {
+                alertRepository.createParam(
+                    alert = it,
+                    type = ForecastType.TempHigh,
+                    rawDefaultLowerBound = null,
+                    rawDefaultUpperBound = 4.0
+                )
             }
         }
     }

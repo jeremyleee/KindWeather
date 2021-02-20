@@ -1,4 +1,4 @@
-package com.tragicfruit.kindweather.data.db
+package com.tragicfruit.kindweather.data.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -13,7 +13,7 @@ interface NotificationDao {
     suspend fun insert(notification: WeatherNotification)
 
     @Query("SELECT * FROM notifications WHERE id = :id")
-    suspend fun loadById(id: String): WeatherNotification
+    fun loadById(id: String): LiveData<WeatherNotification>
 
     @Query("SELECT * FROM notifications ORDER BY createdAt DESC")
     fun loadAll(): LiveData<List<WeatherNotification>>

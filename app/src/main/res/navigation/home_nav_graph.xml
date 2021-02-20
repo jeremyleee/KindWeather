@@ -44,7 +44,7 @@
         android:label="AlertDetailFragment" >
         <argument
             android:name="alertId"
-            app:argType="integer" />
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/forecastFragment"

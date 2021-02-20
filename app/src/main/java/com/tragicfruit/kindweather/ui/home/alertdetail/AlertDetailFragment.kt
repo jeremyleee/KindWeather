@@ -16,11 +16,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.ui.components.AlertDetailParamView
-import com.tragicfruit.kindweather.databinding.FragmentAlertDetailBinding
 import com.tragicfruit.kindweather.data.model.WeatherAlert
 import com.tragicfruit.kindweather.data.model.WeatherAlertParam
+import com.tragicfruit.kindweather.databinding.FragmentAlertDetailBinding
 import com.tragicfruit.kindweather.ui.BaseFragment
+import com.tragicfruit.kindweather.ui.components.AlertDetailParamView
 import com.tragicfruit.kindweather.utils.ColorHelper
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,11 +47,11 @@ class AlertDetailFragment : BaseFragment(), AlertDetailParamView.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.alert.observe(viewLifecycleOwner) { alert ->
-            val color = ContextCompat.getColor(view.context, alert.getInfo().color)
-            setupHeaderView(alert, color)
-            setupContentViews(alert, color, view.context)
-            updateParamListView(alert.params, color)
+        viewModel.alertWithParams.observe(viewLifecycleOwner) {
+            val color = ContextCompat.getColor(view.context, it.alert.type.color)
+            setupHeaderView(it.alert, color)
+            setupContentViews(it.alert, color, view.context)
+            updateParamListView(it.params, color)
         }
 
         viewModel.resetButtonEnabled.observe(viewLifecycleOwner) { enabled ->
@@ -80,7 +80,7 @@ class AlertDetailFragment : BaseFragment(), AlertDetailParamView.Listener {
         applyStatusBarColor(ColorHelper.darkenColor(color), lightStatusBar)
 
         binding.collapsingToolbar.apply {
-            title = getString(alert.getInfo().shortTitle)
+            title = getString(alert.type.shortTitle)
             setCollapsedTitleTypeface(ResourcesCompat.getFont(context, R.font.playfair_bold))
             setExpandedTitleTypeface(ResourcesCompat.getFont(context, R.font.playfair_bold))
             setContentScrimColor(color)
@@ -88,7 +88,7 @@ class AlertDetailFragment : BaseFragment(), AlertDetailParamView.Listener {
 
         binding.header.setBackgroundColor(color)
         Glide.with(this)
-            .load(alert.getInfo().image)
+            .load(alert.type.image)
             .centerCrop()
             .into(binding.headerImage)
 
@@ -105,9 +105,8 @@ class AlertDetailFragment : BaseFragment(), AlertDetailParamView.Listener {
             trackDrawable.setTintList(ColorStateList(states, trackColors))
             background = null
             isChecked = alert.enabled
+            jumpDrawablesToCurrentState()
         }
-
-        binding.resetButton.isEnabled = alert.areParamsEdited()
     }
 
     private fun updateParamListView(params: List<WeatherAlertParam>, @ColorInt color: Int) {

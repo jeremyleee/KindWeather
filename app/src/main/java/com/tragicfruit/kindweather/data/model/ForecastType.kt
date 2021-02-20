@@ -13,7 +13,7 @@ enum class ForecastType(
     private val converter: Converter.Measurement = Converter.Default
 ) {
 
-    TEMP_HIGH(
+    TempHigh(
         label = R.string.forecast_type_temp_high,
         minValue = -20.0,
         maxValue = 60.0,
@@ -22,7 +22,7 @@ enum class ForecastType(
         converter = Converter.Temperature
     ),
 
-    TEMP_LOW(
+    TempLow(
         label = R.string.forecast_type_temp_low,
         minValue = -90.0,
         maxValue = 40.0,
@@ -31,7 +31,7 @@ enum class ForecastType(
         converter = Converter.Temperature
     ),
 
-    PRECIP_INTENSITY(
+    PrecipIntensity(
         label = R.string.forecast_type_precip_intensity,
         minValue = 0.0,
         maxValue = 100.0,
@@ -40,7 +40,7 @@ enum class ForecastType(
         converter = Converter.Precipitation
     ),
 
-    PRECIP_PROBABILITY(
+    PrecipProbability(
         label = R.string.forecast_type_precip_probability,
         minValue = 0.0,
         maxValue = 1.0,
@@ -49,7 +49,7 @@ enum class ForecastType(
         converter = Converter.Probability
     ),
 
-    HUMIDITY(
+    Humidity(
         label = R.string.forecast_type_humidity,
         minValue = 0.0,
         maxValue = 1.0,
@@ -58,7 +58,7 @@ enum class ForecastType(
         converter = Converter.Humidity
     ),
 
-    WIND_GUST(
+    WindGust(
         label = R.string.forecast_type_wind_gust,
         minValue = 0.0,
         maxValue = 33.0,
@@ -67,13 +67,11 @@ enum class ForecastType(
         converter = Converter.WindSpeed
     ),
 
-    UV_INDEX(
+    UVIndex(
         label = R.string.forecast_type_uv,
         minValue = 0.0,
         maxValue = 10.0
-    ),
-
-    UNKNOWN;
+    );
 
     fun getMinValue(usesImperialUnits: Boolean) = fromRawValue(minValue, usesImperialUnits)
 
@@ -100,14 +98,6 @@ enum class ForecastType(
             converter.toImperial(value)
         } else {
             converter.toMetric(value)
-        }
-    }
-
-    companion object {
-        fun fromString(type: String) = try {
-            ForecastType.valueOf(type)
-        } catch (e: Exception) {
-            UNKNOWN
         }
     }
 }

@@ -1,53 +1,42 @@
 package com.tragicfruit.kindweather.data.model
 
-import io.realm.RealmObject
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-open class WeatherAlertParam : RealmObject() {
-
-    internal var type = ""
-
-    internal var rawDefaultLowerBound: Double? = null
-    internal var rawDefaultUpperBound: Double? = null
-    internal var rawLowerBound: Double? = null
-    internal var rawUpperBound: Double? = null
-
-    fun getDefaultLowerBound(usesImperialUnits: Boolean): Double? {
-        return rawDefaultLowerBound?.let {
-            getType().fromRawValue(it, usesImperialUnits)
-        }
-    }
-
-    fun getDefaultUpperBound(usesImperialUnits: Boolean): Double? {
-        return rawDefaultUpperBound?.let {
-            getType().fromRawValue(it, usesImperialUnits)
-        }
-    }
+@Entity(tableName = "params")
+data class WeatherAlertParam(
+    @PrimaryKey val id: String,
+    val alertId: String,
+    val type: ForecastType,
+    val rawDefaultLowerBound: Double?,
+    val rawDefaultUpperBound: Double?,
+    var rawLowerBound: Double?,
+    var rawUpperBound: Double?
+) {
 
     fun setLowerBound(value: Double?, usesImperialUnits: Boolean) {
         rawLowerBound = if (value != null) {
-            getType().toRawValue(value, usesImperialUnits)
+            type.toRawValue(value, usesImperialUnits)
         } else null
     }
 
     fun getLowerBound(usesImperialUnits: Boolean): Double? {
         return rawLowerBound?.let {
-            getType().fromRawValue(it, usesImperialUnits)
+            type.fromRawValue(it, usesImperialUnits)
         }
     }
 
     fun setUpperBound(value: Double?, usesImperialUnits: Boolean) {
         rawUpperBound = if (value != null) {
-            getType().toRawValue(value, usesImperialUnits)
+            type.toRawValue(value, usesImperialUnits)
         } else null
     }
 
     fun getUpperBound(usesImperialUnits: Boolean): Double? {
         return rawUpperBound?.let {
-            getType().fromRawValue(it, usesImperialUnits)
+            type.fromRawValue(it, usesImperialUnits)
         }
     }
-
-    fun getType(): ForecastType = ForecastType.fromString(type)
 
     fun isEdited() = rawDefaultLowerBound != rawLowerBound || rawDefaultUpperBound != rawUpperBound
 }

@@ -3,82 +3,75 @@ package com.tragicfruit.kindweather.data.model
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.Relation
 import com.tragicfruit.kindweather.R
-import io.realm.RealmList
-import io.realm.RealmObject
 
-open class WeatherAlert : RealmObject() {
+@Entity(tableName = "alerts")
+data class WeatherAlert(
+    @PrimaryKey val id: String,
+    val type: WeatherAlertType,
+    val priority: Int,
+    var enabled: Boolean = true
+)
 
-    internal var id = 0
-    internal var info = ""
-    var priority = 0
+enum class WeatherAlertType(
+    @StringRes val title: Int,
+    @StringRes val shortTitle: Int,
+    @ColorRes val color: Int,
+    @DrawableRes val image: Int
+) {
 
-    var enabled = true
-    var params = RealmList<WeatherAlertParam>(); private set
+    Umbrella(
+        title = R.string.alert_umbrella,
+        shortTitle = R.string.alert_umbrella_short,
+        color = R.color.alert_umbrella,
+        image = R.drawable.umbrella
+    ),
 
-    fun getInfo() = Info.fromString(info)
+    Jacket(
+        title = R.string.alert_jacket,
+        shortTitle = R.string.alert_jacket_short,
+        color = R.color.alert_jacket,
+        image = R.drawable.warm_clothing
+    ),
 
-    fun areParamsEdited() = params.any { it.isEdited() }
+    TShirt(
+        title = R.string.alert_tshirt,
+        shortTitle = R.string.alert_tshirt_short,
+        color = R.color.alert_tshirt,
+        image = R.drawable.tshirt_shorts
+    ),
 
-    fun shouldShowAlert(forecast: ForecastPeriod, usesImperialUnits: Boolean): Boolean {
-        return params.all {
-            forecast.satisfiesParam(it, usesImperialUnits)
-        }
-    }
+    Sunscreen(
+        title = R.string.alert_sunscreen,
+        shortTitle = R.string.alert_sunscreen_short,
+        color = R.color.alert_sunscreen,
+        image = R.drawable.sunscreen
+    ),
 
-    enum class Info(
-        @StringRes val title: Int = 0,
-        @StringRes val shortTitle: Int = 0,
-        @ColorRes val color: Int = 0,
-        @DrawableRes val image: Int = 0
-    ) {
+    RainJacket(
+        title = R.string.alert_rain_jacket,
+        shortTitle = R.string.alert_rain_jacket_short,
+        color = R.color.alert_rain_jacket,
+        image = R.drawable.rain_jacket
+    ),
 
-        UMBRELLA(
-            R.string.alert_umbrella,
-            R.string.alert_umbrella_short,
-            R.color.alert_umbrella,
-            R.drawable.umbrella),
-
-        JACKET(
-            R.string.alert_jacket,
-            R.string.alert_jacket_short,
-            R.color.alert_jacket,
-            R.drawable.warm_clothing),
-
-        TSHIRT(
-            R.string.alert_tshirt,
-            R.string.alert_tshirt_short,
-            R.color.alert_tshirt,
-            R.drawable.tshirt_shorts),
-
-        SUNSCREEN(
-            R.string.alert_sunscreen,
-            R.string.alert_sunscreen_short,
-            R.color.alert_sunscreen,
-            R.drawable.sunscreen),
-
-        RAIN_JACKET(
-            R.string.alert_rain_jacket,
-            R.string.alert_rain_jacket_short,
-            R.color.alert_rain_jacket,
-            R.drawable.rain_jacket),
-
-        THICK_JACKET(
-            R.string.alert_thick_jacket,
-            R.string.alert_thick_jacket_short,
-            R.color.alert_thick_jacket,
-            R.drawable.winter_clothing),
-
-        UNKNOWN;
-
-        companion object {
-            fun fromString(info: String) = try {
-                valueOf(info)
-            } catch (e: Exception) {
-                UNKNOWN
-            }
-        }
-
-    }
-
+    ThickJacket(
+        title = R.string.alert_thick_jacket,
+        shortTitle = R.string.alert_thick_jacket_short,
+        color = R.color.alert_thick_jacket,
+        image = R.drawable.winter_clothing
+    )
 }
+
+data class WeatherAlertWithParams(
+    @Embedded val alert: WeatherAlert,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "alertId"
+    )
+    val params: List<WeatherAlertParam>
+)

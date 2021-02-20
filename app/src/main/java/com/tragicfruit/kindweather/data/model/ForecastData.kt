@@ -9,6 +9,6 @@ open class ForecastData : RealmObject() {
     var fetchedTime: Long = 0
 
     fun getValue(usesImperialUnits: Boolean): Double {
-        return ForecastType.fromString(type).fromRawValue(rawValue, usesImperialUnits)
+        return enumValueOf<ForecastType>(type).fromRawValue(rawValue, usesImperialUnits)
     }
 }

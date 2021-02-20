@@ -1,6 +1,8 @@
 package com.tragicfruit.kindweather.data.db
 
 import androidx.room.TypeConverter
+import com.tragicfruit.kindweather.data.model.ForecastType
+import com.tragicfruit.kindweather.data.model.WeatherAlertType
 import java.util.*
 
 class Converters {
@@ -11,6 +13,18 @@ class Converters {
 
     @TypeConverter
     fun dateToTimestamp(date: Date?): Long? {
-        return date?.time?.toLong()
+        return date?.time
     }
+
+    @TypeConverter
+    fun toWeatherAlertType(value: String) = enumValueOf<WeatherAlertType>(value)
+
+    @TypeConverter
+    fun fromWeatherAlertType(value: WeatherAlertType) = value.name
+
+    @TypeConverter
+    fun toForecastType(value: String) = enumValueOf<ForecastType>(value)
+
+    @TypeConverter
+    fun fromForecastType(value: ForecastType) = value.name
 }

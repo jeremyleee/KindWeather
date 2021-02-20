@@ -9,7 +9,6 @@ import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.data.AlertRepository
 import com.tragicfruit.kindweather.data.ForecastRepository
 import com.tragicfruit.kindweather.data.NotificationRepository
-import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +23,6 @@ class AlertService : JobIntentService() {
     @Inject lateinit var notificationRepository: NotificationRepository
     @Inject lateinit var forecastRepository: ForecastRepository
     @Inject lateinit var notificationController: NotificationController
-    @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
 
     override fun onHandleWork(intent: Intent) {
         if (LocationResult.hasResult(intent)) {
@@ -45,11 +43,9 @@ class AlertService : JobIntentService() {
     private suspend fun displayWeatherAlert() {
         forecastRepository.findTodaysForecast()?.let { forecast ->
             // Highest priority alert
-            val showAlert = alertRepository.getEnabledAlerts().firstOrNull {
-                it.shouldShowAlert(forecast, sharedPrefsHelper.usesImperialUnits())
-            }
+            val showAlert = alertRepository.findAlertToShow(forecast)
 
-            val alertInfo = showAlert?.getInfo()
+            val alertInfo = showAlert?.type
             val message = getString(alertInfo?.title ?: R.string.feed_entry_default)
             val color = ContextCompat.getColor(this, alertInfo?.color ?: R.color.alert_no_notification)
 

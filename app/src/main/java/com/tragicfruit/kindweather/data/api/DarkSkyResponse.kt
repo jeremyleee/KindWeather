@@ -29,13 +29,13 @@ class ForecastSerializer : KSerializer<Forecast> {
                     time = it.time
                     summary = it.summary ?: summary
                     icon = it.icon ?: icon
-                    data.add(createData(ForecastType.TEMP_HIGH, it.temperatureHigh))
-                    data.add(createData(ForecastType.TEMP_LOW, it.temperatureLow))
-                    data.add(createData(ForecastType.PRECIP_INTENSITY, it.precipIntensity))
-                    data.add(createData(ForecastType.PRECIP_PROBABILITY, it.precipProbability))
-                    data.add(createData(ForecastType.HUMIDITY, it.humidity))
-                    data.add(createData(ForecastType.WIND_GUST, it.windGust))
-                    data.add(createData(ForecastType.UV_INDEX, it.uvIndex?.toDouble()))
+                    data.add(createData(ForecastType.TempHigh, it.temperatureHigh))
+                    data.add(createData(ForecastType.TempLow, it.temperatureLow))
+                    data.add(createData(ForecastType.PrecipIntensity, it.precipIntensity))
+                    data.add(createData(ForecastType.PrecipProbability, it.precipProbability))
+                    data.add(createData(ForecastType.Humidity, it.humidity))
+                    data.add(createData(ForecastType.WindGust, it.windGust))
+                    data.add(createData(ForecastType.UVIndex, it.uvIndex?.toDouble()))
                     fetchedTime = System.currentTimeMillis()
                 }
             }

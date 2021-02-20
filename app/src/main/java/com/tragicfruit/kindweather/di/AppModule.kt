@@ -6,7 +6,9 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.tragicfruit.kindweather.BuildConfig
 import com.tragicfruit.kindweather.data.api.DarkSkyAPIService
 import com.tragicfruit.kindweather.data.db.AppDatabase
-import com.tragicfruit.kindweather.data.db.NotificationDao
+import com.tragicfruit.kindweather.data.db.dao.AlertDao
+import com.tragicfruit.kindweather.data.db.dao.AlertParamDao
+import com.tragicfruit.kindweather.data.db.dao.NotificationDao
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import com.tragicfruit.kindweather.utils.ViewHelper
 import dagger.Module
@@ -39,6 +41,18 @@ class AppModule {
     @Singleton
     fun providesNotificationDao(database: AppDatabase): NotificationDao {
         return database.notificationDao()
+    }
+
+    @Provides
+    @Singleton
+    fun providesAlertDao(database: AppDatabase): AlertDao {
+        return database.alertDao()
+    }
+
+    @Provides
+    @Singleton
+    fun providesAlertParamDao(database: AppDatabase): AlertParamDao {
+        return database.alertParamDao()
     }
 
     @Provides

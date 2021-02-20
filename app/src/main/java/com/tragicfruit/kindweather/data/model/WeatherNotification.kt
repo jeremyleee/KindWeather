@@ -19,15 +19,15 @@ data class WeatherNotification(
     val longitude: Double
 ) {
     fun getTempHighString(useImperial: Boolean): String {
-        return getDisplayString(rawTempHigh, ForecastType.TEMP_HIGH, useImperial)
+        return getDisplayString(rawTempHigh, ForecastType.TempHigh, useImperial)
     }
 
     fun getTempLowString(useImperial: Boolean): String {
-        return getDisplayString(rawTempLow, ForecastType.TEMP_LOW, useImperial)
+        return getDisplayString(rawTempLow, ForecastType.TempLow, useImperial)
     }
 
     fun getPrecipProbabilityString(useImperial: Boolean): String {
-        return getDisplayString(rawPrecipProbability, ForecastType.PRECIP_PROBABILITY, useImperial)
+        return getDisplayString(rawPrecipProbability, ForecastType.PrecipProbability, useImperial)
     }
 
     private fun getDisplayString(rawValue: Double?, type: ForecastType, useImperial: Boolean): String {

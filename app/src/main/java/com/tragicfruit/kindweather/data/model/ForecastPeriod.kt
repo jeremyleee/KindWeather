@@ -28,7 +28,7 @@ open class ForecastPeriod : RealmObject() {
         val lowerBound = param.getLowerBound(usesImperialUnits)
         val upperBound = param.getUpperBound(usesImperialUnits)
 
-        val data = getDataForType(param.getType())
+        val data = getDataForType(param.type)
 
         // If data doesn't exist, treat it as zero
         val observedValue = data?.getValue(usesImperialUnits) ?: 0.0
@@ -36,7 +36,7 @@ open class ForecastPeriod : RealmObject() {
         val satisfiesLowerBound = lowerBound == null || observedValue >= lowerBound
         val satisfiesUpperBound = upperBound == null || observedValue <= upperBound
 
-        Timber.d("param:${param.getType().name}; observed:$observedValue; lowerbound:$lowerBound; upperbound:$upperBound; satisfies:${satisfiesLowerBound && satisfiesUpperBound}")
+        Timber.d("param:${param.type.name}; observed:$observedValue; lowerbound:$lowerBound; upperbound:$upperBound; satisfies:${satisfiesLowerBound && satisfiesUpperBound}")
 
         return satisfiesLowerBound && satisfiesUpperBound
     }

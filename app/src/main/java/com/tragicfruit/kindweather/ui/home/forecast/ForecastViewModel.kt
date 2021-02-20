@@ -1,13 +1,14 @@
 package com.tragicfruit.kindweather.ui.home.forecast
 
 import android.location.Geocoder
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.tragicfruit.kindweather.data.NotificationRepository
 import com.tragicfruit.kindweather.data.model.WeatherNotification
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
@@ -15,26 +16,19 @@ import javax.inject.Inject
 @HiltViewModel
 class ForecastViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val repository: NotificationRepository,
+    repository: NotificationRepository,
     private val sharedPrefsHelper: SharedPrefsHelper,
     private val geocoder: Geocoder
 ) : ViewModel() {
 
+    // TODO: update when Hilt supports navArgs
+    private val notificationId = requireNotNull(savedStateHandle.get<String>("alertId"))
+
     val useImperialUnits: Boolean
     get() = sharedPrefsHelper.usesImperialUnits()
 
-    private val _notification: MutableLiveData<WeatherNotification> = MutableLiveData()
-    val notification: LiveData<WeatherNotification> get() = _notification
-
-    val addressLabel: LiveData<String?> = Transformations.map(_notification) { fetchAddress(it) }
-
-    init {
-        savedStateHandle.get<String>("notificationId")?.let { id ->
-            viewModelScope.launch(Dispatchers.IO) {
-                _notification.postValue(repository.findNotification(id))
-            }
-        }
-    }
+    val notification: LiveData<WeatherNotification> = repository.findNotification(notificationId)
+    val addressLabel: LiveData<String?> = notification.map { fetchAddress(it) }
 
     private fun fetchAddress(notification: WeatherNotification): String? {
         return try {
