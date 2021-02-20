@@ -1,5 +1,6 @@
 package com.tragicfruit.kindweather.ui.welcome
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,16 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import androidx.work.*
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.controllers.AlertController
-import com.tragicfruit.kindweather.controllers.FetchForecastWorker
 import com.tragicfruit.kindweather.databinding.FragmentWelcomeBinding
 import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.ui.welcome.allowlocation.AllowLocationFragment
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -47,7 +45,7 @@ class WelcomeFragment : BaseFragment() {
 
         childFragmentManager.setFragmentResultListener(AllowLocationFragment.REQUEST_LOCATION, viewLifecycleOwner) { _, bundle ->
             if (bundle.getBoolean(AllowLocationFragment.KEY_PERMISSIONS_GRANTED)) {
-                onLocationPermissionGranted()
+                onLocationPermissionGranted(view.context)
             } else {
                 onLocationPermissionDenied()
             }
@@ -63,10 +61,9 @@ class WelcomeFragment : BaseFragment() {
         binding.pageIndicator.setPageCount(adapter.itemCount)
     }
 
-    private fun onLocationPermissionGranted() {
+    private fun onLocationPermissionGranted(context: Context) {
         sharedPrefsHelper.setOnboardingCompleted(true)
-        enqueueFetchWork()
-        context?.let { alertController.scheduleDailyAlert(it) }
+        alertController.scheduleDailyAlert(context)
 
         // Finish onboarding
         val directions = WelcomeFragmentDirections.actionWelcomeFragmentToHomeFragment(true)
@@ -75,24 +72,5 @@ class WelcomeFragment : BaseFragment() {
 
     private fun onLocationPermissionDenied() {
         Toast.makeText(context, R.string.allow_location_permission_error, Toast.LENGTH_LONG).show()
-    }
-
-    private fun enqueueFetchWork() {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-
-        val request = PeriodicWorkRequestBuilder<FetchForecastWorker>(6, TimeUnit.HOURS)
-            .setConstraints(constraints)
-            .build()
-
-        context?.let {
-            WorkManager.getInstance(it)
-                .enqueueUniquePeriodicWork(
-                    FetchForecastWorker.PERIODIC_FETCH_FORECAST_WORK,
-                    ExistingPeriodicWorkPolicy.REPLACE,
-                    request
-                )
-        }
     }
 }
