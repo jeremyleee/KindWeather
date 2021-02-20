@@ -47,7 +47,9 @@ class AlertListFragment : WFragment(), AlertCell.Listener {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
-        adapter.submitList(viewModel.alertList)
+        viewModel.alertList.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
 
         binding.allowLocationButton.setOnClickListener {
             val dialog = RequestLocationDialogFragment()
@@ -57,12 +59,8 @@ class AlertListFragment : WFragment(), AlertCell.Listener {
 
     override fun onResume() {
         super.onResume()
-
-        // TODO: replace with observe when migrated to live data
-        adapter.notifyDataSetChanged()
-        context?.let {
-            binding.allowLocationHeader.isVisible = !PermissionHelper.hasBackgroundLocationPermission(it)
-        }
+        binding.allowLocationHeader.isVisible =
+            !PermissionHelper.hasBackgroundLocationPermission(context)
     }
 
     override fun onAlertClicked(alert: WeatherAlert) {

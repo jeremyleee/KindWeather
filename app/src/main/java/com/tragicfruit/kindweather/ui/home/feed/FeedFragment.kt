@@ -15,13 +15,10 @@ import com.tragicfruit.kindweather.databinding.FragmentFeedBinding
 import com.tragicfruit.kindweather.model.WeatherNotification
 import com.tragicfruit.kindweather.ui.WFragment
 import dagger.hilt.android.AndroidEntryPoint
-import io.realm.RealmChangeListener
-import io.realm.RealmResults
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
-class FeedFragment : WFragment(), FeedCell.Listener,
-    RealmChangeListener<RealmResults<WeatherNotification>> {
+class FeedFragment : WFragment(), FeedCell.Listener {
 
     override var statusBarColor = R.color.white
 
@@ -50,27 +47,18 @@ class FeedFragment : WFragment(), FeedCell.Listener,
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
-        adapter.submitList(viewModel.feedData)
-        binding.emptyView.isVisible = viewModel.feedData.isEmpty()
-
         Glide.with(this)
             .load(R.drawable.feed_empty)
             .into(binding.emptyImage)
 
+        viewModel.feedData.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+            binding.emptyView.isVisible = it.isEmpty()
+        }
+
         binding.setupButton.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_alertListFragment)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        updateFeedView()
-        viewModel.feedData.addChangeListener(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        viewModel.feedData.removeChangeListener(this)
     }
 
     override fun onFeedItemClicked(notification: WeatherNotification) {
@@ -80,15 +68,5 @@ class FeedFragment : WFragment(), FeedCell.Listener,
                 .actionFeedFragmentToForecastFragment(it.id, timeCreatedMillis, notification.color)
             findNavController().navigate(action)
         }
-    }
-
-    // TODO: replace with LiveData observe when migrated to Room
-    override fun onChange(t: RealmResults<WeatherNotification>) {
-        updateFeedView()
-    }
-
-    private fun updateFeedView() {
-        adapter.notifyDataSetChanged()
-        binding.emptyView.isVisible = viewModel.feedData.isEmpty()
     }
 }
