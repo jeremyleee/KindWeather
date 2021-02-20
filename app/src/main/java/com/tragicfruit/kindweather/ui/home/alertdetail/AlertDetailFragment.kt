@@ -47,17 +47,15 @@ class AlertDetailFragment : WFragment(), AlertDetailParamView.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val color = ContextCompat.getColor(requireContext(), viewModel.alert.getInfo().color)
-
-        initHeaderView(viewModel.alert, color)
-        initContentViews(viewModel.alert, color, requireContext())
+        viewModel.alert.observe(viewLifecycleOwner) { alert ->
+            val color = ContextCompat.getColor(view.context, alert.getInfo().color)
+            setupHeaderView(alert, color)
+            setupContentViews(alert, color, view.context)
+            updateParamListView(alert.params, color)
+        }
 
         viewModel.resetButtonEnabled.observe(viewLifecycleOwner) { enabled ->
             binding.resetButton.isEnabled = enabled
-        }
-
-        viewModel.alertParams.observe(viewLifecycleOwner) { params ->
-            updateParamListView(params)
         }
 
         binding.toolbar.setNavigationOnClickListener {
@@ -78,7 +76,7 @@ class AlertDetailFragment : WFragment(), AlertDetailParamView.Listener {
         _binding = null
     }
 
-    private fun initHeaderView(alert: WeatherAlert, @ColorInt color: Int) {
+    private fun setupHeaderView(alert: WeatherAlert, @ColorInt color: Int) {
         applyStatusBarColor(ColorHelper.darkenColor(color), lightStatusBar)
 
         binding.collapsingToolbar.apply {
@@ -98,7 +96,7 @@ class AlertDetailFragment : WFragment(), AlertDetailParamView.Listener {
         binding.headerImageOverlay.setImageDrawable(gradient)
     }
 
-    private fun initContentViews(alert: WeatherAlert, @ColorInt color: Int, context: Context) {
+    private fun setupContentViews(alert: WeatherAlert, @ColorInt color: Int, context: Context) {
         val states = arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked))
         val thumbColors = intArrayOf(ContextCompat.getColor(context, R.color.switch_unchecked), color)
         val trackColors = intArrayOf(ContextCompat.getColor(context, R.color.switch_unchecked_track), ColorHelper.darkenColor(color, 0.8f))
@@ -112,13 +110,12 @@ class AlertDetailFragment : WFragment(), AlertDetailParamView.Listener {
         binding.resetButton.isEnabled = alert.areParamsEdited()
     }
 
-    private fun updateParamListView(params: List<WeatherAlertParam>) {
+    private fun updateParamListView(params: List<WeatherAlertParam>, @ColorInt color: Int) {
         binding.paramsTitle.isVisible = params.isNotEmpty()
         binding.paramsList.removeAllViews()
         params.forEach { param ->
             val paramView = AlertDetailParamView(binding.paramsList.context)
-            val alertColor = ContextCompat.getColor(paramView.context, viewModel.alert.getInfo().color)
-            paramView.setData(alertColor, param, sharedPrefsHelper.usesImperialUnits(), this)
+            paramView.setData(color, param, sharedPrefsHelper.usesImperialUnits(), this)
             binding.paramsList.addView(paramView)
         }
     }

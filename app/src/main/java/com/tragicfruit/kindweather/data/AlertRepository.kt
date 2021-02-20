@@ -73,10 +73,12 @@ class AlertRepository @Inject constructor(
         }
     }
 
-    fun resetParamsToDefault(param: WeatherAlertParam) {
+    fun resetParamsToDefault(alert: WeatherAlert) {
         Realm.getDefaultInstance().executeTransaction {
-            param.rawLowerBound = param.rawDefaultLowerBound
-            param.rawUpperBound = param.rawDefaultUpperBound
+            alert.params.forEach {
+                it.rawLowerBound = it.rawDefaultLowerBound
+                it.rawUpperBound = it.rawDefaultUpperBound
+            }
         }
     }
 }

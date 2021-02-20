@@ -3,6 +3,7 @@ package com.tragicfruit.kindweather.components
 import android.content.Context
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
@@ -57,7 +58,7 @@ class AlertDetailParamView(context: Context) : RelativeLayout(context) {
         })
     }
 
-    fun setData(color: Int, param: WeatherAlertParam, usesImperialUnits: Boolean, listener: Listener?) {
+    fun setData(@ColorInt color: Int, param: WeatherAlertParam, usesImperialUnits: Boolean, listener: Listener?) {
         val type = param.getType()
 
         paramTitle.setText(type.label)

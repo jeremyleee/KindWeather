@@ -1,49 +1,50 @@
 package com.tragicfruit.kindweather.ui.home.alertdetail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.tragicfruit.kindweather.data.AlertRepository
+import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.model.WeatherAlertParam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class AlertDetailViewModel @Inject constructor(
-    private val repository: AlertRepository,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    private val repository: AlertRepository
 ) : ViewModel() {
 
-    // TODO: update when Hilt supports navArgs
-    val alert = requireNotNull(
-        savedStateHandle.get<Int>("alertId")?.let { id ->
-            repository.findAlert(id)
-        }
-    )
+    private val _alert: MutableLiveData<WeatherAlert> by lazy { MutableLiveData() }
+    val alert: LiveData<WeatherAlert> get() = _alert
 
-    val resetButtonEnabled: MutableLiveData<Boolean> by lazy { MutableLiveData() }
-    val alertParams: MutableLiveData<List<WeatherAlertParam>> by lazy { MutableLiveData(alert.params) }
+    private val _resetButtonEnabled: MutableLiveData<Boolean> by lazy { MutableLiveData() }
+    val resetButtonEnabled: LiveData<Boolean> get() = _resetButtonEnabled
+
+    init {
+        // TODO: update when Hilt supports navArgs
+        savedStateHandle.get<Int>("alertId")?.let { id ->
+            _alert.value = repository.findAlert(id)
+        }
+    }
 
     fun enableAlert(enabled: Boolean) {
-        repository.setAlertEnabled(alert, enabled)
+        _alert.value?.let { repository.setAlertEnabled(it, enabled) }
     }
 
     fun resetParams() {
-        alert.params.forEach { param ->
-            repository.resetParamsToDefault(param)
-        }
-
-        alertParams.value = alert.params
-        resetButtonEnabled.value = false
+        _alert.value = _alert.value?.also { repository.resetParamsToDefault(it) }
+        _resetButtonEnabled.value = false
     }
 
     fun updateLowerBound(param: WeatherAlertParam, value: Double?) {
         repository.setParamLowerBound(param, value)
-        resetButtonEnabled.value = true
+        _resetButtonEnabled.value = true
     }
 
     fun updateUpperBound(param: WeatherAlertParam, value: Double?) {
         repository.setParamUpperBound(param, value)
-        resetButtonEnabled.value = true
+        _resetButtonEnabled.value = true
     }
 }
