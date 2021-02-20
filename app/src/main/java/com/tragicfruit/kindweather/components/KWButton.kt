@@ -12,7 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class WButton @JvmOverloads constructor(
+class KWButton @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     style: Int = 0

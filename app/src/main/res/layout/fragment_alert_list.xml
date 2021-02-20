@@ -37,7 +37,7 @@
                 android:paddingStart="@dimen/app_margin_xx"
                 android:paddingEnd="@dimen/app_margin_xx">
 
-                <com.tragicfruit.kindweather.components.WButton
+                <com.tragicfruit.kindweather.components.KWButton
                     android:id="@+id/allow_location_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

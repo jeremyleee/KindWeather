@@ -15,7 +15,7 @@
         android:scaleType="fitCenter"
         android:src="@drawable/ic_location"/>
 
-    <com.tragicfruit.kindweather.components.WButton
+    <com.tragicfruit.kindweather.components.KWButton
         android:id="@+id/allow_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -10,11 +10,11 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.tragicfruit.kindweather.databinding.FragmentOnboardingBinding
-import com.tragicfruit.kindweather.ui.WFragment
+import com.tragicfruit.kindweather.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OnboardingFragment : WFragment() {
+class OnboardingFragment : BaseFragment() {
 
     private val viewModel: OnboardingViewModel by viewModels()
 

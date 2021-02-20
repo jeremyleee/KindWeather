@@ -49,7 +49,7 @@
             android:letterSpacing="0.05"
             android:gravity="center_horizontal"/>
 
-        <com.tragicfruit.kindweather.components.WButton
+        <com.tragicfruit.kindweather.components.KWButton
             android:id="@+id/setup_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

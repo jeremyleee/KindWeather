@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.tragicfruit.kindweather.R
 
-open class WFragment : Fragment() {
+open class BaseFragment : Fragment() {
 
     val baseActivity: MainActivity?
         get() = activity as? MainActivity

@@ -12,13 +12,13 @@ import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.components.AlertCell
 import com.tragicfruit.kindweather.databinding.FragmentAlertListBinding
 import com.tragicfruit.kindweather.model.WeatherAlert
-import com.tragicfruit.kindweather.ui.WFragment
+import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.ui.home.requestlocation.RequestLocationDialogFragment
 import com.tragicfruit.kindweather.utils.PermissionHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AlertListFragment : WFragment(), AlertCell.Listener {
+class AlertListFragment : BaseFragment(), AlertCell.Listener {
 
     override var statusBarColor = R.color.white
 

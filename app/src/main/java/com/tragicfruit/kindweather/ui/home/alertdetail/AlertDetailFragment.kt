@@ -20,14 +20,14 @@ import com.tragicfruit.kindweather.components.AlertDetailParamView
 import com.tragicfruit.kindweather.databinding.FragmentAlertDetailBinding
 import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.model.WeatherAlertParam
-import com.tragicfruit.kindweather.ui.WFragment
+import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.utils.ColorHelper
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AlertDetailFragment : WFragment(), AlertDetailParamView.Listener {
+class AlertDetailFragment : BaseFragment(), AlertDetailParamView.Listener {
 
     @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
 

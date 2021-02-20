@@ -11,14 +11,14 @@ import android.widget.TimePicker
 import androidx.fragment.app.viewModels
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.databinding.FragmentSettingsBinding
-import com.tragicfruit.kindweather.ui.WFragment
+import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.ui.home.settings.dialogs.TimePickerDialogFragment
 import com.tragicfruit.kindweather.ui.home.settings.dialogs.UnitsDialogFragment
 import com.tragicfruit.kindweather.utils.DisplayUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SettingsFragment : WFragment(), TimePickerDialog.OnTimeSetListener, UnitsDialogFragment.Listener {
+class SettingsFragment : BaseFragment(), TimePickerDialog.OnTimeSetListener, UnitsDialogFragment.Listener {
 
     override var statusBarColor = R.color.white
 

@@ -5,7 +5,7 @@ import com.tragicfruit.kindweather.api.ForecastResponse
 import com.tragicfruit.kindweather.model.ForecastData
 import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.model.ForecastType
-import com.tragicfruit.kindweather.utils.WCallback
+import com.tragicfruit.kindweather.utils.KWCallback
 import io.realm.Realm
 import io.realm.kotlin.createObject
 import io.realm.kotlin.where
@@ -20,7 +20,7 @@ class ForecastRepository @Inject constructor(
     private val apiService: DarkSkyAPIService
 ) {
 
-    fun fetchForecast(latitude: Double, longitude: Double, callback: WCallback) {
+    fun fetchForecast(latitude: Double, longitude: Double, callback: KWCallback) {
         apiService.fetchForecast(latitude, longitude).enqueue(object : Callback<ForecastResponse> {
 
             override fun onResponse(call: Call<ForecastResponse>, response: Response<ForecastResponse>) {

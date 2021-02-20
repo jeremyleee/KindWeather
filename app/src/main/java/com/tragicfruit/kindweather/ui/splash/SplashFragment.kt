@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.databinding.FragmentSplashBinding
-import com.tragicfruit.kindweather.ui.WFragment
+import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SplashFragment : WFragment() {
+class SplashFragment : BaseFragment() {
 
     @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
 

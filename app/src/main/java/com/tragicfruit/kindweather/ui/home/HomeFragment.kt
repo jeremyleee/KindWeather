@@ -9,9 +9,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.databinding.FragmentHomeBinding
-import com.tragicfruit.kindweather.ui.WFragment
+import com.tragicfruit.kindweather.ui.BaseFragment
 
-class HomeFragment : WFragment() {
+class HomeFragment : BaseFragment() {
 
     private val args: HomeFragmentArgs by navArgs()
 

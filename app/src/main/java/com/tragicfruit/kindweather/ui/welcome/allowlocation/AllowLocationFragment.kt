@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import com.tragicfruit.kindweather.databinding.FragmentAllowLocationBinding
-import com.tragicfruit.kindweather.ui.WFragment
+import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.utils.PermissionHelper
 
-class AllowLocationFragment : WFragment() {
+class AllowLocationFragment : BaseFragment() {
 
     private var _binding: FragmentAllowLocationBinding? = null
     private val binding get() = requireNotNull(_binding)

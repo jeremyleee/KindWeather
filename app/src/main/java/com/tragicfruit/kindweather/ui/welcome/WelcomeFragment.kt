@@ -12,7 +12,7 @@ import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.controllers.AlertController
 import com.tragicfruit.kindweather.controllers.FetchForecastWorker
 import com.tragicfruit.kindweather.databinding.FragmentWelcomeBinding
-import com.tragicfruit.kindweather.ui.WFragment
+import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.ui.welcome.allowlocation.AllowLocationFragment
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class WelcomeFragment : WFragment() {
+class WelcomeFragment : BaseFragment() {
 
     @Inject lateinit var alertController: AlertController
     @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper

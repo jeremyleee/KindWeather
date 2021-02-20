@@ -9,13 +9,13 @@ import androidx.navigation.fragment.findNavController
 import com.tragicfruit.kindweather.api.ForecastIcon
 import com.tragicfruit.kindweather.databinding.FragmentForecastBinding
 import com.tragicfruit.kindweather.model.ForecastType
-import com.tragicfruit.kindweather.ui.WFragment
+import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.utils.ColorHelper
 import com.tragicfruit.kindweather.utils.DisplayUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ForecastFragment : WFragment() {
+class ForecastFragment : BaseFragment() {
 
     private val viewModel: ForecastViewModel by viewModels()
 

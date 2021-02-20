@@ -13,12 +13,12 @@ import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.components.FeedCell
 import com.tragicfruit.kindweather.databinding.FragmentFeedBinding
 import com.tragicfruit.kindweather.model.WeatherNotification
-import com.tragicfruit.kindweather.ui.WFragment
+import com.tragicfruit.kindweather.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
-class FeedFragment : WFragment(), FeedCell.Listener {
+class FeedFragment : BaseFragment(), FeedCell.Listener {
 
     override var statusBarColor = R.color.white
 
