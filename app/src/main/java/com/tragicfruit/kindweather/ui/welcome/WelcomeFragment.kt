@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import androidx.work.*
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.controllers.AlertController
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class WelcomeFragment : WFragment(), ViewPager.OnPageChangeListener {
+class WelcomeFragment : WFragment() {
 
     @Inject lateinit var alertController: AlertController
     @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
@@ -53,14 +53,14 @@ class WelcomeFragment : WFragment(), ViewPager.OnPageChangeListener {
             }
         }
 
-        val adapter = WelcomeAdapter(childFragmentManager)
+        val adapter = WelcomeAdapter(this)
         binding.viewPager.adapter = adapter
-        binding.viewPager.addOnPageChangeListener(this)
-        binding.pageIndicator.setPageCount(adapter.count)
-    }
-
-    override fun onPageSelected(position: Int) {
-        binding.pageIndicator.setCurrentPage(position)
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                binding.pageIndicator.setCurrentPage(position)
+            }
+        })
+        binding.pageIndicator.setPageCount(adapter.itemCount)
     }
 
     private fun onLocationPermissionGranted() {
@@ -95,7 +95,4 @@ class WelcomeFragment : WFragment(), ViewPager.OnPageChangeListener {
                 )
         }
     }
-
-    override fun onPageScrollStateChanged(state: Int) = Unit
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
 }

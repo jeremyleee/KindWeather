@@ -1,13 +1,12 @@
 package com.tragicfruit.kindweather.ui.welcome
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.ui.welcome.allowlocation.AllowLocationFragment
 import com.tragicfruit.kindweather.ui.welcome.onboarding.OnboardingFragment
 
-class WelcomeAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+class WelcomeAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     enum class Page {
         PAGE_1,
@@ -16,7 +15,11 @@ class WelcomeAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fr
         ALLOW_LOCATION
     }
 
-    override fun getItem(position: Int): Fragment {
+    override fun getItemCount(): Int {
+        return Page.values().size
+    }
+
+    override fun createFragment(position: Int): Fragment {
         return when (Page.values()[position]) {
             Page.PAGE_1 -> OnboardingFragment.newInstance(
                 imageRes = R.drawable.onboarding_1,
@@ -36,7 +39,4 @@ class WelcomeAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fr
             Page.ALLOW_LOCATION -> AllowLocationFragment()
         }
     }
-
-    override fun getCount() = Page.values().size
-
 }
