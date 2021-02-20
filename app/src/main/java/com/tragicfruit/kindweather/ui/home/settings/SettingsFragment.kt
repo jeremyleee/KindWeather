@@ -71,7 +71,7 @@ class SettingsFragment : WFragment(), TimePickerDialog.OnTimeSetListener, UnitsD
     private fun showAlertTimeDialog() {
         viewModel.alertTime.value?.let {
             val fragment = TimePickerDialogFragment.newInstance(it.hour, it.minute, this)
-            fragment.show(childFragmentManager, fragment.javaClass.name)
+            fragment.show(parentFragmentManager, fragment.javaClass.name)
         }
     }
 
@@ -89,7 +89,7 @@ class SettingsFragment : WFragment(), TimePickerDialog.OnTimeSetListener, UnitsD
                 UnitsDialogFragment.Units.METRIC
             }
             val fragment = UnitsDialogFragment.newInstance(units, this)
-            fragment.show(childFragmentManager, fragment.javaClass.name)
+            fragment.show(parentFragmentManager, fragment.javaClass.name)
         }
     }
 

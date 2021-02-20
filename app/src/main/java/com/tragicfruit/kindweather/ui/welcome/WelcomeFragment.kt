@@ -4,21 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import androidx.work.*
+import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.controllers.AlertController
 import com.tragicfruit.kindweather.controllers.FetchForecastWorker
 import com.tragicfruit.kindweather.databinding.FragmentWelcomeBinding
 import com.tragicfruit.kindweather.ui.WFragment
-import com.tragicfruit.kindweather.ui.welcome.allowlocation.AllowLocationContract
+import com.tragicfruit.kindweather.ui.welcome.allowlocation.AllowLocationFragment
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class WelcomeFragment : WFragment(), AllowLocationContract.Callback, ViewPager.OnPageChangeListener {
+class WelcomeFragment : WFragment(), ViewPager.OnPageChangeListener {
 
     @Inject lateinit var alertController: AlertController
     @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
@@ -43,7 +45,15 @@ class WelcomeFragment : WFragment(), AllowLocationContract.Callback, ViewPager.O
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = WelcomeAdapter(childFragmentManager, this)
+        childFragmentManager.setFragmentResultListener(AllowLocationFragment.REQUEST_LOCATION, viewLifecycleOwner) { _, bundle ->
+            if (bundle.getBoolean(AllowLocationFragment.KEY_PERMISSIONS_GRANTED)) {
+                onLocationPermissionGranted()
+            } else {
+                onLocationPermissionDenied()
+            }
+        }
+
+        val adapter = WelcomeAdapter(childFragmentManager)
         binding.viewPager.adapter = adapter
         binding.viewPager.addOnPageChangeListener(this)
         binding.pageIndicator.setPageCount(adapter.count)
@@ -53,7 +63,7 @@ class WelcomeFragment : WFragment(), AllowLocationContract.Callback, ViewPager.O
         binding.pageIndicator.setCurrentPage(position)
     }
 
-    override fun onLocationPermissionGranted() {
+    private fun onLocationPermissionGranted() {
         sharedPrefsHelper.setOnboardingCompleted(true)
         enqueueFetchWork()
         context?.let { alertController.scheduleDailyAlert(it) }
@@ -61,6 +71,10 @@ class WelcomeFragment : WFragment(), AllowLocationContract.Callback, ViewPager.O
         // Finish onboarding
         val directions = WelcomeFragmentDirections.actionWelcomeFragmentToHomeFragment(true)
         findNavController().navigate(directions)
+    }
+
+    private fun onLocationPermissionDenied() {
+        Toast.makeText(context, R.string.allow_location_permission_error, Toast.LENGTH_LONG).show()
     }
 
     private fun enqueueFetchWork() {
@@ -84,5 +98,4 @@ class WelcomeFragment : WFragment(), AllowLocationContract.Callback, ViewPager.O
 
     override fun onPageScrollStateChanged(state: Int) = Unit
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
-
 }

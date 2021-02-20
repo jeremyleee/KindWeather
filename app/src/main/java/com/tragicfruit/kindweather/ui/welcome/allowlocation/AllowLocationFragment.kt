@@ -1,20 +1,18 @@
 package com.tragicfruit.kindweather.ui.welcome.allowlocation
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import com.tragicfruit.kindweather.R
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import com.tragicfruit.kindweather.databinding.FragmentAllowLocationBinding
 import com.tragicfruit.kindweather.ui.WFragment
 import com.tragicfruit.kindweather.utils.PermissionHelper
 
-class AllowLocationFragment : WFragment(), AllowLocationContract.View {
-
-    private val presenter = AllowLocationPresenter(this)
-    private var callback: AllowLocationContract.Callback? = null
+class AllowLocationFragment : WFragment() {
 
     private var _binding: FragmentAllowLocationBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -37,17 +35,15 @@ class AllowLocationFragment : WFragment(), AllowLocationContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         binding.allowButton.setOnClickListener {
-            presenter.onAllowClicked()
+            requestLocationPermission(it.context)
         }
     }
 
-    override fun requestLocationPermission() {
-        context?.let {
-            if (!PermissionHelper.hasFineLocationPermission(it)) {
-                requestPermissions(PermissionHelper.FINE_LOCATION, REQUEST_LOCATION_PERMISSION)
-            } else {
-                presenter.onPermissionAllowed()
-            }
+    private fun requestLocationPermission(context: Context) {
+        if (!PermissionHelper.hasFineLocationPermission(context)) {
+            requestPermissions(PermissionHelper.FINE_LOCATION, REQUEST_LOCATION_PERMISSION)
+        } else {
+            setResult(false)
         }
     }
 
@@ -58,31 +54,24 @@ class AllowLocationFragment : WFragment(), AllowLocationContract.View {
     ) {
         when (requestCode) {
             REQUEST_LOCATION_PERMISSION -> {
-                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                    presenter.onPermissionAllowed()
-                } else {
-                    presenter.onPermissionDenied()
-                }
+                val permissionsGranted = grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+                setResult(permissionsGranted)
             }
         }
     }
 
-    override fun showNextScreen() {
-        callback?.onLocationPermissionGranted()
-    }
-
-    override fun showPermissionsRequiredError() {
-        Toast.makeText(context, R.string.allow_location_permission_error, Toast.LENGTH_LONG).show()
+    private fun setResult(permissionsGranted: Boolean) {
+        setFragmentResult(
+            REQUEST_LOCATION,
+            bundleOf(KEY_PERMISSIONS_GRANTED to permissionsGranted)
+        )
     }
 
     companion object {
-        private const val REQUEST_LOCATION_PERMISSION = 700
+        const val REQUEST_LOCATION = "request_location"
+        const val KEY_PERMISSIONS_GRANTED = "permissions_granted"
 
-        fun newInstance(callback: AllowLocationContract.Callback): AllowLocationFragment {
-            return AllowLocationFragment().also {
-                it.callback = callback
-            }
-        }
+        private const val REQUEST_LOCATION_PERMISSION = 700
     }
 
 }
