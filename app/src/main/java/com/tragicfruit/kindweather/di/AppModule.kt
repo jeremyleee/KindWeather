@@ -9,7 +9,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ViewScoped
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -20,14 +19,14 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class AppModule {
 
-    @Singleton
     @Provides
+    @Singleton
     fun providesApiService(retrofit: Retrofit): DarkSkyAPIService {
         return retrofit.create()
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun providesRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.API_URL)
@@ -35,14 +34,14 @@ class AppModule {
             .build()
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun providesSharedPrefsHelper(@ApplicationContext context: Context): SharedPrefsHelper {
         return SharedPrefsHelper(context)
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun providesViewHelper(@ApplicationContext context: Context): ViewHelper {
         return ViewHelper(context)
     }

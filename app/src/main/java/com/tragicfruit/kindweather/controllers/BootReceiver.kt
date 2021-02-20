@@ -9,8 +9,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class BootReceiver : BroadcastReceiver() {
 
-    @Inject
-    lateinit var alertController: AlertController
+    @Inject lateinit var alertController: AlertController
 
     override fun onReceive(context: Context?, intent: Intent?) {
         context ?: return

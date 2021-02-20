@@ -52,11 +52,9 @@ class ForecastFragment : BaseFragment() {
             binding.highTempValueText.text = forecast.getDataForType(ForecastType.TEMP_HIGH)?.getDisplayString(viewModel.useImperialUnits)
             binding.lowTempValueText.text = forecast.getDataForType(ForecastType.TEMP_LOW)?.getDisplayString(viewModel.useImperialUnits)
             binding.precipValueText.text = forecast.getDataForType(ForecastType.PRECIP_PROBABILITY)?.getDisplayString(viewModel.useImperialUnits)
-
-            viewModel.fetchAddress(view.context, forecast)
         }
 
-        viewModel.addressString.observe(viewLifecycleOwner) { address ->
+        viewModel.addressLabel.observe(viewLifecycleOwner) { address ->
             binding.addressText.text = address
         }
 

@@ -38,7 +38,6 @@
     <string name="forecast_high_temp">High</string>
     <string name="forecast_low_temp">Low</string>
     <string name="forecast_precip">Precip</string>
-    <string name="forecast_location_not_found">Lat: %1$f\nLon: %2$f</string>
 
     <string name="alert_umbrella">Make sure to bring your brolly today</string>
     <string name="alert_umbrella_short">Bring your brolly today</string>

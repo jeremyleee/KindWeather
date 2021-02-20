@@ -1,19 +1,13 @@
 package com.tragicfruit.kindweather.ui.home.forecast
 
-import android.content.Context
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.ResultReceiver
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import com.tragicfruit.kindweather.controllers.FetchAddressService
+import android.location.Geocoder
+import androidx.lifecycle.*
 import com.tragicfruit.kindweather.data.ForecastRepository
 import com.tragicfruit.kindweather.model.ForecastPeriod
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
+import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
@@ -21,7 +15,8 @@ import javax.inject.Inject
 class ForecastViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val repository: ForecastRepository,
-    private val sharedPrefsHelper: SharedPrefsHelper
+    private val sharedPrefsHelper: SharedPrefsHelper,
+    private val geocoder: Geocoder
 ) : ViewModel() {
 
     val useImperialUnits: Boolean
@@ -36,8 +31,7 @@ class ForecastViewModel @Inject constructor(
     private val _createdAt: MutableLiveData<Date> = MutableLiveData()
     val createdAt: LiveData<Date> get() = _createdAt
 
-    private val _addressString: MutableLiveData<String?> = MutableLiveData()
-    val addressString: LiveData<String?> get() = _addressString
+    val addressLabel: LiveData<String?> = Transformations.map(_forecast) { fetchAddress(it) }
 
     init {
         savedStateHandle.get<String>("forecastId")?.let { id ->
@@ -48,13 +42,19 @@ class ForecastViewModel @Inject constructor(
         _createdAt.value = savedStateHandle.get<Long>("timeCreatedMillis")?.let { Date(it) }
     }
 
-    // TODO: refactor this with coroutines
-    fun fetchAddress(context: Context, forecast: ForecastPeriod) {
-        FetchAddressService.start(context, forecast.latitude, forecast.longitude,
-            object : ResultReceiver(Handler(Looper.getMainLooper())) {
-                override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
-                    _addressString.postValue(resultData?.getString(FetchAddressService.RESULT_DATA))
-                }
-        })
+    private fun fetchAddress(forecast: ForecastPeriod): String? {
+        return try {
+            val address = geocoder.getFromLocation(
+                forecast.latitude,
+                forecast.longitude,
+                1
+            ).firstOrNull()
+
+            Timber.d("Fetched address ${address?.toString()}")
+            address?.locality ?: address?.subAdminArea
+
+        } catch (e: IOException) {
+            null
+        }
     }
 }
