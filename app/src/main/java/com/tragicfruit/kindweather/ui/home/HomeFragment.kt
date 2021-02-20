@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.tragicfruit.kindweather.R
@@ -35,14 +35,15 @@ class HomeFragment : WFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.let {
-            val navController = Navigation.findNavController(it, R.id.nav_host_fragment)
-            binding.bottomNav.setupWithNavController(navController)
+        val navHostFragment =
+            childFragmentManager.findFragmentById(R.id.home_nav_host_fragment) as NavHostFragment
 
-            // Show the conditions screen first if user has just onboarded
-            if (args.fromOnboarding) {
-                navController.navigate(R.id.action_feedFragment_to_alertListFragment)
-            }
+        val navController = navHostFragment.navController
+        binding.bottomNav.setupWithNavController(navController)
+
+        // Show the conditions screen first if user has just onboarded
+        if (args.fromOnboarding) {
+            navController.navigate(R.id.action_feedFragment_to_alertListFragment)
         }
     }
 
