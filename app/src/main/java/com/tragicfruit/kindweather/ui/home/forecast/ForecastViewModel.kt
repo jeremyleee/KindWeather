@@ -3,7 +3,7 @@ package com.tragicfruit.kindweather.ui.home.forecast
 import android.location.Geocoder
 import androidx.lifecycle.*
 import com.tragicfruit.kindweather.data.NotificationRepository
-import com.tragicfruit.kindweather.model.WeatherNotification
+import com.tragicfruit.kindweather.data.model.WeatherNotification
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber

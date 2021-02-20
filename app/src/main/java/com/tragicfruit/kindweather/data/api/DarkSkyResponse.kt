@@ -1,8 +1,8 @@
-package com.tragicfruit.kindweather.api
+package com.tragicfruit.kindweather.data.api
 
-import com.tragicfruit.kindweather.model.ForecastData
-import com.tragicfruit.kindweather.model.ForecastPeriod
-import com.tragicfruit.kindweather.model.ForecastType
+import com.tragicfruit.kindweather.data.model.ForecastData
+import com.tragicfruit.kindweather.data.model.ForecastPeriod
+import com.tragicfruit.kindweather.data.model.ForecastType
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encoding.Decoder

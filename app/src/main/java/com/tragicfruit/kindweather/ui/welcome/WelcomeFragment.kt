@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.controllers.AlertController
+import com.tragicfruit.kindweather.utils.controllers.AlertController
 import com.tragicfruit.kindweather.databinding.FragmentWelcomeBinding
 import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.ui.welcome.allowlocation.AllowLocationFragment

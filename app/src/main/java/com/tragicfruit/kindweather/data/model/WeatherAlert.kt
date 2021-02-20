@@ -1,14 +1,11 @@
-package com.tragicfruit.kindweather.model
+package com.tragicfruit.kindweather.data.model
 
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.tragicfruit.kindweather.R
-import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmObject
-import io.realm.kotlin.createObject
-import io.realm.kotlin.where
 
 open class WeatherAlert : RealmObject() {
 

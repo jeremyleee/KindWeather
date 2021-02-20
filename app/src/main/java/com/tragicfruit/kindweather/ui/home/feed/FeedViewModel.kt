@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tragicfruit.kindweather.data.NotificationRepository
-import com.tragicfruit.kindweather.model.WeatherNotification
+import com.tragicfruit.kindweather.data.model.WeatherNotification
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.RealmResults
 import javax.inject.Inject

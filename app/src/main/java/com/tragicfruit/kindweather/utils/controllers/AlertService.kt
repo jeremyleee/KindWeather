@@ -1,4 +1,4 @@
-package com.tragicfruit.kindweather.controllers
+package com.tragicfruit.kindweather.utils.controllers
 
 import android.content.Context
 import android.content.Intent

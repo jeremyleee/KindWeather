@@ -1,10 +1,10 @@
 package com.tragicfruit.kindweather
 
 import android.app.Application
-import com.tragicfruit.kindweather.controllers.NotificationController
 import com.tragicfruit.kindweather.data.AlertRepository
-import com.tragicfruit.kindweather.model.ForecastType
-import com.tragicfruit.kindweather.model.WeatherAlert
+import com.tragicfruit.kindweather.data.model.ForecastType
+import com.tragicfruit.kindweather.data.model.WeatherAlert
+import com.tragicfruit.kindweather.utils.controllers.NotificationController
 import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
 import io.realm.RealmConfiguration

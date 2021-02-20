@@ -1,8 +1,8 @@
 package com.tragicfruit.kindweather.data
 
-import com.tragicfruit.kindweather.api.DarkSkyAPIService
-import com.tragicfruit.kindweather.model.ForecastData
-import com.tragicfruit.kindweather.model.ForecastPeriod
+import com.tragicfruit.kindweather.data.api.DarkSkyAPIService
+import com.tragicfruit.kindweather.data.model.ForecastData
+import com.tragicfruit.kindweather.data.model.ForecastPeriod
 import io.realm.Realm
 import io.realm.kotlin.where
 import timber.log.Timber

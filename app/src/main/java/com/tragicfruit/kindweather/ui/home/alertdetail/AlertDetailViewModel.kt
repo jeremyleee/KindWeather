@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.tragicfruit.kindweather.data.AlertRepository
-import com.tragicfruit.kindweather.model.WeatherAlert
-import com.tragicfruit.kindweather.model.WeatherAlertParam
+import com.tragicfruit.kindweather.data.model.WeatherAlert
+import com.tragicfruit.kindweather.data.model.WeatherAlertParam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -26,14 +26,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.tragicfruit.kindweather.components.SettingsListItemView
+            <com.tragicfruit.kindweather.ui.components.SettingsListItemView
                 android:id="@+id/alert_time_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/settings_alert_time"
                 android:background="?attr/selectableItemBackground"/>
 
-            <com.tragicfruit.kindweather.components.SettingsListItemView
+            <com.tragicfruit.kindweather.ui.components.SettingsListItemView
                 android:id="@+id/units_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

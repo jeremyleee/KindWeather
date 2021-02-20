@@ -1,4 +1,4 @@
-package com.tragicfruit.kindweather.model
+package com.tragicfruit.kindweather.data.model
 
 import io.realm.RealmObject
 

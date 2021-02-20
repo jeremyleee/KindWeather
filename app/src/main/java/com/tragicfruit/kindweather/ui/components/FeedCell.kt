@@ -1,4 +1,4 @@
-package com.tragicfruit.kindweather.components
+package com.tragicfruit.kindweather.ui.components
 
 import android.content.Context
 import android.graphics.PorterDuff
@@ -12,8 +12,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setMargins
 import androidx.core.view.setPadding
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.model.ForecastIcon
-import com.tragicfruit.kindweather.model.WeatherNotification
+import com.tragicfruit.kindweather.data.model.ForecastIcon
+import com.tragicfruit.kindweather.data.model.WeatherNotification
 import com.tragicfruit.kindweather.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

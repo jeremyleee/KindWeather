@@ -1,4 +1,4 @@
-package com.tragicfruit.kindweather.components
+package com.tragicfruit.kindweather.ui.components
 
 import android.content.Context
 import android.util.AttributeSet

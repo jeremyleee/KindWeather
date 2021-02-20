@@ -9,9 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.components.AlertCell
+import com.tragicfruit.kindweather.ui.components.AlertCell
 import com.tragicfruit.kindweather.databinding.FragmentAlertListBinding
-import com.tragicfruit.kindweather.model.WeatherAlert
+import com.tragicfruit.kindweather.data.model.WeatherAlert
 import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.ui.home.requestlocation.RequestLocationDialogFragment
 import com.tragicfruit.kindweather.utils.PermissionHelper

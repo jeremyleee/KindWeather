@@ -1,8 +1,8 @@
 package com.tragicfruit.kindweather.data
 
-import com.tragicfruit.kindweather.model.ForecastType
-import com.tragicfruit.kindweather.model.WeatherAlert
-import com.tragicfruit.kindweather.model.WeatherAlertParam
+import com.tragicfruit.kindweather.data.model.ForecastType
+import com.tragicfruit.kindweather.data.model.WeatherAlert
+import com.tragicfruit.kindweather.data.model.WeatherAlertParam
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import io.realm.Realm
 import io.realm.RealmResults

@@ -1,9 +1,9 @@
 package com.tragicfruit.kindweather.data
 
 import androidx.annotation.ColorInt
-import com.tragicfruit.kindweather.model.ForecastPeriod
-import com.tragicfruit.kindweather.model.ForecastType
-import com.tragicfruit.kindweather.model.WeatherNotification
+import com.tragicfruit.kindweather.data.model.ForecastPeriod
+import com.tragicfruit.kindweather.data.model.ForecastType
+import com.tragicfruit.kindweather.data.model.WeatherNotification
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
