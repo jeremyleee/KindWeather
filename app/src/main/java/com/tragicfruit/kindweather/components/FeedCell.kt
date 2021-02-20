@@ -12,8 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setMargins
 import androidx.core.view.setPadding
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.api.ForecastIcon
-import com.tragicfruit.kindweather.model.ForecastType
+import com.tragicfruit.kindweather.model.ForecastIcon
 import com.tragicfruit.kindweather.model.WeatherNotification
 import com.tragicfruit.kindweather.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,8 +80,8 @@ class FeedCell(context: Context) : LinearLayout(context) {
         dateView.text = DisplayUtils.getSummaryDateString(notification.createdAt)
 
         cellContainer.background.setColorFilter(notification.color, PorterDuff.Mode.SRC_IN)
-        icon.setImageResource(ForecastIcon.fromString(notification.forecast?.icon).iconRes)
-        highTempView.text = notification.forecast?.getDataForType(ForecastType.TEMP_HIGH)?.getDisplayString(sharedPrefsHelper.usesImperialUnits())
+        icon.setImageResource(ForecastIcon.fromString(notification.forecastIcon).iconRes)
+        highTempView.text = notification.getTempHighString(sharedPrefsHelper.usesImperialUnits())
         descriptionView.text = notification.description
     }
 

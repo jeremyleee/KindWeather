@@ -30,7 +30,8 @@ class FeedAdapter(
             override fun areContentsTheSame(oldItem: WeatherNotification, newItem: WeatherNotification): Boolean {
                 return oldItem.createdAt == newItem.createdAt
                         && oldItem.description == newItem.description
-                        && oldItem.forecast?.id == newItem.forecast?.id
+                        && oldItem.forecastIcon == newItem.forecastIcon
+                        && oldItem.rawTempHigh == newItem.rawTempHigh
             }
         }
     }

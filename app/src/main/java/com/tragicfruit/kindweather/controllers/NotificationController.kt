@@ -1,7 +1,6 @@
 package com.tragicfruit.kindweather.controllers
 
 import android.annotation.TargetApi
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -16,8 +15,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavDeepLinkBuilder
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.model.ForecastPeriod
-import com.tragicfruit.kindweather.model.WeatherAlert
+import com.tragicfruit.kindweather.model.WeatherNotification
 import com.tragicfruit.kindweather.ui.home.forecast.ForecastFragmentArgs
 import javax.inject.Inject
 
@@ -69,12 +67,8 @@ class NotificationController @Inject constructor() {
             .notify(LOCATION_PERMISSIONS_ID, builder.build())
     }
 
-    fun notifyWeatherAlert(context: Context, alert: WeatherAlert, forecast: ForecastPeriod) {
-        val arguments = ForecastFragmentArgs(
-            forecast.id,
-            System.currentTimeMillis(),
-            ContextCompat.getColor(context, alert.getInfo().color)
-        ).toBundle()
+    fun notifyWeatherAlert(context: Context, notification: WeatherNotification) {
+        val arguments = ForecastFragmentArgs(notification.id).toBundle()
 
         val pendingIntent = NavDeepLinkBuilder(context)
             .setGraph(R.navigation.home_nav_graph)
@@ -84,7 +78,7 @@ class NotificationController @Inject constructor() {
 
         val builder = NotificationCompat.Builder(context, WEATHER_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle(context.getString(alert.getInfo().title))
+            .setContentTitle(notification.description)
             .setContentText(context.getString(R.string.notification_weather_tap))
             .setStyle(NotificationCompat.BigTextStyle()
                 .bigText(context.getString(R.string.notification_weather_tap)))
@@ -95,15 +89,6 @@ class NotificationController @Inject constructor() {
 
         NotificationManagerCompat.from(context)
             .notify(WEATHER_ALERT_ID, builder.build())
-    }
-
-    fun getAlertForegroundNotification(context: Context): Notification {
-        return NotificationCompat.Builder(context, WEATHER_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle(context.getString(R.string.notification_alert_foreground))
-            .setPriority(NotificationCompat.PRIORITY_MIN)
-            .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
-            .build()
     }
 
     companion object {

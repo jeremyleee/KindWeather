@@ -15,7 +15,6 @@ import com.tragicfruit.kindweather.databinding.FragmentFeedBinding
 import com.tragicfruit.kindweather.model.WeatherNotification
 import com.tragicfruit.kindweather.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class FeedFragment : BaseFragment(), FeedCell.Listener {
@@ -62,11 +61,7 @@ class FeedFragment : BaseFragment(), FeedCell.Listener {
     }
 
     override fun onFeedItemClicked(notification: WeatherNotification) {
-        notification.forecast?.let {
-            val timeCreatedMillis = notification.createdAt?.time ?: TimeUnit.SECONDS.toMillis(it.fetchedTime)
-            val action = FeedFragmentDirections
-                .actionFeedFragmentToForecastFragment(it.id, timeCreatedMillis, notification.color)
-            findNavController().navigate(action)
-        }
+        val action = FeedFragmentDirections.actionFeedFragmentToForecastFragment(notification.id)
+        findNavController().navigate(action)
     }
 }

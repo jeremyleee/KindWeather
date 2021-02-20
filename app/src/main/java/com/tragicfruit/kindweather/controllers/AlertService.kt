@@ -11,6 +11,10 @@ import com.tragicfruit.kindweather.data.ForecastRepository
 import com.tragicfruit.kindweather.data.NotificationRepository
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,10 +27,16 @@ class AlertService : JobIntentService() {
     @Inject lateinit var notificationController: NotificationController
     @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
 
+    private val job = Job()
+    private val scope = CoroutineScope(Dispatchers.IO + job)
+
     override fun onHandleWork(intent: Intent) {
         if (LocationResult.hasResult(intent)) {
             val location = LocationResult.extractResult(intent).lastLocation
-            forecastRepository.fetchForecast(location.latitude, location.longitude) { success, code, message ->
+
+            Timber.d("Fetching forecast")
+            scope.launch {
+                val success = forecastRepository.fetchForecast(location.latitude, location.longitude)
                 if (!success) {
                     // TODO: handle retry
                 }
@@ -43,20 +53,22 @@ class AlertService : JobIntentService() {
                 it.shouldShowAlert(forecast, sharedPrefsHelper.usesImperialUnits())
             }
 
-            var message = getString(R.string.feed_entry_default)
-            var color = ContextCompat.getColor(this, R.color.alert_no_notification)
-
-            showAlert?.let { alert ->
-                message = getString(alert.getInfo().title)
-                color = ContextCompat.getColor(this, alert.getInfo().color)
-                Timber.i("Showing push notification: $message")
-                notificationController.notifyWeatherAlert(this, alert, forecast)
-            }
+            val alertInfo = showAlert?.getInfo()
+            val message = getString(alertInfo?.title ?: R.string.feed_entry_default)
+            val color = ContextCompat.getColor(this, alertInfo?.color ?: R.color.alert_no_notification)
 
             // Create model object for feed
-            notificationRepository.createNotification(message, forecast, color)
-            forecastRepository.setDisplayed(forecast, true)
+            val notification = notificationRepository.createNotification(message, forecast, color)
+            if (showAlert != null) {
+                Timber.i("Showing push notification: $message")
+                notificationController.notifyWeatherAlert(this, notification)
+            }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+//        job.cancel()
     }
 
     companion object {

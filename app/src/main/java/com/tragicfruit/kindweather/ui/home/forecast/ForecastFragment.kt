@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.tragicfruit.kindweather.api.ForecastIcon
 import com.tragicfruit.kindweather.databinding.FragmentForecastBinding
-import com.tragicfruit.kindweather.model.ForecastType
+import com.tragicfruit.kindweather.model.ForecastIcon
 import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.utils.ColorHelper
 import com.tragicfruit.kindweather.utils.DisplayUtils
@@ -38,20 +37,16 @@ class ForecastFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.mainColor.observe(viewLifecycleOwner) { color ->
-            binding.toolbar.setBackgroundColor(color)
-            applyStatusBarColor(ColorHelper.darkenColor(color), lightStatusBar)
-        }
+        viewModel.notification.observe(viewLifecycleOwner) {
+            binding.toolbar.setBackgroundColor(it.color)
+            applyStatusBarColor(ColorHelper.darkenColor(it.color), lightStatusBar)
 
-        viewModel.createdAt.observe(viewLifecycleOwner) { createdAt ->
-            binding.toolbar.title = DisplayUtils.getDateString(createdAt)
-        }
+            binding.toolbar.title = DisplayUtils.getDateString(it.createdAt)
 
-        viewModel.forecast.observe(viewLifecycleOwner) { forecast ->
-            binding.mainImage.setImageResource(ForecastIcon.fromString(forecast.icon).iconRes)
-            binding.highTempValueText.text = forecast.getDataForType(ForecastType.TEMP_HIGH)?.getDisplayString(viewModel.useImperialUnits)
-            binding.lowTempValueText.text = forecast.getDataForType(ForecastType.TEMP_LOW)?.getDisplayString(viewModel.useImperialUnits)
-            binding.precipValueText.text = forecast.getDataForType(ForecastType.PRECIP_PROBABILITY)?.getDisplayString(viewModel.useImperialUnits)
+            binding.mainImage.setImageResource(ForecastIcon.fromString(it.forecastIcon).iconRes)
+            binding.highTempValueText.text = it.getTempHighString(viewModel.useImperialUnits)
+            binding.lowTempValueText.text = it.getTempLowString(viewModel.useImperialUnits)
+            binding.precipValueText.text = it.getPrecipProbabilityString(viewModel.useImperialUnits)
         }
 
         viewModel.addressLabel.observe(viewLifecycleOwner) { address ->

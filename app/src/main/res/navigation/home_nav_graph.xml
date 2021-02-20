@@ -51,14 +51,8 @@
         android:name="com.tragicfruit.kindweather.ui.home.forecast.ForecastFragment"
         android:label="ForecastFragment" >
         <argument
-            android:name="forecastId"
+            android:name="notificationId"
             app:argType="string" />
-        <argument
-            android:name="timeCreatedMillis"
-            app:argType="long" />
-        <argument
-            android:name="color"
-            app:argType="integer" />
     </fragment>
 
 </navigation>
