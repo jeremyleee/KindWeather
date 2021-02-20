@@ -1,9 +1,12 @@
 package com.tragicfruit.kindweather.di
 
 import android.content.Context
+import androidx.room.Room
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.tragicfruit.kindweather.BuildConfig
 import com.tragicfruit.kindweather.data.api.DarkSkyAPIService
+import com.tragicfruit.kindweather.data.db.AppDatabase
+import com.tragicfruit.kindweather.data.db.NotificationDao
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import com.tragicfruit.kindweather.utils.ViewHelper
 import dagger.Module
@@ -21,6 +24,22 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
+
+    @Provides
+    @Singleton
+    fun providesAppDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "kindweather-db"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun providesNotificationDao(database: AppDatabase): NotificationDao {
+        return database.notificationDao()
+    }
 
     @Provides
     @Singleton

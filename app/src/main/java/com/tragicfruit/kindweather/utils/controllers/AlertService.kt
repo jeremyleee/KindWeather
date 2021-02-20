@@ -13,7 +13,6 @@ import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -27,15 +26,12 @@ class AlertService : JobIntentService() {
     @Inject lateinit var notificationController: NotificationController
     @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
 
-    private val job = Job()
-    private val scope = CoroutineScope(Dispatchers.IO + job)
-
     override fun onHandleWork(intent: Intent) {
         if (LocationResult.hasResult(intent)) {
             val location = LocationResult.extractResult(intent).lastLocation
 
             Timber.d("Fetching forecast")
-            scope.launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 val success = forecastRepository.fetchForecast(location.latitude, location.longitude)
                 if (!success) {
                     // TODO: handle retry
@@ -46,7 +42,7 @@ class AlertService : JobIntentService() {
         }
     }
 
-    private fun displayWeatherAlert() {
+    private suspend fun displayWeatherAlert() {
         forecastRepository.findTodaysForecast()?.let { forecast ->
             // Highest priority alert
             val showAlert = alertRepository.getEnabledAlerts().firstOrNull {
@@ -64,11 +60,6 @@ class AlertService : JobIntentService() {
                 notificationController.notifyWeatherAlert(this, notification)
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-//        job.cancel()
     }
 
     companion object {

@@ -6,6 +6,8 @@ import com.tragicfruit.kindweather.data.NotificationRepository
 import com.tragicfruit.kindweather.data.model.WeatherNotification
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
@@ -28,7 +30,9 @@ class ForecastViewModel @Inject constructor(
 
     init {
         savedStateHandle.get<String>("notificationId")?.let { id ->
-            _notification.value = repository.findNotification(id)
+            viewModelScope.launch(Dispatchers.IO) {
+                _notification.postValue(repository.findNotification(id))
+            }
         }
     }
 

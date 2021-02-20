@@ -1,23 +1,23 @@
 package com.tragicfruit.kindweather.data.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.tragicfruit.kindweather.utils.DisplayUtils
-import io.realm.RealmObject
 import java.util.*
 
-open class WeatherNotification : RealmObject() {
-    var id = ""
-    var createdAt = Date()
-    var description = ""
-    var color = 0
-
-    var forecastIcon = ""
-    var rawTempHigh = 0.0
-    var rawTempLow = 0.0
-    var rawPrecipProbability = 0.0
-
-    var latitude = 0.0
-    var longitude = 0.0
-
+@Entity(tableName = "notifications")
+data class WeatherNotification(
+    @PrimaryKey val id: String,
+    val createdAt: Date,
+    val description: String,
+    val color: Int,
+    val forecastIconName: String,
+    val rawTempHigh: Double?,
+    val rawTempLow: Double?,
+    val rawPrecipProbability: Double?,
+    val latitude: Double,
+    val longitude: Double
+) {
     fun getTempHighString(useImperial: Boolean): String {
         return getDisplayString(rawTempHigh, ForecastType.TEMP_HIGH, useImperial)
     }
@@ -30,7 +30,9 @@ open class WeatherNotification : RealmObject() {
         return getDisplayString(rawPrecipProbability, ForecastType.PRECIP_PROBABILITY, useImperial)
     }
 
-    private fun getDisplayString(rawValue: Double, type: ForecastType, useImperial: Boolean): String {
+    private fun getDisplayString(rawValue: Double?, type: ForecastType, useImperial: Boolean): String {
+        rawValue ?: return ""
+
         val convertedValue = type.fromRawValue(rawValue, useImperial)
         val unitsLabel = type.getUnits(useImperial)
 
