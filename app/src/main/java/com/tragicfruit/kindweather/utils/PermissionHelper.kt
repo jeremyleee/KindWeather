@@ -16,14 +16,17 @@ object PermissionHelper {
         FINE_LOCATION
     }
 
-    fun hasPermission(context: Context, permission: String) =
-        ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+    fun hasPermission(context: Context?, permission: String): Boolean {
+        return context?.let {
+            ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+        } ?: false
+    }
 
-    fun hasPermissions(context: Context, vararg permissions: String) =
+    fun hasPermissions(context: Context?, vararg permissions: String) =
         permissions.all { hasPermission(context, it) }
 
-    fun hasFineLocationPermission(context: Context) = hasPermissions(context, *FINE_LOCATION)
+    fun hasFineLocationPermission(context: Context?) = hasPermissions(context, *FINE_LOCATION)
 
-    fun hasBackgroundLocationPermission(context: Context) = hasPermissions(context, *BACKGROUND_LOCATION)
+    fun hasBackgroundLocationPermission(context: Context?) = hasPermissions(context, *BACKGROUND_LOCATION)
 
 }

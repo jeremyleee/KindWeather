@@ -41,12 +41,11 @@ class ForecastViewModel @Inject constructor(
 
     init {
         savedStateHandle.get<String>("forecastId")?.let { id ->
-            _forecast.postValue(repository.findForecastPeriod(id))
+            _forecast.value = repository.findForecastPeriod(id)
         }
 
-        _mainColor.postValue(savedStateHandle.get("color"))
-
-        _createdAt.postValue(savedStateHandle.get<Long>("timeCreatedMillis")?.let { Date(it) })
+        _mainColor.value = savedStateHandle.get("color")
+        _createdAt.value = savedStateHandle.get<Long>("timeCreatedMillis")?.let { Date(it) }
     }
 
     // TODO: refactor this with coroutines

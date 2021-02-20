@@ -22,14 +22,14 @@ class SettingsViewModel @Inject constructor(
     val useImperialUnits: LiveData<Boolean> get() = _useImperialUnits
 
     init {
-        _alertTime.postValue(AlertTime(sharedPrefsHelper.getAlertHour(), sharedPrefsHelper.getAlertMinute()))
-        _useImperialUnits.postValue(sharedPrefsHelper.usesImperialUnits())
+        _alertTime.value = AlertTime(sharedPrefsHelper.getAlertHour(), sharedPrefsHelper.getAlertMinute())
+        _useImperialUnits.value = sharedPrefsHelper.usesImperialUnits()
     }
 
     fun updateAlertTime(context: Context, hour: Int, minute: Int) {
         sharedPrefsHelper.setAlertHour(hour)
         sharedPrefsHelper.setAlertMinute(minute)
-        _alertTime.postValue(AlertTime(hour, minute))
+        _alertTime.value = AlertTime(hour, minute)
 
         // Restart alert service for new alert time
         alertController.scheduleDailyAlert(context)
@@ -37,7 +37,7 @@ class SettingsViewModel @Inject constructor(
 
     fun updateUnits(useImperial: Boolean) {
         sharedPrefsHelper.setUsesImperialUnits(useImperial)
-        _useImperialUnits.postValue(useImperial)
+        _useImperialUnits.value = useImperial
     }
 
     companion object {
