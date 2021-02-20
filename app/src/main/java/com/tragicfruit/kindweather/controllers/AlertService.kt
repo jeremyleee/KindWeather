@@ -6,31 +6,22 @@ import androidx.core.app.JobIntentService
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationResult
 import com.tragicfruit.kindweather.R
+import com.tragicfruit.kindweather.data.AlertRepository
 import com.tragicfruit.kindweather.data.ForecastRepository
 import com.tragicfruit.kindweather.data.NotificationRepository
-import com.tragicfruit.kindweather.model.ForecastPeriod
-import com.tragicfruit.kindweather.model.WeatherAlert
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
-import io.realm.Realm
-import io.realm.Sort
-import io.realm.kotlin.where
 import timber.log.Timber
-import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class AlertService : JobIntentService() {
 
+    @Inject lateinit var alertRepository: AlertRepository
     @Inject lateinit var notificationRepository: NotificationRepository
     @Inject lateinit var forecastRepository: ForecastRepository
     @Inject lateinit var notificationController: NotificationController
     @Inject lateinit var sharedPrefsHelper: SharedPrefsHelper
-
-    private val calendar = Calendar.getInstance().apply {
-        timeInMillis = System.currentTimeMillis()
-    }
 
     override fun onHandleWork(intent: Intent) {
         if (LocationResult.hasResult(intent)) {
@@ -46,26 +37,9 @@ class AlertService : JobIntentService() {
     }
 
     private fun displayWeatherAlert() {
-        val realm = Realm.getDefaultInstance()
-
-        val now = calendar.time
-        calendar.add(Calendar.DAY_OF_MONTH, -1)
-        val yesterday = calendar.time
-
-        val todaysForecast = realm.where<ForecastPeriod>()
-            .greaterThan("time", TimeUnit.MILLISECONDS.toSeconds(yesterday.time))
-            .lessThanOrEqualTo("time", TimeUnit.MILLISECONDS.toSeconds(now.time))
-            .equalTo("displayOnly", false)
-            .findFirst()
-
-        todaysForecast?.let { forecast ->
-            val enabledAlerts = realm.where<WeatherAlert>()
-                .equalTo("enabled", true)
-                .sort("priority", Sort.ASCENDING)
-                .findAll()
-
+        forecastRepository.findTodaysForecast()?.let { forecast ->
             // Highest priority alert
-            val showAlert = enabledAlerts.firstOrNull {
+            val showAlert = alertRepository.getEnabledAlerts().firstOrNull {
                 it.shouldShowAlert(forecast, sharedPrefsHelper.usesImperialUnits())
             }
 
@@ -86,7 +60,6 @@ class AlertService : JobIntentService() {
     }
 
     companion object {
-        private const val FOREGROUND_ID = 200
         private const val JOB_ID = 1000
 
         fun enqueueWork(context: Context, work: Intent) {

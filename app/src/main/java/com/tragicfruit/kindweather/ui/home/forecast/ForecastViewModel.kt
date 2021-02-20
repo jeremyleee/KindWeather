@@ -41,7 +41,7 @@ class ForecastViewModel @Inject constructor(
 
     init {
         savedStateHandle.get<String>("forecastId")?.let { id ->
-            _forecast.value = repository.findForecastPeriod(id)
+            _forecast.value = repository.findForecast(id)
         }
 
         _mainColor.value = savedStateHandle.get("color")

@@ -14,6 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ForecastRepository @Inject constructor(
@@ -52,50 +53,43 @@ class ForecastRepository @Inject constructor(
         })
     }
 
-    private fun deleteForecastsBefore(timestamp: Long, realm: Realm) {
-        val oldForecasts = realm.where<ForecastPeriod>()
-            .lessThan("fetchedTime", timestamp)
-            .equalTo("displayOnly", false)
-            .findAll()
-
-        Timber.d("${oldForecasts.count()} old forecasts deleted")
-
-        val oldForecastData = realm.where<ForecastData>()
-            .lessThan("fetchedTime", timestamp)
-            .equalTo("displayOnly", false)
-            .findAll()
-
-        Timber.d("${oldForecastData.count()} old forecast data deleted")
-
-        oldForecasts.deleteAllFromRealm()
-        oldForecastData.deleteAllFromRealm()
-    }
-
-    fun findForecastPeriod(id: String): ForecastPeriod? {
+    fun findForecast(id: String): ForecastPeriod? {
         return Realm.getDefaultInstance()
             .where<ForecastPeriod>()
             .equalTo("id", id)
             .findFirst()
     }
 
-    fun createData(type: ForecastType, rawValue: Double?, realm: Realm): ForecastData? {
-        rawValue ?: return null
+    fun findTodaysForecast(): ForecastPeriod? {
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+        }
+        val now = calendar.time
+        calendar.add(Calendar.DAY_OF_MONTH, -1)
+        val yesterday = calendar.time
 
-        val data = realm.createObject<ForecastData>()
-        data.type = type.name
-        data.rawValue = rawValue
-        data.fetchedTime = System.currentTimeMillis()
-        return data
+        return Realm.getDefaultInstance().where<ForecastPeriod>()
+            .greaterThan("time", TimeUnit.MILLISECONDS.toSeconds(yesterday.time))
+            .lessThanOrEqualTo("time", TimeUnit.MILLISECONDS.toSeconds(now.time))
+            .equalTo("displayOnly", false)
+            .findFirst()
     }
 
-    fun setDisplayed(data: ForecastData, displayed: Boolean) {
+    fun setDisplayed(forecast: ForecastPeriod, displayed: Boolean) {
         Realm.getDefaultInstance().executeTransaction {
-            data.displayOnly = displayed
+            forecast.displayOnly = displayed
+            forecast.data.forEach { data ->
+                data.displayOnly = displayed
+            }
         }
     }
 
-    fun fromResponse(responseData: ForecastResponse.Daily.DataPoint,
-                     latitude: Double, longitude: Double, realm: Realm): ForecastPeriod {
+    private fun fromResponse(
+        responseData: ForecastResponse.Daily.DataPoint,
+        latitude: Double,
+        longitude: Double,
+        realm: Realm
+    ): ForecastPeriod {
         val forecastPeriod = realm.createObject<ForecastPeriod>()
 
         forecastPeriod.id = UUID.randomUUID().toString()
@@ -120,12 +114,32 @@ class ForecastRepository @Inject constructor(
         return forecastPeriod
     }
 
-    fun setDisplayed(forecast: ForecastPeriod, displayed: Boolean) {
-        Realm.getDefaultInstance().executeTransaction {
-            forecast.displayOnly = displayed
-        }
-        forecast.data.forEach { data ->
-            setDisplayed(data, displayed)
-        }
+    private fun createData(type: ForecastType, rawValue: Double?, realm: Realm): ForecastData? {
+        rawValue ?: return null
+
+        val data = realm.createObject<ForecastData>()
+        data.type = type.name
+        data.rawValue = rawValue
+        data.fetchedTime = System.currentTimeMillis()
+        return data
+    }
+
+    private fun deleteForecastsBefore(timestamp: Long, realm: Realm) {
+        val oldForecasts = realm.where<ForecastPeriod>()
+            .lessThan("fetchedTime", timestamp)
+            .equalTo("displayOnly", false)
+            .findAll()
+
+        Timber.d("${oldForecasts.count()} old forecasts deleted")
+
+        val oldForecastData = realm.where<ForecastData>()
+            .lessThan("fetchedTime", timestamp)
+            .equalTo("displayOnly", false)
+            .findAll()
+
+        Timber.d("${oldForecastData.count()} old forecast data deleted")
+
+        oldForecasts.deleteAllFromRealm()
+        oldForecastData.deleteAllFromRealm()
     }
 }

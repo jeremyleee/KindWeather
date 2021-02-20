@@ -41,13 +41,24 @@ class AlertRepository @Inject constructor(
         }
     }
 
-    fun findAlert(id: Int) =
-        Realm.getDefaultInstance().where<WeatherAlert>().equalTo("id", id).findFirst()
+    fun findAlert(id: Int): WeatherAlert? {
+        return Realm.getDefaultInstance()
+            .where<WeatherAlert>()
+            .equalTo("id", id)
+            .findFirst()
+    }
 
     fun getAllAlerts(): RealmResults<WeatherAlert> {
         return Realm.getDefaultInstance()
             .where<WeatherAlert>()
             .sort("enabled", Sort.DESCENDING, "priority", Sort.ASCENDING)
+            .findAll()
+    }
+
+    fun getEnabledAlerts(): RealmResults<WeatherAlert> {
+        return Realm.getDefaultInstance().where<WeatherAlert>()
+            .equalTo("enabled", true)
+            .sort("priority", Sort.ASCENDING)
             .findAll()
     }
 
