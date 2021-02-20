@@ -1,8 +1,8 @@
 package com.tragicfruit.kindweather.controllers
 
-import android.app.IntentService
 import android.content.Context
 import android.content.Intent
+import androidx.core.app.JobIntentService
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationResult
 import com.tragicfruit.kindweather.R
@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AlertService : IntentService(AlertService::javaClass.name) {
+class AlertService : JobIntentService() {
 
     @Inject lateinit var notificationRepository: NotificationRepository
     @Inject lateinit var forecastRepository: ForecastRepository
@@ -32,14 +32,12 @@ class AlertService : IntentService(AlertService::javaClass.name) {
         timeInMillis = System.currentTimeMillis()
     }
 
-    override fun onHandleIntent(intent: Intent?) {
-        startForeground(FOREGROUND_ID, notificationController.getAlertForegroundNotification(this))
-
+    override fun onHandleWork(intent: Intent) {
         if (LocationResult.hasResult(intent)) {
             val location = LocationResult.extractResult(intent).lastLocation
             forecastRepository.fetchForecast(location.latitude, location.longitude) { success, code, message ->
                 if (!success) {
-                    // TODO: logic for comparing cached forecasts with current location
+                    // TODO: handle retry
                 }
 
                 displayWeatherAlert()
@@ -88,9 +86,11 @@ class AlertService : IntentService(AlertService::javaClass.name) {
     }
 
     companion object {
-        const val FOREGROUND_ID = 200
+        private const val FOREGROUND_ID = 200
+        private const val JOB_ID = 1000
 
-        fun getIntent(context: Context) = Intent(context, AlertService::class.java)
+        fun enqueueWork(context: Context, work: Intent) {
+            enqueueWork(context, AlertService::class.java, JOB_ID, work)
+        }
     }
-
 }

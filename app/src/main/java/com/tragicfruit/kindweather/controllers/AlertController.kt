@@ -7,7 +7,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -27,7 +26,7 @@ class AlertController @Inject constructor(
     fun scheduleDailyAlert(context: Context) {
         val alarmManager = ContextCompat.getSystemService(context, AlarmManager::class.java)
 
-        val intent = AlertReceiver.getIntent(context)
+        val intent = Intent(context, AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context, ALERT_RECEIVER_REQUEST, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         calendar.timeInMillis = System.currentTimeMillis()
@@ -57,7 +56,7 @@ class AlertController @Inject constructor(
 }
 
 @AndroidEntryPoint
-class AlertReceiver : BroadcastReceiver() {
+class AlarmReceiver : BroadcastReceiver() {
 
     @Inject lateinit var notificationController: NotificationController
 
@@ -72,12 +71,12 @@ class AlertReceiver : BroadcastReceiver() {
             val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
             val locationRequest = LocationRequest.create().setNumUpdates(1)
 
-            val serviceIntent = AlertService.getIntent(context)
-            val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                PendingIntent.getForegroundService(context, ALERT_SERVICE_REQUEST, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-            } else {
-                PendingIntent.getService(context, ALERT_SERVICE_REQUEST, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-            }
+            val pendingIntent = PendingIntent.getBroadcast(
+                context,
+                ALERT_SERVICE_REQUEST,
+                Intent(context, LocationReceiver::class.java),
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
             fusedLocationClient.requestLocationUpdates(locationRequest, pendingIntent)
 
@@ -88,24 +87,12 @@ class AlertReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        const val ALERT_SERVICE_REQUEST = 301
-
-        fun getIntent(context: Context) = Intent(context, AlertReceiver::class.java)
+        private const val ALERT_SERVICE_REQUEST = 301
     }
-
 }
 
-@AndroidEntryPoint
-class BootReceiver : BroadcastReceiver() {
-
-    @Inject lateinit var alertController: AlertController
-
-    override fun onReceive(context: Context?, intent: Intent?) {
-        context ?: return
-
-        if (intent?.action == Intent.ACTION_BOOT_COMPLETED) {
-            alertController.scheduleDailyAlert(context)
-        }
+class LocationReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        AlertService.enqueueWork(context, intent)
     }
-
 }
