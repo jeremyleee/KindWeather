@@ -8,11 +8,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.microsoft.appcenter.AppCenter
-import com.microsoft.appcenter.analytics.Analytics
-import com.microsoft.appcenter.crashes.Crashes
-import com.microsoft.appcenter.distribute.Distribute
-import com.tragicfruit.kindweather.BuildConfig
 import com.tragicfruit.kindweather.R
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,11 +23,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         applyStatusBarColorRes(statusBarColor, lightStatusBar)
-
-        AppCenter.start(application, BuildConfig.APP_CENTER,
-            Analytics::class.java,
-            Crashes::class.java,
-            Distribute::class.java)
     }
 
     fun applyStatusBarColor(@ColorInt color: Int, lightStatusBar: Boolean) {
