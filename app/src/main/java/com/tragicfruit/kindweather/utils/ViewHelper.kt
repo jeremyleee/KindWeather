@@ -1,7 +1,6 @@
 package com.tragicfruit.kindweather.utils
 
 import android.content.Context
-import android.content.res.Resources
 import androidx.annotation.DimenRes
 
 class ViewHelper(context: Context) {

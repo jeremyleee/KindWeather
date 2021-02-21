@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.tragicfruit.kindweather.databinding.FragmentForecastBinding
-import com.tragicfruit.kindweather.data.model.ForecastIcon
 import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.utils.ColorHelper
 import com.tragicfruit.kindweather.utils.DisplayUtils

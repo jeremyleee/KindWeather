@@ -2,7 +2,7 @@ package com.tragicfruit.kindweather.ui.components
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.tragicfruit.kindweather.R
@@ -16,7 +16,7 @@ class KWButton @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     style: Int = 0
-) : TextView(context, attributeSet, style) {
+) : AppCompatTextView(context, attributeSet, style) {
 
     @Inject lateinit var viewHelper: ViewHelper
 

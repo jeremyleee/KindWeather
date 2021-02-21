@@ -3,8 +3,6 @@ package com.tragicfruit.kindweather.data
 import androidx.annotation.ColorInt
 import androidx.lifecycle.LiveData
 import com.tragicfruit.kindweather.data.db.dao.NotificationDao
-import com.tragicfruit.kindweather.data.model.ForecastPeriod
-import com.tragicfruit.kindweather.data.model.ForecastDataType
 import com.tragicfruit.kindweather.data.model.ForecastIcon
 import com.tragicfruit.kindweather.data.model.WeatherNotification
 import java.util.*
