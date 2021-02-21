@@ -11,7 +11,7 @@ data class WeatherNotification(
     val createdAt: Date,
     val description: String,
     val color: Int,
-    val forecastIconName: String,
+    val forecastIcon: ForecastIcon,
     val rawTempHigh: Double?,
     val rawTempLow: Double?,
     val rawPrecipProbability: Double?,
@@ -19,18 +19,18 @@ data class WeatherNotification(
     val longitude: Double
 ) {
     fun getTempHighString(useImperial: Boolean): String {
-        return getDisplayString(rawTempHigh, ForecastType.TempHigh, useImperial)
+        return getDisplayString(rawTempHigh, ForecastDataType.TempHigh, useImperial)
     }
 
     fun getTempLowString(useImperial: Boolean): String {
-        return getDisplayString(rawTempLow, ForecastType.TempLow, useImperial)
+        return getDisplayString(rawTempLow, ForecastDataType.TempLow, useImperial)
     }
 
     fun getPrecipProbabilityString(useImperial: Boolean): String {
-        return getDisplayString(rawPrecipProbability, ForecastType.PrecipProbability, useImperial)
+        return getDisplayString(rawPrecipProbability, ForecastDataType.PrecipProbability, useImperial)
     }
 
-    private fun getDisplayString(rawValue: Double?, type: ForecastType, useImperial: Boolean): String {
+    private fun getDisplayString(rawValue: Double?, type: ForecastDataType, useImperial: Boolean): String {
         rawValue ?: return ""
 
         val convertedValue = type.fromRawValue(rawValue, useImperial)

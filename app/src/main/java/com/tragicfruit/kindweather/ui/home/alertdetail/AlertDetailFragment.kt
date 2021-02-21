@@ -48,7 +48,7 @@ class AlertDetailFragment : BaseFragment(), AlertDetailParamView.Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.alertWithParams.observe(viewLifecycleOwner) {
-            val color = ContextCompat.getColor(view.context, it.alert.type.color)
+            val color = ContextCompat.getColor(view.context, it.alert.alertType.color)
             setupHeaderView(it.alert, color)
             setupContentViews(it.alert, color, view.context)
             updateParamListView(it.params, color)
@@ -80,7 +80,7 @@ class AlertDetailFragment : BaseFragment(), AlertDetailParamView.Listener {
         applyStatusBarColor(ColorHelper.darkenColor(color), lightStatusBar)
 
         binding.collapsingToolbar.apply {
-            title = getString(alert.type.shortTitle)
+            title = getString(alert.alertType.shortTitle)
             setCollapsedTitleTypeface(ResourcesCompat.getFont(context, R.font.playfair_bold))
             setExpandedTitleTypeface(ResourcesCompat.getFont(context, R.font.playfair_bold))
             setContentScrimColor(color)
@@ -88,7 +88,7 @@ class AlertDetailFragment : BaseFragment(), AlertDetailParamView.Listener {
 
         binding.header.setBackgroundColor(color)
         Glide.with(this)
-            .load(alert.type.image)
+            .load(alert.alertType.image)
             .centerCrop()
             .into(binding.headerImage)
 

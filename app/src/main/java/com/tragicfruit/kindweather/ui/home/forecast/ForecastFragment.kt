@@ -43,7 +43,7 @@ class ForecastFragment : BaseFragment() {
 
             binding.toolbar.title = DisplayUtils.getDateString(it.createdAt)
 
-            binding.mainImage.setImageResource(ForecastIcon.fromString(it.forecastIconName).iconRes)
+            binding.mainImage.setImageResource(it.forecastIcon.iconRes)
             binding.highTempValueText.text = it.getTempHighString(viewModel.useImperialUnits)
             binding.lowTempValueText.text = it.getTempLowString(viewModel.useImperialUnits)
             binding.precipValueText.text = it.getPrecipProbabilityString(viewModel.useImperialUnits)

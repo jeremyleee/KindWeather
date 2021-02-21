@@ -32,7 +32,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/empty_image"

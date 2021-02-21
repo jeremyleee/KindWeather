@@ -1,8 +1,9 @@
 package com.tragicfruit.kindweather.data.api
 
-import com.tragicfruit.kindweather.data.model.ForecastData
+import com.tragicfruit.kindweather.data.model.ForecastDataPoint
+import com.tragicfruit.kindweather.data.model.ForecastDataType
+import com.tragicfruit.kindweather.data.model.ForecastIcon
 import com.tragicfruit.kindweather.data.model.ForecastPeriod
-import com.tragicfruit.kindweather.data.model.ForecastType
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encoding.Decoder
@@ -11,7 +12,8 @@ import java.util.*
 
 @Serializable(with = ForecastSerializer::class)
 data class Forecast(
-    val data: List<ForecastPeriod>
+    val periods: List<ForecastPeriod>,
+    val dataPoints: List<ForecastDataPoint>
 )
 
 class ForecastSerializer : KSerializer<Forecast> {
@@ -20,35 +22,49 @@ class ForecastSerializer : KSerializer<Forecast> {
     override fun deserialize(decoder: Decoder): Forecast {
         val response = ForecastResponse.serializer().deserialize(decoder)
 
+        val periods = mutableListOf<ForecastPeriod>()
+        val dataPoints = mutableListOf<ForecastDataPoint?>()
+        response.daily.data.forEach { dataPoint ->
+            val forecastId = UUID.randomUUID().toString()
+
+            val icon = ForecastIcon.values().find {
+                dataPoint.icon?.replace("-", "").equals(it.name, ignoreCase = true)
+            } ?: ForecastIcon.Unknown
+
+            periods += ForecastPeriod(
+                id = forecastId,
+                latitude = response.latitude,
+                longitude = response.longitude,
+                reportedTime = dataPoint.time,
+                summary = dataPoint.summary,
+                icon = icon,
+                fetchedTime = System.currentTimeMillis()
+            )
+
+            dataPoints += createData(forecastId, ForecastDataType.TempHigh, dataPoint.temperatureHigh)
+            dataPoints += createData(forecastId, ForecastDataType.TempLow, dataPoint.temperatureLow)
+            dataPoints += createData(forecastId, ForecastDataType.PrecipIntensity, dataPoint.precipIntensity)
+            dataPoints += createData(forecastId, ForecastDataType.PrecipProbability, dataPoint.precipProbability)
+            dataPoints += createData(forecastId, ForecastDataType.Humidity, dataPoint.humidity)
+            dataPoints += createData(forecastId, ForecastDataType.WindGust, dataPoint.windGust)
+            dataPoints += createData(forecastId, ForecastDataType.UVIndex, dataPoint.uvIndex?.toDouble())
+        }
+
         return Forecast(
-            response.daily.data.map {
-                ForecastPeriod().apply {
-                    id = UUID.randomUUID().toString()
-                    latitude = response.latitude
-                    longitude = response.longitude
-                    time = it.time
-                    summary = it.summary ?: summary
-                    icon = it.icon ?: icon
-                    data.add(createData(ForecastType.TempHigh, it.temperatureHigh))
-                    data.add(createData(ForecastType.TempLow, it.temperatureLow))
-                    data.add(createData(ForecastType.PrecipIntensity, it.precipIntensity))
-                    data.add(createData(ForecastType.PrecipProbability, it.precipProbability))
-                    data.add(createData(ForecastType.Humidity, it.humidity))
-                    data.add(createData(ForecastType.WindGust, it.windGust))
-                    data.add(createData(ForecastType.UVIndex, it.uvIndex?.toDouble()))
-                    fetchedTime = System.currentTimeMillis()
-                }
-            }
+            periods = periods,
+            dataPoints = dataPoints.mapNotNull { it }
         )
     }
 
-    private fun createData(type: ForecastType, rawValue: Double?): ForecastData? {
+    private fun createData(forecastId: String, type: ForecastDataType, rawValue: Double?): ForecastDataPoint? {
         rawValue ?: return null
-        return ForecastData().apply {
-            this.type = type.name
-            this.rawValue = rawValue
-            this.fetchedTime = System.currentTimeMillis()
-        }
+        return ForecastDataPoint(
+            id = UUID.randomUUID().toString(),
+            forecastId = forecastId,
+            dataType = type,
+            rawValue = rawValue,
+            fetchedTime = System.currentTimeMillis()
+        )
     }
 
     override fun serialize(encoder: Encoder, value: Forecast) = throw UnsupportedOperationException()

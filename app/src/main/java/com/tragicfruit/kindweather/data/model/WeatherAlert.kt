@@ -12,9 +12,18 @@ import com.tragicfruit.kindweather.R
 @Entity(tableName = "alerts")
 data class WeatherAlert(
     @PrimaryKey val id: String,
-    val type: WeatherAlertType,
+    val alertType: WeatherAlertType,
     val priority: Int,
     var enabled: Boolean = true
+)
+
+data class WeatherAlertWithParams(
+    @Embedded val alert: WeatherAlert,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "alertId"
+    )
+    val params: List<WeatherAlertParam>
 )
 
 enum class WeatherAlertType(
@@ -66,12 +75,3 @@ enum class WeatherAlertType(
         image = R.drawable.winter_clothing
     )
 }
-
-data class WeatherAlertWithParams(
-    @Embedded val alert: WeatherAlert,
-    @Relation(
-        parentColumn = "id",
-        entityColumn = "alertId"
-    )
-    val params: List<WeatherAlertParam>
-)

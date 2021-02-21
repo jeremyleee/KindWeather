@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class WeatherAlertParam(
     @PrimaryKey val id: String,
     val alertId: String,
-    val type: ForecastType,
+    val dataType: ForecastDataType,
     val rawDefaultLowerBound: Double?,
     val rawDefaultUpperBound: Double?,
     var rawLowerBound: Double?,
@@ -16,25 +16,25 @@ data class WeatherAlertParam(
 
     fun setLowerBound(value: Double?, usesImperialUnits: Boolean) {
         rawLowerBound = if (value != null) {
-            type.toRawValue(value, usesImperialUnits)
+            dataType.toRawValue(value, usesImperialUnits)
         } else null
     }
 
     fun getLowerBound(usesImperialUnits: Boolean): Double? {
         return rawLowerBound?.let {
-            type.fromRawValue(it, usesImperialUnits)
+            dataType.fromRawValue(it, usesImperialUnits)
         }
     }
 
     fun setUpperBound(value: Double?, usesImperialUnits: Boolean) {
         rawUpperBound = if (value != null) {
-            type.toRawValue(value, usesImperialUnits)
+            dataType.toRawValue(value, usesImperialUnits)
         } else null
     }
 
     fun getUpperBound(usesImperialUnits: Boolean): Double? {
         return rawUpperBound?.let {
-            type.fromRawValue(it, usesImperialUnits)
+            dataType.fromRawValue(it, usesImperialUnits)
         }
     }
 

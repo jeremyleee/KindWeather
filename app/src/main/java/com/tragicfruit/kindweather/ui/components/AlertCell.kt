@@ -77,10 +77,10 @@ class AlertCell(context: Context) : ConstraintLayout(context) {
             listener?.onAlertClicked(alert)
         }
 
-        titleView.setText(alert.type.title)
+        titleView.setText(alert.alertType.title)
 
         if (alert.enabled) {
-            background.setColorFilter(ContextCompat.getColor(context, alert.type.color), PorterDuff.Mode.SRC_IN)
+            background.setColorFilter(ContextCompat.getColor(context, alert.alertType.color), PorterDuff.Mode.SRC_IN)
             titleView.setTextColor(ContextCompat.getColor(context, R.color.alert_title))
         } else {
             background.setColorFilter(ContextCompat.getColor(context, R.color.alert_disabled), PorterDuff.Mode.SRC_IN)
@@ -92,7 +92,7 @@ class AlertCell(context: Context) : ConstraintLayout(context) {
                 override fun onGlobalLayout() {
                     viewTreeObserver.removeOnGlobalLayoutListener(this)
                     Glide.with(context)
-                        .load(alert.type.image)
+                        .load(alert.alertType.image)
                         .override(width)
                         .into(this@with)
                 }

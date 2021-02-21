@@ -1,10 +1,26 @@
 package com.tragicfruit.kindweather.data.model
 
 import androidx.annotation.StringRes
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.utils.Converter
 
-enum class ForecastType(
+@Entity(tableName = "datapoints")
+data class ForecastDataPoint(
+    @PrimaryKey val id: String,
+    val forecastId: String,
+    val dataType: ForecastDataType,
+    val rawValue: Double,
+    val fetchedTime: Long
+) {
+
+    fun getValue(usesImperialUnits: Boolean): Double {
+        return dataType.fromRawValue(rawValue, usesImperialUnits)
+    }
+}
+
+enum class ForecastDataType(
     @StringRes val label: Int = -1,
     private val minValue: Double = 0.0,
     private val maxValue: Double = 100.0,

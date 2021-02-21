@@ -28,6 +28,16 @@ interface AlertDao {
     fun loadAlertWithParams(alertId: String): LiveData<WeatherAlertWithParams>
 
     @Transaction
-    @Query("SELECT * FROM alerts WHERE enabled ORDER BY priority ASC")
-    suspend fun loadEnabledAlertsWithParams(): List<WeatherAlertWithParams>
+    @Query("""
+        SELECT * FROM alerts 
+        INNER JOIN params ON params.alertId = alerts.id
+        INNER JOIN datapoints ON datapoints.dataType = params.dataType
+        WHERE datapoints.forecastId = :forecastId AND alerts.enabled
+        GROUP BY alertId HAVING MIN(
+            (params.rawLowerBound <= datapoints.rawValue OR params.rawLowerBound IS NULL) AND
+            (params.rawUpperBound >= datapoints.rawValue OR params.rawUpperBound IS NULL)
+        ) = 1
+        ORDER BY priority ASC
+    """)
+    suspend fun loadAlertMatchingForecast(forecastId: String): WeatherAlert?
 }

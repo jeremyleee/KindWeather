@@ -9,6 +9,7 @@ import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.data.AlertRepository
 import com.tragicfruit.kindweather.data.ForecastRepository
 import com.tragicfruit.kindweather.data.NotificationRepository
+import com.tragicfruit.kindweather.data.model.ForecastDataType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -41,16 +42,25 @@ class AlertService : JobIntentService() {
     }
 
     private suspend fun displayWeatherAlert() {
-        forecastRepository.findTodaysForecast()?.let { forecast ->
+        forecastRepository.findForecastForToday()?.let { forecast ->
             // Highest priority alert
-            val showAlert = alertRepository.findAlertToShow(forecast)
+            val showAlert = alertRepository.findAlertMatchingForecast(forecast)
 
-            val alertInfo = showAlert?.type
-            val message = getString(alertInfo?.title ?: R.string.feed_entry_default)
-            val color = ContextCompat.getColor(this, alertInfo?.color ?: R.color.alert_no_notification)
+            val alertType = showAlert?.alertType
+            val message = getString(alertType?.title ?: R.string.feed_entry_default)
+            val color = ContextCompat.getColor(this, alertType?.color ?: R.color.alert_no_notification)
 
             // Create model object for feed
-            val notification = notificationRepository.createNotification(message, forecast, color)
+            val notification = notificationRepository.createNotification(
+                description = message,
+                color = color,
+                forecastIcon = forecast.icon,
+                rawTempHigh = forecastRepository.findDataPointForType(forecast, ForecastDataType.TempHigh)?.rawValue,
+                rawTempLow = forecastRepository.findDataPointForType(forecast, ForecastDataType.TempLow)?.rawValue,
+                rawPrecipProbability = forecastRepository.findDataPointForType(forecast, ForecastDataType.PrecipProbability)?.rawValue,
+                latitude = forecast.latitude,
+                longitude = forecast.longitude
+            )
             if (showAlert != null) {
                 Timber.i("Showing push notification: $message")
                 notificationController.notifyWeatherAlert(this, notification)

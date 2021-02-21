@@ -80,7 +80,7 @@ class FeedCell(context: Context) : LinearLayout(context) {
         dateView.text = DisplayUtils.getSummaryDateString(notification.createdAt)
 
         cellContainer.background.setColorFilter(notification.color, PorterDuff.Mode.SRC_IN)
-        icon.setImageResource(ForecastIcon.fromString(notification.forecastIconName).iconRes)
+        icon.setImageResource(notification.forecastIcon.iconRes)
         highTempView.text = notification.getTempHighString(sharedPrefsHelper.usesImperialUnits())
         descriptionView.text = notification.description
     }

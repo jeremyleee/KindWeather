@@ -17,7 +17,7 @@ class AlertRepository @Inject constructor(
     suspend fun createAlert(priority: Int, type: WeatherAlertType): WeatherAlert {
         return WeatherAlert(
             id = UUID.randomUUID().toString(),
-            type = type,
+            alertType = type,
             priority = priority
         ).also {
             alertDao.insert(it)
@@ -26,14 +26,14 @@ class AlertRepository @Inject constructor(
 
     suspend fun createParam(
         alert: WeatherAlert,
-        type: ForecastType,
+        type: ForecastDataType,
         rawDefaultLowerBound: Double?,
         rawDefaultUpperBound: Double?,
     ): WeatherAlertParam {
         return WeatherAlertParam(
             id = UUID.randomUUID().toString(),
             alertId = alert.id,
-            type = type,
+            dataType = type,
             rawDefaultLowerBound = rawDefaultLowerBound,
             rawDefaultUpperBound = rawDefaultUpperBound,
             rawLowerBound = rawDefaultLowerBound,
@@ -60,11 +60,8 @@ class AlertRepository @Inject constructor(
         return alertDao.loadCount()
     }
 
-    suspend fun findAlertToShow(forecast: ForecastPeriod): WeatherAlert? {
-        // TODO: replace with join once forecast is migrated to room
-        return alertDao.loadEnabledAlertsWithParams().firstOrNull {
-            it.params.all { param -> forecast.satisfiesParam(param, sharedPrefsHelper.usesImperialUnits()) }
-        }?.alert
+    suspend fun findAlertMatchingForecast(forecast: ForecastPeriod): WeatherAlert? {
+        return alertDao.loadAlertMatchingForecast(forecast.id)
     }
 
     suspend fun setParamLowerBound(param: WeatherAlertParam, lowerBound: Double?) {

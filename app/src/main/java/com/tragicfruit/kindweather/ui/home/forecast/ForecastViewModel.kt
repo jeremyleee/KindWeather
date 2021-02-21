@@ -22,7 +22,7 @@ class ForecastViewModel @Inject constructor(
 ) : ViewModel() {
 
     // TODO: update when Hilt supports navArgs
-    private val notificationId = requireNotNull(savedStateHandle.get<String>("alertId"))
+    private val notificationId = requireNotNull(savedStateHandle.get<String>("notificationId"))
 
     val useImperialUnits: Boolean
     get() = sharedPrefsHelper.usesImperialUnits()
