@@ -6,8 +6,6 @@ import com.tragicfruit.kindweather.data.model.ForecastDataType
 import com.tragicfruit.kindweather.data.model.WeatherAlertType
 import com.tragicfruit.kindweather.utils.controllers.NotificationController
 import dagger.hilt.android.HiltAndroidApp
-import io.realm.Realm
-import io.realm.RealmConfiguration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,14 +24,6 @@ class KindWeatherApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-
-        Realm.init(this)
-        Realm.setDefaultConfiguration(RealmConfiguration.Builder()
-            .name("KindWeatherDB")
-            .schemaVersion(1)
-            .allowWritesOnUiThread(true)
-            .deleteRealmIfMigrationNeeded() // TODO: remove on production
-            .build())
 
         notificationController.setupNotificationChannels(this)
         createInitialAlerts()
