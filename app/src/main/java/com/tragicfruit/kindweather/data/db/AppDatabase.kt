@@ -14,7 +14,7 @@ import com.tragicfruit.kindweather.data.model.*
         ForecastPeriod::class,
         ForecastDataPoint::class
     ],
-    version = 1
+    version = 2
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

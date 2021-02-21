@@ -1,10 +1,10 @@
 package com.tragicfruit.kindweather.data
 
-import androidx.lifecycle.LiveData
 import com.tragicfruit.kindweather.data.db.dao.AlertDao
 import com.tragicfruit.kindweather.data.db.dao.AlertParamDao
 import com.tragicfruit.kindweather.data.model.*
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
+import kotlinx.coroutines.flow.Flow
 import java.util.*
 import javax.inject.Inject
 
@@ -43,11 +43,11 @@ class AlertRepository @Inject constructor(
         }
     }
 
-    fun findParamsForAlert(alertId: String): LiveData<WeatherAlertWithParams> {
+    suspend fun findParamsForAlert(alertId: String): WeatherAlertWithParams {
         return alertDao.loadAlertWithParams(alertId)
     }
 
-    fun getAllAlerts(): LiveData<List<WeatherAlert>> {
+    fun getAllAlerts(): Flow<List<WeatherAlert>> {
         return alertDao.loadAll()
     }
 

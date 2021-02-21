@@ -1,10 +1,10 @@
 package com.tragicfruit.kindweather.data
 
 import androidx.annotation.ColorInt
-import androidx.lifecycle.LiveData
 import com.tragicfruit.kindweather.data.db.dao.NotificationDao
 import com.tragicfruit.kindweather.data.model.ForecastIcon
 import com.tragicfruit.kindweather.data.model.WeatherNotification
+import kotlinx.coroutines.flow.Flow
 import java.util.*
 import javax.inject.Inject
 
@@ -38,11 +38,11 @@ class NotificationRepository @Inject constructor(
         }
     }
 
-    fun findNotification(id: String): LiveData<WeatherNotification> {
+    suspend fun findNotification(id: String): WeatherNotification {
         return dao.loadById(id)
     }
 
-    fun getAllNotifications(): LiveData<List<WeatherNotification>> {
+    fun getAllNotifications(): Flow<List<WeatherNotification>> {
         return dao.loadAll()
     }
 }

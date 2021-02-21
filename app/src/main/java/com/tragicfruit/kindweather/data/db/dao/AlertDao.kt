@@ -1,9 +1,9 @@
 package com.tragicfruit.kindweather.data.db.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.tragicfruit.kindweather.data.model.WeatherAlert
 import com.tragicfruit.kindweather.data.model.WeatherAlertWithParams
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AlertDao {
@@ -14,18 +14,15 @@ interface AlertDao {
     @Update
     suspend fun update(alert: WeatherAlert)
 
-    @Query("SELECT * FROM alerts WHERE id = :id")
-    fun loadById(id: String): LiveData<WeatherAlert>
-
     @Query("SELECT * FROM alerts ORDER BY enabled DESC, priority ASC")
-    fun loadAll(): LiveData<List<WeatherAlert>>
+    fun loadAll(): Flow<List<WeatherAlert>>
 
     @Query("SELECT COUNT(id) FROM alerts")
     suspend fun loadCount(): Int
 
     @Transaction
     @Query("SELECT * FROM alerts WHERE id = :alertId")
-    fun loadAlertWithParams(alertId: String): LiveData<WeatherAlertWithParams>
+    suspend fun loadAlertWithParams(alertId: String): WeatherAlertWithParams
 
     @Transaction
     @Query("""

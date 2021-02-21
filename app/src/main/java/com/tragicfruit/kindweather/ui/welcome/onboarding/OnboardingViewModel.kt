@@ -13,13 +13,13 @@ class OnboardingViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _imageRes: MutableLiveData<Int> = MutableLiveData()
-    val imageRes: LiveData<Int> get() = _imageRes
+    val imageRes: LiveData<Int> = _imageRes
 
     private val _titleRes: MutableLiveData<Int> = MutableLiveData()
-    val titleRes: LiveData<Int> get() = _titleRes
+    val titleRes: LiveData<Int> = _titleRes
 
     private val _descriptionRes: MutableLiveData<Int> = MutableLiveData()
-    val descriptionRes: LiveData<Int> get() = _descriptionRes
+    val descriptionRes: LiveData<Int> = _descriptionRes
 
     init {
         _imageRes.value = savedStateHandle.get<Int>(OnboardingFragment.IMAGE_RES)

@@ -16,10 +16,10 @@ class SettingsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _alertTime: MutableLiveData<AlertTime> = MutableLiveData()
-    val alertTime: LiveData<AlertTime> get() = _alertTime
+    val alertTime: LiveData<AlertTime> = _alertTime
 
     private val _useImperialUnits: MutableLiveData<Boolean> = MutableLiveData()
-    val useImperialUnits: LiveData<Boolean> get() = _useImperialUnits
+    val useImperialUnits: LiveData<Boolean> = _useImperialUnits
 
     init {
         _alertTime.value = AlertTime(sharedPrefsHelper.getAlertHour(), sharedPrefsHelper.getAlertMinute())

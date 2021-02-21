@@ -2,6 +2,7 @@ package com.tragicfruit.kindweather.ui.home.alertlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.tragicfruit.kindweather.data.AlertRepository
 import com.tragicfruit.kindweather.data.model.WeatherAlert
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,5 +13,5 @@ class AlertListViewModel @Inject constructor(
     repository: AlertRepository
 ) : ViewModel() {
 
-    val alertList: LiveData<List<WeatherAlert>> = repository.getAllAlerts()
+    val alertList: LiveData<List<WeatherAlert>> = repository.getAllAlerts().asLiveData()
 }

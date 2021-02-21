@@ -1,10 +1,7 @@
 package com.tragicfruit.kindweather.ui.home.forecast
 
 import android.location.Geocoder
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
+import androidx.lifecycle.*
 import com.tragicfruit.kindweather.data.NotificationRepository
 import com.tragicfruit.kindweather.data.model.WeatherNotification
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
@@ -27,7 +24,9 @@ class ForecastViewModel @Inject constructor(
     val useImperialUnits: Boolean
     get() = sharedPrefsHelper.usesImperialUnits()
 
-    val notification: LiveData<WeatherNotification> = repository.findNotification(notificationId)
+    val notification: LiveData<WeatherNotification> = liveData {
+        emit(repository.findNotification(notificationId))
+    }
     val addressLabel: LiveData<String?> = notification.map { fetchAddress(it) }
 
     private fun fetchAddress(notification: WeatherNotification): String? {

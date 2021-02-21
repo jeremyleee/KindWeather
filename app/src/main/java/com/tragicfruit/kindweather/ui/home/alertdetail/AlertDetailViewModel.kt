@@ -18,7 +18,9 @@ class AlertDetailViewModel @Inject constructor(
     // TODO: update when Hilt supports navArgs
     private val alertId = requireNotNull(savedStateHandle.get<String>("alertId"))
 
-    val alertWithParams: LiveData<WeatherAlertWithParams> = repository.findParamsForAlert(alertId)
+    val alertWithParams: LiveData<WeatherAlertWithParams> = liveData {
+        emit(repository.findParamsForAlert(alertId))
+    }
     val resetButtonEnabled: LiveData<Boolean> get() = alertWithParams.map {
         it.params.any { param -> param.isEdited() }
     }
