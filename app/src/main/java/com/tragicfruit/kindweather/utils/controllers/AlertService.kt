@@ -11,9 +11,7 @@ import com.tragicfruit.kindweather.data.ForecastRepository
 import com.tragicfruit.kindweather.data.NotificationRepository
 import com.tragicfruit.kindweather.data.model.ForecastDataType
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -30,7 +28,8 @@ class AlertService : JobIntentService() {
             val location = LocationResult.extractResult(intent).lastLocation
 
             Timber.d("Fetching forecast")
-            CoroutineScope(Dispatchers.IO).launch {
+
+            runBlocking {
                 val success = forecastRepository.fetchForecast(location.latitude, location.longitude)
                 if (!success) {
                     // TODO: handle retry

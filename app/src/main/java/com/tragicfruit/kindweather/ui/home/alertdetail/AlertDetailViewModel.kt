@@ -5,7 +5,6 @@ import com.tragicfruit.kindweather.data.AlertRepository
 import com.tragicfruit.kindweather.data.model.WeatherAlertParam
 import com.tragicfruit.kindweather.data.model.WeatherAlertWithParams
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,25 +25,25 @@ class AlertDetailViewModel @Inject constructor(
     }
 
     fun enableAlert(enabled: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             alertWithParams.value?.let { repository.setAlertEnabled(it.alert, enabled) }
         }
     }
 
     fun resetParams() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             alertWithParams.value?.let { repository.resetParamsToDefault(it.params) }
         }
     }
 
     fun updateLowerBound(param: WeatherAlertParam, value: Double?) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             repository.setParamLowerBound(param, value)
         }
     }
 
     fun updateUpperBound(param: WeatherAlertParam, value: Double?) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             repository.setParamUpperBound(param, value)
         }
     }

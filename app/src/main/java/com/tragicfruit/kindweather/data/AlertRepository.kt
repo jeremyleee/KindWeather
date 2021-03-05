@@ -3,24 +3,30 @@ package com.tragicfruit.kindweather.data
 import com.tragicfruit.kindweather.data.db.dao.AlertDao
 import com.tragicfruit.kindweather.data.db.dao.AlertParamDao
 import com.tragicfruit.kindweather.data.model.*
+import com.tragicfruit.kindweather.di.IoDispatcher
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
 class AlertRepository @Inject constructor(
     private val alertDao: AlertDao,
     private val paramDao: AlertParamDao,
-    private val sharedPrefsHelper: SharedPrefsHelper
+    private val sharedPrefsHelper: SharedPrefsHelper,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
     suspend fun createAlert(priority: Int, type: WeatherAlertType): WeatherAlert {
-        return WeatherAlert(
-            id = UUID.randomUUID().toString(),
-            alertType = type,
-            priority = priority
-        ).also {
-            alertDao.insert(it)
+        return withContext(ioDispatcher) {
+            WeatherAlert(
+                id = UUID.randomUUID().toString(),
+                alertType = type,
+                priority = priority
+            ).also {
+                alertDao.insert(it)
+            }
         }
     }
 
@@ -30,21 +36,25 @@ class AlertRepository @Inject constructor(
         rawDefaultLowerBound: Double?,
         rawDefaultUpperBound: Double?,
     ): WeatherAlertParam {
-        return WeatherAlertParam(
-            id = UUID.randomUUID().toString(),
-            alertId = alert.id,
-            dataType = type,
-            rawDefaultLowerBound = rawDefaultLowerBound,
-            rawDefaultUpperBound = rawDefaultUpperBound,
-            rawLowerBound = rawDefaultLowerBound,
-            rawUpperBound = rawDefaultUpperBound
-        ).also {
-            paramDao.insert(it)
+        return withContext(ioDispatcher) {
+            WeatherAlertParam(
+                id = UUID.randomUUID().toString(),
+                alertId = alert.id,
+                dataType = type,
+                rawDefaultLowerBound = rawDefaultLowerBound,
+                rawDefaultUpperBound = rawDefaultUpperBound,
+                rawLowerBound = rawDefaultLowerBound,
+                rawUpperBound = rawDefaultUpperBound
+            ).also {
+                paramDao.insert(it)
+            }
         }
     }
 
     suspend fun findParamsForAlert(alertId: String): WeatherAlertWithParams {
-        return alertDao.loadAlertWithParams(alertId)
+        return withContext(ioDispatcher) {
+            alertDao.loadAlertWithParams(alertId)
+        }
     }
 
     fun getAllAlerts(): Flow<List<WeatherAlert>> {
@@ -52,33 +62,45 @@ class AlertRepository @Inject constructor(
     }
 
     suspend fun setAlertEnabled(alert: WeatherAlert, enabled: Boolean) {
-        alert.enabled = enabled
-        alertDao.update(alert)
+        withContext(ioDispatcher) {
+            alert.enabled = enabled
+            alertDao.update(alert)
+        }
     }
 
     suspend fun getAlertCount(): Int {
-        return alertDao.loadCount()
+        return withContext(ioDispatcher) {
+            alertDao.loadCount()
+        }
     }
 
     suspend fun findAlertMatchingForecast(forecast: ForecastPeriod): WeatherAlert? {
-        return alertDao.loadAlertMatchingForecast(forecast.id)
+        return withContext(ioDispatcher) {
+            alertDao.loadAlertMatchingForecast(forecast.id)
+        }
     }
 
     suspend fun setParamLowerBound(param: WeatherAlertParam, lowerBound: Double?) {
-        param.setLowerBound(lowerBound, sharedPrefsHelper.usesImperialUnits())
-        paramDao.update(param)
+        return withContext(ioDispatcher) {
+            param.setLowerBound(lowerBound, sharedPrefsHelper.usesImperialUnits())
+            paramDao.update(param)
+        }
     }
 
     suspend fun setParamUpperBound(param: WeatherAlertParam, upperBound: Double?) {
-        param.setUpperBound(upperBound, sharedPrefsHelper.usesImperialUnits())
-        paramDao.update(param)
+        return withContext(ioDispatcher) {
+            param.setUpperBound(upperBound, sharedPrefsHelper.usesImperialUnits())
+            paramDao.update(param)
+        }
     }
 
     suspend fun resetParamsToDefault(params: List<WeatherAlertParam>) {
-        params.forEach {
-            it.rawLowerBound = it.rawDefaultLowerBound
-            it.rawUpperBound = it.rawDefaultUpperBound
+        return withContext(ioDispatcher) {
+            params.forEach {
+                it.rawLowerBound = it.rawDefaultLowerBound
+                it.rawUpperBound = it.rawDefaultUpperBound
+            }
+            paramDao.updateAll(*params.toTypedArray())
         }
-        paramDao.updateAll(*params.toTypedArray())
     }
 }

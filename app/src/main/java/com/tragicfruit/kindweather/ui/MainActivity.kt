@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private val viewModel: MainViewModel by viewModels()
+
     @ColorRes
     var statusBarColor = R.color.background
     var lightStatusBar = true
@@ -23,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         applyStatusBarColorRes(statusBarColor, lightStatusBar)
+
+        viewModel.createInitialAlerts()
     }
 
     fun applyStatusBarColor(@ColorInt color: Int, lightStatusBar: Boolean) {
