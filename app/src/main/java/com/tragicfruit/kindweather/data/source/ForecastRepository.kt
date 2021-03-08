@@ -1,18 +1,18 @@
 package com.tragicfruit.kindweather.data.source
 
-import com.tragicfruit.kindweather.data.source.remote.DarkSkyAPIService
-import com.tragicfruit.kindweather.data.source.local.ForecastDataPointDao
-import com.tragicfruit.kindweather.data.source.local.ForecastPeriodDao
 import com.tragicfruit.kindweather.data.ForecastDataPoint
 import com.tragicfruit.kindweather.data.ForecastDataType
 import com.tragicfruit.kindweather.data.ForecastPeriod
+import com.tragicfruit.kindweather.data.source.local.ForecastDataPointDao
+import com.tragicfruit.kindweather.data.source.local.ForecastPeriodDao
+import com.tragicfruit.kindweather.data.source.remote.DarkSkyAPIService
 import com.tragicfruit.kindweather.di.IoDispatcher
+import java.util.Calendar
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import java.util.*
-import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 class ForecastRepository @Inject constructor(
     private val periodDao: ForecastPeriodDao,
@@ -37,7 +37,6 @@ class ForecastRepository @Inject constructor(
                     deleteForecastsBefore(timestamp)
                 }
                 true
-
             } catch (e: Exception) {
                 Timber.e(e, "Failed to fetch forecast")
                 false
@@ -45,7 +44,10 @@ class ForecastRepository @Inject constructor(
         }
     }
 
-    suspend fun findDataPointForType(forecast: ForecastPeriod, type: ForecastDataType): ForecastDataPoint? {
+    suspend fun findDataPointForType(
+        forecast: ForecastPeriod,
+        type: ForecastDataType
+    ): ForecastDataPoint? {
         return withContext(ioDispatcher) {
             dataPointDao.loadDataPointForType(forecast.id, type)
         }

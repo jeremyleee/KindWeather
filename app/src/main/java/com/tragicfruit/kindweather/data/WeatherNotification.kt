@@ -3,7 +3,7 @@ package com.tragicfruit.kindweather.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.tragicfruit.kindweather.utils.DisplayUtils
-import java.util.*
+import java.util.Date
 
 @Entity(tableName = "notifications")
 data class WeatherNotification(
@@ -27,11 +27,17 @@ data class WeatherNotification(
     }
 
     fun getPrecipProbabilityString(useImperial: Boolean): String {
-        return getDisplayString(rawPrecipProbability,
-            ForecastDataType.PrecipProbability, useImperial)
+        return getDisplayString(
+            rawPrecipProbability,
+            ForecastDataType.PrecipProbability, useImperial
+        )
     }
 
-    private fun getDisplayString(rawValue: Double?, type: ForecastDataType, useImperial: Boolean): String {
+    private fun getDisplayString(
+        rawValue: Double?,
+        type: ForecastDataType,
+        useImperial: Boolean
+    ): String {
         rawValue ?: return ""
 
         val convertedValue = type.fromRawValue(rawValue, useImperial)

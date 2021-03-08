@@ -4,7 +4,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
 import com.google.common.truth.Truth.assertThat
 import com.tragicfruit.kindweather.MainCoroutineRule
-import com.tragicfruit.kindweather.data.*
+import com.tragicfruit.kindweather.data.ForecastDataType
+import com.tragicfruit.kindweather.data.WeatherAlert
+import com.tragicfruit.kindweather.data.WeatherAlertParam
+import com.tragicfruit.kindweather.data.WeatherAlertType
+import com.tragicfruit.kindweather.data.WeatherAlertWithParams
 import com.tragicfruit.kindweather.data.source.FakeAlertRepository
 import com.tragicfruit.kindweather.getOrAwaitValue
 import com.tragicfruit.kindweather.observeForTesting

@@ -24,23 +24,32 @@ class NotificationController @Inject constructor() {
     fun setupNotificationChannels(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Location notifications
-            createNotificationChannel(context,
+            createNotificationChannel(
+                context,
                 R.string.notification_channel_location,
-                LOCATION_CHANNEL_ID)
+                LOCATION_CHANNEL_ID
+            )
 
             // Weather notifications
-            createNotificationChannel(context,
+            createNotificationChannel(
+                context,
                 R.string.notification_channel_weather,
                 WEATHER_CHANNEL_ID,
-                NotificationManager.IMPORTANCE_HIGH)
+                NotificationManager.IMPORTANCE_HIGH
+            )
         }
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel(context: Context, @StringRes name: Int, id: String,
-                                          importance: Int = NotificationManager.IMPORTANCE_DEFAULT) {
+    private fun createNotificationChannel(
+        context: Context,
+        @StringRes name: Int,
+        id: String,
+        importance: Int = NotificationManager.IMPORTANCE_DEFAULT
+    ) {
         val channel = NotificationChannel(id, context.getString(name), importance)
-        val notificationManager = ContextCompat.getSystemService(context, NotificationManager::class.java)
+        val notificationManager =
+            ContextCompat.getSystemService(context, NotificationManager::class.java)
         notificationManager?.createNotificationChannel(channel)
     }
 
@@ -50,14 +59,21 @@ class NotificationController @Inject constructor() {
             data = Uri.fromParts("package", context.packageName, null)
         }
 
-        val pendingIntent = PendingIntent.getActivity(context, APP_SETTINGS_ACTION, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            APP_SETTINGS_ACTION,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
         val builder = NotificationCompat.Builder(context, LOCATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.notification_location_permission_title))
             .setContentText(context.getString(R.string.notification_location_permission_text))
-            .setStyle(NotificationCompat.BigTextStyle()
-                .bigText(context.getString(R.string.notification_location_permission_text)))
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(context.getString(R.string.notification_location_permission_text))
+            )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
@@ -80,8 +96,10 @@ class NotificationController @Inject constructor() {
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(notification.description)
             .setContentText(context.getString(R.string.notification_weather_tap))
-            .setStyle(NotificationCompat.BigTextStyle()
-                .bigText(context.getString(R.string.notification_weather_tap)))
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(context.getString(R.string.notification_weather_tap))
+            )
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)

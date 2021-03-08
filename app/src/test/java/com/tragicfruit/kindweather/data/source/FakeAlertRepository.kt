@@ -1,9 +1,15 @@
 package com.tragicfruit.kindweather.data.source
 
-import com.tragicfruit.kindweather.data.*
+import com.tragicfruit.kindweather.data.ForecastDataType
+import com.tragicfruit.kindweather.data.ForecastPeriod
+import com.tragicfruit.kindweather.data.WeatherAlert
+import com.tragicfruit.kindweather.data.WeatherAlertParam
+import com.tragicfruit.kindweather.data.WeatherAlertType
+import com.tragicfruit.kindweather.data.WeatherAlertWithParams
+import java.util.LinkedHashMap
+import java.util.UUID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import java.util.*
 
 class FakeAlertRepository : AlertRepository {
 

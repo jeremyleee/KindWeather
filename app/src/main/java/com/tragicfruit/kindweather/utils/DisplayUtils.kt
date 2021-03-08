@@ -2,7 +2,9 @@ package com.tragicfruit.kindweather.utils
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 object DisplayUtils {
 
@@ -32,5 +34,4 @@ object DisplayUtils {
         val validDate = date ?: return ""
         return dateFormatter.format(validDate)
     }
-
 }

@@ -40,11 +40,9 @@ class SplashFragment : BaseFragment() {
         if (sharedPrefsHelper.isOnboardingCompleted()) {
             // Launch home screen
             findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
-
         } else {
             // Launch welcome screens
             findNavController().navigate(R.id.action_splashFragment_to_welcomeFragment)
         }
     }
-
 }

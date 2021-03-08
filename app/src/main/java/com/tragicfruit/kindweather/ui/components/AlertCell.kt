@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class AlertCell(context: Context) : ConstraintLayout(context) {
-    
+
     @Inject lateinit var viewHelper: ViewHelper
 
     private val titleView = TextView(context)
@@ -33,39 +33,85 @@ class AlertCell(context: Context) : ConstraintLayout(context) {
 
     init {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT).apply {
-            setMargins(viewHelper.parsePx(R.dimen.app_margin_xx), viewHelper.parsePx(R.dimen.app_margin))
+            setMargins(
+                viewHelper.parsePx(R.dimen.app_margin_xx),
+                viewHelper.parsePx(R.dimen.app_margin)
+            )
         }
 
         setBackgroundResource(R.drawable.round_rect_cell_background)
         elevation = viewHelper.parsePx(R.dimen.app_margin).toFloat()
-        outlineProvider = RoundRectOutlineProvider(viewHelper.parsePx(R.dimen.round_rect_cell_radius).toFloat())
+        outlineProvider =
+            RoundRectOutlineProvider(viewHelper.parsePx(R.dimen.round_rect_cell_radius).toFloat())
 
-        addView(illustrationView, LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT))
+        addView(
+            illustrationView,
+            LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT)
+        )
 
         titleView.textSize = 26f
         titleView.setLineSpacing(viewHelper.toPx(-4).toFloat(), 1f)
         titleView.typeface = ResourcesCompat.getFont(context, R.font.playfair_bold)
         titleView.setTextColor(ContextCompat.getColor(context, R.color.alert_title))
         titleView.gravity = Gravity.CENTER_VERTICAL
-        addView(titleView, LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.MATCH_CONSTRAINT))
+        addView(
+            titleView,
+            LayoutParams(LayoutParams.MATCH_CONSTRAINT, LayoutParams.MATCH_CONSTRAINT)
+        )
 
         val titleGuidelineId = Guideline(context).getViewId()
         val titleSet = ConstraintSet().also {
             it.create(titleGuidelineId, ConstraintSet.VERTICAL_GUIDELINE)
             it.setGuidelinePercent(titleGuidelineId, 0.6f)
-            it.connect(titleView.getViewId(), ConstraintSet.START, this.getViewId(), ConstraintSet.START, viewHelper.parsePx(R.dimen.app_margin_xxx))
-            it.connect(titleView.getViewId(), ConstraintSet.END, titleGuidelineId, ConstraintSet.START)
-            it.connect(titleView.getViewId(), ConstraintSet.TOP, this.getViewId(), ConstraintSet.TOP)
-            it.connect(titleView.getViewId(), ConstraintSet.BOTTOM, this.getViewId(), ConstraintSet.BOTTOM)
+            it.connect(
+                titleView.getViewId(),
+                ConstraintSet.START,
+                this.getViewId(),
+                ConstraintSet.START,
+                viewHelper.parsePx(R.dimen.app_margin_xxx)
+            )
+            it.connect(
+                titleView.getViewId(),
+                ConstraintSet.END,
+                titleGuidelineId,
+                ConstraintSet.START
+            )
+            it.connect(
+                titleView.getViewId(),
+                ConstraintSet.TOP,
+                this.getViewId(),
+                ConstraintSet.TOP
+            )
+            it.connect(
+                titleView.getViewId(),
+                ConstraintSet.BOTTOM,
+                this.getViewId(),
+                ConstraintSet.BOTTOM
+            )
         }
 
         val imageGuidelineId = Guideline(context).getViewId()
         val illustrationSet = ConstraintSet().also {
             it.create(imageGuidelineId, ConstraintSet.VERTICAL_GUIDELINE)
             it.setGuidelinePercent(imageGuidelineId, 0.4f)
-            it.connect(illustrationView.getViewId(), ConstraintSet.TOP, this.getViewId(), ConstraintSet.TOP)
-            it.connect(illustrationView.getViewId(), ConstraintSet.START, imageGuidelineId, ConstraintSet.END)
-            it.connect(illustrationView.getViewId(), ConstraintSet.END, this.getViewId(), ConstraintSet.END)
+            it.connect(
+                illustrationView.getViewId(),
+                ConstraintSet.TOP,
+                this.getViewId(),
+                ConstraintSet.TOP
+            )
+            it.connect(
+                illustrationView.getViewId(),
+                ConstraintSet.START,
+                imageGuidelineId,
+                ConstraintSet.END
+            )
+            it.connect(
+                illustrationView.getViewId(),
+                ConstraintSet.END,
+                this.getViewId(),
+                ConstraintSet.END
+            )
         }
 
         titleSet.applyTo(this)
@@ -80,45 +126,62 @@ class AlertCell(context: Context) : ConstraintLayout(context) {
         titleView.setText(alert.alertType.title)
 
         if (alert.enabled) {
-            background.setColorFilter(ContextCompat.getColor(context, alert.alertType.color), PorterDuff.Mode.SRC_IN)
+            background.setColorFilter(
+                ContextCompat.getColor(context, alert.alertType.color),
+                PorterDuff.Mode.SRC_IN
+            )
             titleView.setTextColor(ContextCompat.getColor(context, R.color.alert_title))
         } else {
-            background.setColorFilter(ContextCompat.getColor(context, R.color.alert_disabled), PorterDuff.Mode.SRC_IN)
+            background.setColorFilter(
+                ContextCompat.getColor(context, R.color.alert_disabled),
+                PorterDuff.Mode.SRC_IN
+            )
             titleView.setTextColor(ContextCompat.getColor(context, R.color.alert_title_disabled))
         }
 
-        with (illustrationView) {
-            viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-                    viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    Glide.with(context)
-                        .load(alert.alertType.image)
-                        .override(width)
-                        .into(this@with)
+        with(illustrationView) {
+            viewTreeObserver.addOnGlobalLayoutListener(
+                object : ViewTreeObserver.OnGlobalLayoutListener {
+                    override fun onGlobalLayout() {
+                        viewTreeObserver.removeOnGlobalLayoutListener(this)
+                        Glide.with(context)
+                            .load(alert.alertType.image)
+                            .override(width)
+                            .into(this@with)
+                    }
                 }
-            })
+            )
 
-            colorFilter = ColorMatrixColorFilter(ColorMatrix().apply {
-                setSaturation(if (alert.enabled) 1f else 0f)
-            })
+            colorFilter = ColorMatrixColorFilter(
+                ColorMatrix().apply {
+                    setSaturation(if (alert.enabled) 1f else 0f)
+                }
+            )
         }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val height = MeasureSpec.getSize(widthMeasureSpec) * 0.5625
-        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height.toInt(), MeasureSpec.EXACTLY))
+        super.onMeasure(
+            widthMeasureSpec,
+            MeasureSpec.makeMeasureSpec(height.toInt(), MeasureSpec.EXACTLY)
+        )
     }
 
     interface Listener {
         fun onAlertClicked(alert: WeatherAlert)
     }
-
 }
 
 class AlertCellImageView(context: Context) : ImageView(context) {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         // Allow height to be larger than parent view
-        super.onMeasure(widthMeasureSpec,
-            MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(heightMeasureSpec), MeasureSpec.UNSPECIFIED))
+        super.onMeasure(
+            widthMeasureSpec,
+            MeasureSpec.makeMeasureSpec(
+                MeasureSpec.getSize(heightMeasureSpec),
+                MeasureSpec.UNSPECIFIED
+            )
+        )
     }
 }

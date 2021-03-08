@@ -13,9 +13,10 @@ import com.google.android.gms.location.LocationServices
 import com.tragicfruit.kindweather.utils.PermissionHelper
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
+import timber.log.Timber
 
 class AlertController @Inject constructor(
     private val sharedPrefsHelper: SharedPrefsHelper
@@ -27,7 +28,12 @@ class AlertController @Inject constructor(
         val alarmManager = ContextCompat.getSystemService(context, AlarmManager::class.java)
 
         val intent = Intent(context, AlarmReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, ALERT_RECEIVER_REQUEST, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            ALERT_RECEIVER_REQUEST,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
         calendar.timeInMillis = System.currentTimeMillis()
         calendar.set(Calendar.HOUR_OF_DAY, sharedPrefsHelper.getAlertHour())
@@ -40,14 +46,20 @@ class AlertController @Inject constructor(
         }
 
         Timber.i("Daily alert scheduled for ${calendar.time}")
-        alarmManager?.setRepeating(AlarmManager.RTC, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
+        alarmManager?.setRepeating(
+            AlarmManager.RTC,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            pendingIntent
+        )
 
         // Enable boot completed receiver
         val receiver = ComponentName(context, BootReceiver::class.java)
         context.packageManager.setComponentEnabledSetting(
             receiver,
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-            PackageManager.DONT_KILL_APP)
+            PackageManager.DONT_KILL_APP
+        )
     }
 
     companion object {
@@ -79,7 +91,6 @@ class AlarmReceiver : BroadcastReceiver() {
             )
 
             fusedLocationClient.requestLocationUpdates(locationRequest, pendingIntent)
-
         } else {
             // No location permission, display notification
             notificationController.notifyLocationPermissionsRequired(context)

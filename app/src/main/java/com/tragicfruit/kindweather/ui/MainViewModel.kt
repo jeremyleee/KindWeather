@@ -2,12 +2,12 @@ package com.tragicfruit.kindweather.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tragicfruit.kindweather.data.source.AlertRepository
 import com.tragicfruit.kindweather.data.ForecastDataType
 import com.tragicfruit.kindweather.data.WeatherAlertType
+import com.tragicfruit.kindweather.data.source.AlertRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MainViewModel @Inject constructor(

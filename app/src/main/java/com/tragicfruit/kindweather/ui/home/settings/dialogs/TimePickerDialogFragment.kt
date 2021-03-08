@@ -20,7 +20,11 @@ class TimePickerDialogFragment : DialogFragment() {
         private const val INITIAL_HOUR = "hour"
         private const val INITIAL_MINUTE = "minute"
 
-        fun newInstance(initialHour: Int, initialMinute: Int, listener: TimePickerDialog.OnTimeSetListener) =
+        fun newInstance(
+            initialHour: Int,
+            initialMinute: Int,
+            listener: TimePickerDialog.OnTimeSetListener
+        ) =
             TimePickerDialogFragment().also {
                 it.arguments = bundleOf(
                     INITIAL_HOUR to initialHour,
@@ -29,5 +33,4 @@ class TimePickerDialogFragment : DialogFragment() {
                 it.listener = listener
             }
     }
-
 }

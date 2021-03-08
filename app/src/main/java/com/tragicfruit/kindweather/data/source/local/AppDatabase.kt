@@ -3,7 +3,11 @@ package com.tragicfruit.kindweather.data.source.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.tragicfruit.kindweather.data.*
+import com.tragicfruit.kindweather.data.ForecastDataPoint
+import com.tragicfruit.kindweather.data.ForecastPeriod
+import com.tragicfruit.kindweather.data.WeatherAlert
+import com.tragicfruit.kindweather.data.WeatherAlertParam
+import com.tragicfruit.kindweather.data.WeatherNotification
 
 @Database(
     entities = [

@@ -37,5 +37,4 @@ class KWButton @JvmOverloads constructor(
         val colorRes = if (enabled) R.color.text_black else R.color.text_lt_grey
         setTextColor(ContextCompat.getColor(context, colorRes))
     }
-
 }

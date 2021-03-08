@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 import com.tragicfruit.kindweather.data.ForecastDataType
 import com.tragicfruit.kindweather.data.ForecastIcon
 import com.tragicfruit.kindweather.data.WeatherAlertType
-import java.util.*
+import java.util.Date
 
 class Converters {
     @TypeConverter

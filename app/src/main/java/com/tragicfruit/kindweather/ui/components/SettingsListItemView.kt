@@ -37,10 +37,13 @@ class SettingsListItemView @JvmOverloads constructor(
         subtitle.typeface = ResourcesCompat.getFont(context, R.font.lato_regular)
         subtitle.textSize = 14f
         subtitle.setTextColor(ContextCompat.getColor(context, R.color.text_grey))
-        addView(subtitle, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
-            addRule(BELOW, title.getViewId())
-            setMargins(0, viewHelper.parsePx(R.dimen.app_margin_h), 0, 0)
-        })
+        addView(
+            subtitle,
+            LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
+                addRule(BELOW, title.getViewId())
+                setMargins(0, viewHelper.parsePx(R.dimen.app_margin_h), 0, 0)
+            }
+        )
 
         attributeSet?.let {
             val typedArray = context.obtainStyledAttributes(it, R.styleable.SettingsListItemView)
@@ -60,5 +63,4 @@ class SettingsListItemView @JvmOverloads constructor(
     fun setSubtitle(subtitleText: String) {
         subtitle.text = subtitleText
     }
-
 }

@@ -4,11 +4,11 @@ import com.tragicfruit.kindweather.data.ForecastDataPoint
 import com.tragicfruit.kindweather.data.ForecastDataType
 import com.tragicfruit.kindweather.data.ForecastIcon
 import com.tragicfruit.kindweather.data.ForecastPeriod
+import java.util.UUID
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import java.util.*
 
 @Serializable(with = ForecastSerializer::class)
 data class Forecast(
@@ -41,13 +41,36 @@ class ForecastSerializer : KSerializer<Forecast> {
                 fetchedTime = System.currentTimeMillis()
             )
 
-            dataPoints += createData(forecastId, ForecastDataType.TempHigh, dataPoint.temperatureHigh)
-            dataPoints += createData(forecastId, ForecastDataType.TempLow, dataPoint.temperatureLow)
-            dataPoints += createData(forecastId, ForecastDataType.PrecipIntensity, dataPoint.precipIntensity)
-            dataPoints += createData(forecastId, ForecastDataType.PrecipProbability, dataPoint.precipProbability)
-            dataPoints += createData(forecastId, ForecastDataType.Humidity, dataPoint.humidity)
-            dataPoints += createData(forecastId, ForecastDataType.WindGust, dataPoint.windGust)
-            dataPoints += createData(forecastId, ForecastDataType.UVIndex, dataPoint.uvIndex?.toDouble())
+            dataPoints += listOf(
+                createData(
+                    forecastId,
+                    ForecastDataType.TempHigh, dataPoint.temperatureHigh
+                ),
+                createData(
+                    forecastId,
+                    ForecastDataType.TempLow, dataPoint.temperatureLow
+                ),
+                createData(
+                    forecastId,
+                    ForecastDataType.PrecipIntensity, dataPoint.precipIntensity
+                ),
+                createData(
+                    forecastId,
+                    ForecastDataType.PrecipProbability, dataPoint.precipProbability
+                ),
+                createData(
+                    forecastId,
+                    ForecastDataType.Humidity, dataPoint.humidity
+                ),
+                createData(
+                    forecastId,
+                    ForecastDataType.WindGust, dataPoint.windGust
+                ),
+                createData(
+                    forecastId,
+                    ForecastDataType.UVIndex, dataPoint.uvIndex?.toDouble()
+                )
+            ).mapNotNull { it }
         }
 
         return Forecast(
@@ -56,7 +79,11 @@ class ForecastSerializer : KSerializer<Forecast> {
         )
     }
 
-    private fun createData(forecastId: String, type: ForecastDataType, rawValue: Double?): ForecastDataPoint? {
+    private fun createData(
+        forecastId: String,
+        type: ForecastDataType,
+        rawValue: Double?
+    ): ForecastDataPoint? {
         rawValue ?: return null
         return ForecastDataPoint(
             id = UUID.randomUUID().toString(),
@@ -67,7 +94,8 @@ class ForecastSerializer : KSerializer<Forecast> {
         )
     }
 
-    override fun serialize(encoder: Encoder, value: Forecast) = throw UnsupportedOperationException()
+    override fun serialize(encoder: Encoder, value: Forecast) =
+        throw UnsupportedOperationException()
 }
 
 @Serializable

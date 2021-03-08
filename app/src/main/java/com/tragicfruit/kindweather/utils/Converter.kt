@@ -67,5 +67,4 @@ object Converter {
         fun fromMetric(value: Double): Double
         fun fromImperial(value: Double): Double
     }
-
 }

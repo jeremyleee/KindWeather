@@ -13,9 +13,13 @@ class RequestLocationDialogFragment : DialogFragment() {
         return activity?.let {
             AlertDialog.Builder(it)
                 .setTitle(R.string.allow_location_dialog_title)
-                .setMessage(getString(R.string.allow_location_dialog_text,
-                    it.packageManager.backgroundPermissionOptionLabel))
-                .setPositiveButton(android.R.string.ok) { _,_ ->
+                .setMessage(
+                    getString(
+                        R.string.allow_location_dialog_text,
+                        it.packageManager.backgroundPermissionOptionLabel
+                    )
+                )
+                .setPositiveButton(android.R.string.ok) { _, _ ->
                     requestPermissions(
                         PermissionHelper.BACKGROUND_LOCATION,
                         REQUEST_LOCATION_PERMISSION

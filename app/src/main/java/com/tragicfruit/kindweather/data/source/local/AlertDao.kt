@@ -1,6 +1,10 @@
 package com.tragicfruit.kindweather.data.source.local
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
 import com.tragicfruit.kindweather.data.WeatherAlert
 import com.tragicfruit.kindweather.data.WeatherAlertWithParams
 import kotlinx.coroutines.flow.Flow
@@ -25,7 +29,8 @@ interface AlertDao {
     suspend fun loadAlertWithParams(alertId: String): WeatherAlertWithParams
 
     @Transaction
-    @Query("""
+    @Query(
+        """
         SELECT * FROM alerts 
         INNER JOIN params ON params.alertId = alerts.id
         INNER JOIN datapoints ON datapoints.dataType = params.dataType
@@ -35,6 +40,7 @@ interface AlertDao {
             (params.rawUpperBound >= datapoints.rawValue OR params.rawUpperBound IS NULL)
         ) = 1
         ORDER BY priority ASC
-    """)
+    """
+    )
     suspend fun loadAlertMatchingForecast(forecastId: String): WeatherAlert?
 }

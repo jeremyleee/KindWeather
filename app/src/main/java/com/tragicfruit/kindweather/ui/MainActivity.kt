@@ -47,5 +47,4 @@ class MainActivity : AppCompatActivity() {
     fun applyStatusBarColorRes(@ColorRes colorRes: Int, lightStatusBar: Boolean) {
         applyStatusBarColor(ContextCompat.getColor(this, colorRes), lightStatusBar)
     }
-
 }

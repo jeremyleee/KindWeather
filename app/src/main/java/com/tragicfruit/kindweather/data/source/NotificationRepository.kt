@@ -6,7 +6,7 @@ import com.tragicfruit.kindweather.data.WeatherNotification
 import kotlinx.coroutines.flow.Flow
 
 interface NotificationRepository {
-    
+
     suspend fun createNotification(
         description: String,
         @ColorInt color: Int,

@@ -9,11 +9,11 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.utils.controllers.AlertController
 import com.tragicfruit.kindweather.databinding.FragmentWelcomeBinding
 import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.ui.welcome.allowlocation.AllowLocationFragment
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
+import com.tragicfruit.kindweather.utils.controllers.AlertController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -43,7 +43,10 @@ class WelcomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        childFragmentManager.setFragmentResultListener(AllowLocationFragment.REQUEST_LOCATION, viewLifecycleOwner) { _, bundle ->
+        childFragmentManager.setFragmentResultListener(
+            AllowLocationFragment.REQUEST_LOCATION,
+            viewLifecycleOwner
+        ) { _, bundle ->
             if (bundle.getBoolean(AllowLocationFragment.KEY_PERMISSIONS_GRANTED)) {
                 onLocationPermissionGranted(view.context)
             } else {

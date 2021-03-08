@@ -2,8 +2,12 @@ package com.tragicfruit.kindweather.di
 
 import android.content.Context
 import androidx.room.Room
+import com.tragicfruit.kindweather.data.source.local.AlertDao
+import com.tragicfruit.kindweather.data.source.local.AlertParamDao
 import com.tragicfruit.kindweather.data.source.local.AppDatabase
-import com.tragicfruit.kindweather.data.source.local.*
+import com.tragicfruit.kindweather.data.source.local.ForecastDataPointDao
+import com.tragicfruit.kindweather.data.source.local.ForecastPeriodDao
+import com.tragicfruit.kindweather.data.source.local.NotificationDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

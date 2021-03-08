@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.tragicfruit.kindweather.utils.controllers.AlertController
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
+import com.tragicfruit.kindweather.utils.controllers.AlertController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -22,7 +22,8 @@ class SettingsViewModel @Inject constructor(
     val useImperialUnits: LiveData<Boolean> = _useImperialUnits
 
     init {
-        _alertTime.value = AlertTime(sharedPrefsHelper.getAlertHour(), sharedPrefsHelper.getAlertMinute())
+        _alertTime.value =
+            AlertTime(sharedPrefsHelper.getAlertHour(), sharedPrefsHelper.getAlertMinute())
         _useImperialUnits.value = sharedPrefsHelper.usesImperialUnits()
     }
 

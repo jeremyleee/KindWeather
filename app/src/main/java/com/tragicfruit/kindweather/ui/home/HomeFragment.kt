@@ -46,5 +46,4 @@ class HomeFragment : BaseFragment() {
             navController.navigate(R.id.action_feedFragment_to_alertListFragment)
         }
     }
-
 }

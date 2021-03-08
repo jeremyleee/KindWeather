@@ -54,7 +54,9 @@ class AllowLocationFragment : BaseFragment() {
     ) {
         when (requestCode) {
             REQUEST_LOCATION_PERMISSION -> {
-                val permissionsGranted = grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+                val permissionsGranted = grantResults.all {
+                    it == PackageManager.PERMISSION_GRANTED
+                }
                 setResult(permissionsGranted)
             }
         }
@@ -73,5 +75,4 @@ class AllowLocationFragment : BaseFragment() {
 
         private const val REQUEST_LOCATION_PERMISSION = 700
     }
-
 }

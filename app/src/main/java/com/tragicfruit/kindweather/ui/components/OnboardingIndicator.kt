@@ -38,11 +38,15 @@ class OnboardingIndicator @JvmOverloads constructor(
         for (i in 0 until pageCount) {
             val indicator = OnboardingPageIndicator(context)
             indicator.setCurrent(i == initialPage, false)
-            addView(indicator, LayoutParams(
-                viewHelper.parsePx(R.dimen.onboarding_indicator_size),
-                viewHelper.parsePx(R.dimen.onboarding_indicator_size)).apply {
-                setMargins(viewHelper.parsePx(R.dimen.app_margin), 0)
-            })
+            addView(
+                indicator,
+                LayoutParams(
+                    viewHelper.parsePx(R.dimen.onboarding_indicator_size),
+                    viewHelper.parsePx(R.dimen.onboarding_indicator_size)
+                ).apply {
+                    setMargins(viewHelper.parsePx(R.dimen.app_margin), 0)
+                }
+            )
         }
     }
 
@@ -52,7 +56,6 @@ class OnboardingIndicator @JvmOverloads constructor(
             indicator?.setCurrent(i == pageIndex, true)
         }
     }
-
 }
 
 class OnboardingPageIndicator(context: Context) : View(context) {
@@ -64,8 +67,9 @@ class OnboardingPageIndicator(context: Context) : View(context) {
     fun setCurrent(current: Boolean, animated: Boolean) {
         // TODO: animation
 
-        val drawable = if (current) R.drawable.onboarding_indicator_selected else R.drawable.onboarding_indicator_unselected
+        val drawable = if (current) {
+            R.drawable.onboarding_indicator_selected
+        } else R.drawable.onboarding_indicator_unselected
         setBackgroundResource(drawable)
     }
-
 }

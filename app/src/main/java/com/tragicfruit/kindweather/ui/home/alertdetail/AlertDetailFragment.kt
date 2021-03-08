@@ -92,14 +92,26 @@ class AlertDetailFragment : BaseFragment(), AlertDetailParamView.Listener {
             .centerCrop()
             .into(binding.headerImage)
 
-        val gradient = GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, intArrayOf(color, Color.TRANSPARENT))
+        val gradient = GradientDrawable(
+            GradientDrawable.Orientation.BOTTOM_TOP,
+            intArrayOf(color, Color.TRANSPARENT)
+        )
         binding.headerImageOverlay.setImageDrawable(gradient)
     }
 
     private fun setupContentViews(alert: WeatherAlert, @ColorInt color: Int, context: Context) {
-        val states = arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked))
-        val thumbColors = intArrayOf(ContextCompat.getColor(context, R.color.switch_unchecked), color)
-        val trackColors = intArrayOf(ContextCompat.getColor(context, R.color.switch_unchecked_track), ColorHelper.darkenColor(color, 0.8f))
+        val states = arrayOf(
+            intArrayOf(-android.R.attr.state_checked),
+            intArrayOf(android.R.attr.state_checked)
+        )
+        val thumbColors = intArrayOf(
+            ContextCompat.getColor(context, R.color.switch_unchecked),
+            color
+        )
+        val trackColors = intArrayOf(
+            ContextCompat.getColor(context, R.color.switch_unchecked_track),
+            ColorHelper.darkenColor(color, 0.8f)
+        )
         binding.enableSwitch.apply {
             thumbDrawable.setTintList(ColorStateList(states, thumbColors))
             trackDrawable.setTintList(ColorStateList(states, trackColors))

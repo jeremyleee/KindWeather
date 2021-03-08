@@ -14,8 +14,12 @@ import dagger.hilt.components.SingletonComponent
 abstract class RepositoryModule {
 
     @Binds
-    abstract fun bindAlertRepository(repository: DefaultAlertRepository): AlertRepository
+    abstract fun bindAlertRepository(
+        repository: DefaultAlertRepository
+    ): AlertRepository
 
     @Binds
-    abstract fun bindNotificationRepository(repository: DefaultNotificationRepository): NotificationRepository
+    abstract fun bindNotificationRepository(
+        repository: DefaultNotificationRepository
+    ): NotificationRepository
 }

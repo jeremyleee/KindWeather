@@ -6,14 +6,14 @@ import androidx.core.app.JobIntentService
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationResult
 import com.tragicfruit.kindweather.R
+import com.tragicfruit.kindweather.data.ForecastDataType
 import com.tragicfruit.kindweather.data.source.AlertRepository
 import com.tragicfruit.kindweather.data.source.ForecastRepository
 import com.tragicfruit.kindweather.data.source.NotificationRepository
-import com.tragicfruit.kindweather.data.ForecastDataType
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class AlertService : JobIntentService() {
@@ -30,7 +30,10 @@ class AlertService : JobIntentService() {
             Timber.d("Fetching forecast")
 
             runBlocking {
-                val success = forecastRepository.fetchForecast(location.latitude, location.longitude)
+                val success = forecastRepository.fetchForecast(
+                    location.latitude,
+                    location.longitude
+                )
                 if (!success) {
                     // TODO: handle retry
                 }
@@ -47,16 +50,22 @@ class AlertService : JobIntentService() {
 
             val alertType = showAlert?.alertType
             val message = getString(alertType?.title ?: R.string.feed_entry_default)
-            val color = ContextCompat.getColor(this, alertType?.color ?: R.color.alert_no_notification)
+            val color = ContextCompat.getColor(
+                this,
+                alertType?.color ?: R.color.alert_no_notification
+            )
 
             // Create model object for feed
             val notification = notificationRepository.createNotification(
                 description = message,
                 color = color,
                 forecastIcon = forecast.icon,
-                rawTempHigh = forecastRepository.findDataPointForType(forecast, ForecastDataType.TempHigh)?.rawValue,
-                rawTempLow = forecastRepository.findDataPointForType(forecast, ForecastDataType.TempLow)?.rawValue,
-                rawPrecipProbability = forecastRepository.findDataPointForType(forecast, ForecastDataType.PrecipProbability)?.rawValue,
+                rawTempHigh = forecastRepository
+                    .findDataPointForType(forecast, ForecastDataType.TempHigh)?.rawValue,
+                rawTempLow = forecastRepository
+                    .findDataPointForType(forecast, ForecastDataType.TempLow)?.rawValue,
+                rawPrecipProbability = forecastRepository
+                    .findDataPointForType(forecast, ForecastDataType.PrecipProbability)?.rawValue,
                 latitude = forecast.latitude,
                 longitude = forecast.longitude
             )

@@ -35,5 +35,10 @@ private fun Rect.scale(
     val deltaX = (width() - newWidth) / 2
     val deltaY = (height() - newHeight) / 2
 
-    set((left + deltaX).toInt(), (top + deltaY).toInt(), (right - deltaX).toInt(), (bottom - deltaY).toInt())
+    set(
+        (left + deltaX).toInt(),
+        (top + deltaY).toInt(),
+        (right - deltaX).toInt(),
+        (bottom - deltaY).toInt()
+    )
 }

@@ -7,12 +7,12 @@ import com.tragicfruit.kindweather.data.ForecastIcon
 import com.tragicfruit.kindweather.data.WeatherNotification
 import com.tragicfruit.kindweather.data.source.FakeNotificationRepository
 import com.tragicfruit.kindweather.getOrAwaitValue
+import java.util.Date
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.util.*
 
 @ExperimentalCoroutinesApi
 class FeedViewModelTest {
@@ -63,7 +63,9 @@ class FeedViewModelTest {
 
     @Test
     fun testGetFeedData() = mainCoroutineRule.runBlockingTest {
-        assertThat(viewModel.feedData.getOrAwaitValue()).hasSize(notifications.size)
-        assertThat(viewModel.feedData.getOrAwaitValue()).containsExactly(*notifications.toTypedArray())
+        assertThat(viewModel.feedData.getOrAwaitValue())
+            .hasSize(notifications.size)
+        assertThat(viewModel.feedData.getOrAwaitValue())
+            .containsExactly(*notifications.toTypedArray())
     }
 }

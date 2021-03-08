@@ -3,8 +3,8 @@ package com.tragicfruit.kindweather
 import android.app.Application
 import com.tragicfruit.kindweather.utils.controllers.NotificationController
 import dagger.hilt.android.HiltAndroidApp
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 @HiltAndroidApp
 class KindWeatherApplication : Application() {

@@ -18,7 +18,10 @@ import com.tragicfruit.kindweather.utils.DisplayUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SettingsFragment : BaseFragment(), TimePickerDialog.OnTimeSetListener, UnitsDialogFragment.Listener {
+class SettingsFragment :
+    BaseFragment(),
+    TimePickerDialog.OnTimeSetListener,
+    UnitsDialogFragment.Listener {
 
     override var statusBarColor = R.color.white
 
@@ -48,11 +51,13 @@ class SettingsFragment : BaseFragment(), TimePickerDialog.OnTimeSetListener, Uni
         }
 
         viewModel.useImperialUnits.observe(viewLifecycleOwner) { useImperial ->
-            binding.unitsItem.setSubtitle(if (useImperial) {
-                R.string.settings_units_imperial
-            } else {
-                R.string.settings_units_metric
-            })
+            binding.unitsItem.setSubtitle(
+                if (useImperial) {
+                    R.string.settings_units_imperial
+                } else {
+                    R.string.settings_units_metric
+                }
+            )
         }
 
         binding.alertTimeItem.setOnClickListener {
