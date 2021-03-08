@@ -1,20 +1,11 @@
 package com.tragicfruit.kindweather.data.source
 
 import androidx.annotation.ColorInt
-import com.tragicfruit.kindweather.data.source.local.NotificationDao
 import com.tragicfruit.kindweather.data.ForecastIcon
 import com.tragicfruit.kindweather.data.WeatherNotification
-import com.tragicfruit.kindweather.di.IoDispatcher
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
-import java.util.*
-import javax.inject.Inject
 
-class NotificationRepository @Inject constructor(
-    private val dao: NotificationDao,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-) {
+interface NotificationRepository {
     
     suspend fun createNotification(
         description: String,
@@ -25,32 +16,9 @@ class NotificationRepository @Inject constructor(
         rawPrecipProbability: Double?,
         latitude: Double,
         longitude: Double,
-    ): WeatherNotification {
-        return withContext(ioDispatcher) {
-            WeatherNotification(
-                id = UUID.randomUUID().toString(),
-                createdAt = Date(),
-                description = description,
-                color = color,
-                forecastIcon = forecastIcon,
-                rawTempHigh = rawTempHigh,
-                rawTempLow = rawTempLow,
-                rawPrecipProbability = rawPrecipProbability,
-                latitude = latitude,
-                longitude = longitude
-            ).also {
-                dao.insert(it)
-            }
-        }
-    }
+    ): WeatherNotification
 
-    suspend fun findNotification(id: String): WeatherNotification {
-        return withContext(ioDispatcher) {
-            dao.loadById(id)
-        }
-    }
+    suspend fun findNotification(id: String): WeatherNotification
 
-    fun getAllNotifications(): Flow<List<WeatherNotification>> {
-        return dao.loadAll()
-    }
+    fun getAllNotifications(): Flow<List<WeatherNotification>>
 }
