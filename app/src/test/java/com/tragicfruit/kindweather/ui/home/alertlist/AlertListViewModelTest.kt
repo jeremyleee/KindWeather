@@ -44,7 +44,7 @@ class AlertListViewModelTest {
 
     @Before
     fun setUp() {
-        repository.alertMap.putAll(alerts.map { Pair(it.id, it) })
+        repository.alertMap.putAll(alerts.map { it.id to it })
         viewModel = AlertListViewModel(repository)
     }
 

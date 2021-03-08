@@ -57,7 +57,7 @@ class FeedViewModelTest {
 
     @Before
     fun setUp() {
-        repository.notificationMap.putAll(notifications.map { Pair(it.id, it) })
+        repository.notificationMap.putAll(notifications.map { it.id to it })
         viewModel = FeedViewModel(repository)
     }
 

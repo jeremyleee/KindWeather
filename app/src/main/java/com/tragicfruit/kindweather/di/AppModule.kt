@@ -4,6 +4,7 @@ import android.content.Context
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.tragicfruit.kindweather.BuildConfig
 import com.tragicfruit.kindweather.data.source.remote.DarkSkyAPIService
+import com.tragicfruit.kindweather.utils.DefaultSharedPrefsHelper
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import com.tragicfruit.kindweather.utils.ViewHelper
 import dagger.Module
@@ -41,7 +42,7 @@ object AppModule {
     @Provides
     @Singleton
     fun providesSharedPrefsHelper(@ApplicationContext context: Context): SharedPrefsHelper {
-        return SharedPrefsHelper(context)
+        return DefaultSharedPrefsHelper(context)
     }
 
     @Provides
