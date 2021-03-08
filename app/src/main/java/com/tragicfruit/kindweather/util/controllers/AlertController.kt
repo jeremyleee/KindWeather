@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import com.tragicfruit.kindweather.util.Mockable
 import com.tragicfruit.kindweather.util.PermissionHelper
 import com.tragicfruit.kindweather.util.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,6 +19,7 @@ import java.util.Date
 import javax.inject.Inject
 import timber.log.Timber
 
+@Mockable
 class AlertController @Inject constructor(
     private val sharedPrefsHelper: SharedPrefsHelper
 ) {

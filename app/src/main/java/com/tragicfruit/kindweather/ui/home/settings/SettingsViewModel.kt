@@ -15,17 +15,15 @@ class SettingsViewModel @Inject constructor(
     private val sharedPrefsHelper: SharedPrefsHelper
 ) : ViewModel() {
 
-    private val _alertTime: MutableLiveData<AlertTime> = MutableLiveData()
+    private val _alertTime: MutableLiveData<AlertTime> = MutableLiveData(
+        AlertTime(sharedPrefsHelper.getAlertHour(), sharedPrefsHelper.getAlertMinute())
+    )
     val alertTime: LiveData<AlertTime> = _alertTime
 
-    private val _useImperialUnits: MutableLiveData<Boolean> = MutableLiveData()
+    private val _useImperialUnits: MutableLiveData<Boolean> = MutableLiveData(
+        sharedPrefsHelper.usesImperialUnits()
+    )
     val useImperialUnits: LiveData<Boolean> = _useImperialUnits
-
-    init {
-        _alertTime.value =
-            AlertTime(sharedPrefsHelper.getAlertHour(), sharedPrefsHelper.getAlertMinute())
-        _useImperialUnits.value = sharedPrefsHelper.usesImperialUnits()
-    }
 
     fun updateAlertTime(context: Context, hour: Int, minute: Int) {
         sharedPrefsHelper.setAlertHour(hour)
