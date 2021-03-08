@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.setFragmentResult
 import com.tragicfruit.kindweather.R
 
 class UnitsDialogFragment : DialogFragment() {
@@ -13,33 +14,31 @@ class UnitsDialogFragment : DialogFragment() {
         METRIC, IMPERIAL
     }
 
-    interface Listener {
-        fun onUnitsChanged(units: Units)
-    }
-
-    var listener: Listener? = null
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val unit = (arguments?.getSerializable(UNIT) as? Units) ?: Units.METRIC
+        val unit = (arguments?.getSerializable(KEY_UNIT) as? Units) ?: Units.METRIC
 
         return activity?.let {
             AlertDialog.Builder(it)
                 .setTitle(R.string.settings_units)
                 .setSingleChoiceItems(R.array.units, unit.ordinal) { _, which ->
-                    listener?.onUnitsChanged(Units.values()[which])
+                    onUnitsChanged(Units.values()[which])
                     dismiss()
                 }
                 .create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    companion object {
-        private const val UNIT = "unit"
+    private fun onUnitsChanged(units: Units) {
+        setFragmentResult(REQUEST_UPDATE_UNITS, bundleOf(KEY_UNIT to units))
+    }
 
-        fun newInstance(units: Units, listener: Listener) =
+    companion object {
+        const val REQUEST_UPDATE_UNITS = "update_units"
+        const val KEY_UNIT = "unit"
+
+        fun newInstance(units: Units) =
             UnitsDialogFragment().also {
-                it.arguments = bundleOf(UNIT to units)
-                it.listener = listener
+                it.arguments = bundleOf(KEY_UNIT to units)
             }
     }
 }

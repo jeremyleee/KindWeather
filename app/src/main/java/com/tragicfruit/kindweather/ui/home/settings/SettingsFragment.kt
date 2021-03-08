@@ -1,13 +1,12 @@
 package com.tragicfruit.kindweather.ui.home.settings
 
-import android.app.TimePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TimePicker
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.databinding.FragmentSettingsBinding
@@ -18,14 +17,27 @@ import com.tragicfruit.kindweather.util.DisplayUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SettingsFragment :
-    BaseFragment(),
-    TimePickerDialog.OnTimeSetListener,
-    UnitsDialogFragment.Listener {
+class SettingsFragment : BaseFragment() {
 
     override var statusBarColor = R.color.white
 
     private val viewModel: SettingsViewModel by viewModels()
+
+    private val fragmentResultListener: (String, Bundle) -> Unit = { requestKey, bundle ->
+        when (requestKey) {
+            UnitsDialogFragment.REQUEST_UPDATE_UNITS -> {
+                val updatedUnit = bundle.get(UnitsDialogFragment.KEY_UNIT)
+                viewModel.updateUnits(updatedUnit == UnitsDialogFragment.Units.IMPERIAL)
+            }
+            TimePickerDialogFragment.REQUEST_UPDATE_TIME -> {
+                val hourOfDay = bundle.getInt(TimePickerDialogFragment.KEY_HOUR)
+                val minute = bundle.getInt(TimePickerDialogFragment.KEY_MINUTE)
+                context?.let {
+                    viewModel.updateAlertTime(it, hourOfDay, minute)
+                }
+            }
+        }
+    }
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -60,6 +72,11 @@ class SettingsFragment :
             )
         }
 
+        with(fragmentResultListener) {
+            setFragmentResultListener(UnitsDialogFragment.REQUEST_UPDATE_UNITS, this)
+            setFragmentResultListener(TimePickerDialogFragment.REQUEST_UPDATE_TIME, this)
+        }
+
         binding.alertTimeItem.setOnClickListener {
             showAlertTimeDialog()
         }
@@ -75,14 +92,8 @@ class SettingsFragment :
 
     private fun showAlertTimeDialog() {
         viewModel.alertTime.value?.let {
-            val fragment = TimePickerDialogFragment.newInstance(it.hour, it.minute, this)
+            val fragment = TimePickerDialogFragment.newInstance(it.hour, it.minute)
             fragment.show(parentFragmentManager, fragment.javaClass.name)
-        }
-    }
-
-    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        context?.let {
-            viewModel.updateAlertTime(it, hourOfDay, minute)
         }
     }
 
@@ -93,13 +104,9 @@ class SettingsFragment :
             } else {
                 UnitsDialogFragment.Units.METRIC
             }
-            val fragment = UnitsDialogFragment.newInstance(units, this)
+            val fragment = UnitsDialogFragment.newInstance(units)
             fragment.show(parentFragmentManager, fragment.javaClass.name)
         }
-    }
-
-    override fun onUnitsChanged(units: UnitsDialogFragment.Units) {
-        viewModel.updateUnits(units == UnitsDialogFragment.Units.IMPERIAL)
     }
 
     private fun openDarkSkyWebPage() {
