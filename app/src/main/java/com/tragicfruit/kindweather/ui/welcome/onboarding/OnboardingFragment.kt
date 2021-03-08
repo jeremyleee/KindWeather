@@ -38,19 +38,12 @@ class OnboardingFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.imageRes.observe(viewLifecycleOwner) {
-            Glide.with(this)
-                .load(it)
-                .into(binding.mainImage)
-        }
+        Glide.with(this)
+            .load(viewModel.imageRes)
+            .into(binding.mainImage)
 
-        viewModel.titleRes.observe(viewLifecycleOwner) {
-            binding.titleText.setText(it)
-        }
-
-        viewModel.descriptionRes.observe(viewLifecycleOwner) {
-            binding.descText.setText(it)
-        }
+        viewModel.titleRes?.let { binding.titleText.setText(it) }
+        viewModel.descriptionRes?.let { binding.descriptionText.setText(it) }
     }
 
     companion object {
