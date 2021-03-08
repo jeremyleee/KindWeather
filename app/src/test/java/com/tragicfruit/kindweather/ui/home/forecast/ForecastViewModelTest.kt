@@ -13,7 +13,7 @@ import com.tragicfruit.kindweather.data.ForecastIcon
 import com.tragicfruit.kindweather.data.WeatherNotification
 import com.tragicfruit.kindweather.data.source.FakeNotificationRepository
 import com.tragicfruit.kindweather.getOrAwaitValue
-import com.tragicfruit.kindweather.utils.FakeSharedPrefsHelper
+import com.tragicfruit.kindweather.util.FakeSharedPrefsHelper
 import java.io.IOException
 import java.util.Date
 import kotlinx.coroutines.ExperimentalCoroutinesApi

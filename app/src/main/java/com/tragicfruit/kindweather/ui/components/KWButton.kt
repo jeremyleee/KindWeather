@@ -6,8 +6,8 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.utils.ViewHelper
-import com.tragicfruit.kindweather.utils.setPadding
+import com.tragicfruit.kindweather.util.ViewHelper
+import com.tragicfruit.kindweather.util.setPadding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

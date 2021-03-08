@@ -12,8 +12,8 @@ import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.databinding.FragmentWelcomeBinding
 import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.ui.welcome.allowlocation.AllowLocationFragment
-import com.tragicfruit.kindweather.utils.SharedPrefsHelper
-import com.tragicfruit.kindweather.utils.controllers.AlertController
+import com.tragicfruit.kindweather.util.SharedPrefsHelper
+import com.tragicfruit.kindweather.util.controllers.AlertController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

@@ -13,11 +13,11 @@ import androidx.core.view.setMargins
 import androidx.core.view.setPadding
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.data.WeatherNotification
-import com.tragicfruit.kindweather.utils.DisplayUtils
-import com.tragicfruit.kindweather.utils.RoundRectOutlineProvider
-import com.tragicfruit.kindweather.utils.SharedPrefsHelper
-import com.tragicfruit.kindweather.utils.ViewHelper
-import com.tragicfruit.kindweather.utils.getViewId
+import com.tragicfruit.kindweather.util.DisplayUtils
+import com.tragicfruit.kindweather.util.RoundRectOutlineProvider
+import com.tragicfruit.kindweather.util.SharedPrefsHelper
+import com.tragicfruit.kindweather.util.ViewHelper
+import com.tragicfruit.kindweather.util.getViewId
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

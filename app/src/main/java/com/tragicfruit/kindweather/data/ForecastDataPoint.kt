@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.utils.Converter
+import com.tragicfruit.kindweather.util.Converter
 
 @Entity(tableName = "datapoints")
 data class ForecastDataPoint(

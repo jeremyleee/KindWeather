@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.databinding.FragmentSplashBinding
 import com.tragicfruit.kindweather.ui.BaseFragment
-import com.tragicfruit.kindweather.utils.SharedPrefsHelper
+import com.tragicfruit.kindweather.util.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

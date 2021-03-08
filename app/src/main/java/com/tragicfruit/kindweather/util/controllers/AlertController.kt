@@ -1,4 +1,4 @@
-package com.tragicfruit.kindweather.utils.controllers
+package com.tragicfruit.kindweather.util.controllers
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -10,8 +10,8 @@ import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-import com.tragicfruit.kindweather.utils.PermissionHelper
-import com.tragicfruit.kindweather.utils.SharedPrefsHelper
+import com.tragicfruit.kindweather.util.PermissionHelper
+import com.tragicfruit.kindweather.util.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 import java.util.Date

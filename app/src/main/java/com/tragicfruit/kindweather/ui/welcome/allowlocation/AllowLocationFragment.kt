@@ -10,7 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import com.tragicfruit.kindweather.databinding.FragmentAllowLocationBinding
 import com.tragicfruit.kindweather.ui.BaseFragment
-import com.tragicfruit.kindweather.utils.PermissionHelper
+import com.tragicfruit.kindweather.util.PermissionHelper
 
 class AllowLocationFragment : BaseFragment() {
 

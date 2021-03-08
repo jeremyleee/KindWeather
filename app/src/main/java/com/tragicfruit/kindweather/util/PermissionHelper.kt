@@ -1,4 +1,4 @@
-package com.tragicfruit.kindweather.utils
+package com.tragicfruit.kindweather.util
 
 import android.Manifest
 import android.content.Context

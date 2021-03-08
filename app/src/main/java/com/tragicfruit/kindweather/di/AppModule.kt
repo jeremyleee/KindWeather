@@ -4,9 +4,9 @@ import android.content.Context
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.tragicfruit.kindweather.BuildConfig
 import com.tragicfruit.kindweather.data.source.remote.DarkSkyAPIService
-import com.tragicfruit.kindweather.utils.DefaultSharedPrefsHelper
-import com.tragicfruit.kindweather.utils.SharedPrefsHelper
-import com.tragicfruit.kindweather.utils.ViewHelper
+import com.tragicfruit.kindweather.util.DefaultSharedPrefsHelper
+import com.tragicfruit.kindweather.util.SharedPrefsHelper
+import com.tragicfruit.kindweather.util.ViewHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

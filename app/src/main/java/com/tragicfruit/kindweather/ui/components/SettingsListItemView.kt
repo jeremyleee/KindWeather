@@ -9,8 +9,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.utils.ViewHelper
-import com.tragicfruit.kindweather.utils.getViewId
+import com.tragicfruit.kindweather.util.ViewHelper
+import com.tragicfruit.kindweather.util.getViewId
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

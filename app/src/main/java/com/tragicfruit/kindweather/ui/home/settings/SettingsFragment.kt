@@ -14,7 +14,7 @@ import com.tragicfruit.kindweather.databinding.FragmentSettingsBinding
 import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.ui.home.settings.dialogs.TimePickerDialogFragment
 import com.tragicfruit.kindweather.ui.home.settings.dialogs.UnitsDialogFragment
-import com.tragicfruit.kindweather.utils.DisplayUtils
+import com.tragicfruit.kindweather.util.DisplayUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

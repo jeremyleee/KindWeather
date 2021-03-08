@@ -29,11 +29,11 @@
 
         </activity>
 
-        <receiver android:name=".utils.controllers.AlarmReceiver"/>
-        <receiver android:name=".utils.controllers.LocationReceiver"/>
+        <receiver android:name=".util.controllers.AlarmReceiver"/>
+        <receiver android:name=".util.controllers.LocationReceiver"/>
 
         <receiver
-            android:name=".utils.controllers.BootReceiver"
+            android:name=".util.controllers.BootReceiver"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
@@ -41,7 +41,7 @@
         </receiver>
 
         <service
-            android:name=".utils.controllers.AlertService"
+            android:name=".util.controllers.AlertService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
 
     </application>

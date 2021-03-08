@@ -8,7 +8,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.map
 import com.tragicfruit.kindweather.data.WeatherNotification
 import com.tragicfruit.kindweather.data.source.NotificationRepository
-import com.tragicfruit.kindweather.utils.SharedPrefsHelper
+import com.tragicfruit.kindweather.util.SharedPrefsHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.IOException
 import javax.inject.Inject

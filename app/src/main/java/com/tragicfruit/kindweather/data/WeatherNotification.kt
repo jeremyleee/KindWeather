@@ -2,7 +2,7 @@ package com.tragicfruit.kindweather.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.tragicfruit.kindweather.utils.DisplayUtils
+import com.tragicfruit.kindweather.util.DisplayUtils
 import java.util.Date
 
 @Entity(tableName = "notifications")

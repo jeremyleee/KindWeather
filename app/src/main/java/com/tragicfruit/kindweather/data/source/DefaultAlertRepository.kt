@@ -9,7 +9,7 @@ import com.tragicfruit.kindweather.data.WeatherAlertWithParams
 import com.tragicfruit.kindweather.data.source.local.AlertDao
 import com.tragicfruit.kindweather.data.source.local.AlertParamDao
 import com.tragicfruit.kindweather.di.IoDispatcher
-import com.tragicfruit.kindweather.utils.SharedPrefsHelper
+import com.tragicfruit.kindweather.util.SharedPrefsHelper
 import java.util.UUID
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher

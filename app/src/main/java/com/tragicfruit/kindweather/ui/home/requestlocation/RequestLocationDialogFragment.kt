@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.utils.PermissionHelper
+import com.tragicfruit.kindweather.util.PermissionHelper
 
 class RequestLocationDialogFragment : DialogFragment() {
 

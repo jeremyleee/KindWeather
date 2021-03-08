@@ -8,8 +8,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.tragicfruit.kindweather.databinding.FragmentForecastBinding
 import com.tragicfruit.kindweather.ui.BaseFragment
-import com.tragicfruit.kindweather.utils.ColorHelper
-import com.tragicfruit.kindweather.utils.DisplayUtils
+import com.tragicfruit.kindweather.util.ColorHelper
+import com.tragicfruit.kindweather.util.DisplayUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

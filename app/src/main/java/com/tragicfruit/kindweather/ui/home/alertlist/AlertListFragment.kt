@@ -14,7 +14,7 @@ import com.tragicfruit.kindweather.databinding.FragmentAlertListBinding
 import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.ui.components.AlertCell
 import com.tragicfruit.kindweather.ui.home.requestlocation.RequestLocationDialogFragment
-import com.tragicfruit.kindweather.utils.PermissionHelper
+import com.tragicfruit.kindweather.util.PermissionHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

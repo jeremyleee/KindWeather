@@ -21,8 +21,8 @@ import com.tragicfruit.kindweather.data.WeatherAlertParam
 import com.tragicfruit.kindweather.databinding.FragmentAlertDetailBinding
 import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.ui.components.AlertDetailParamView
-import com.tragicfruit.kindweather.utils.ColorHelper
-import com.tragicfruit.kindweather.utils.SharedPrefsHelper
+import com.tragicfruit.kindweather.util.ColorHelper
+import com.tragicfruit.kindweather.util.SharedPrefsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

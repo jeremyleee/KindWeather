@@ -5,8 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.utils.ViewHelper
-import com.tragicfruit.kindweather.utils.setMargins
+import com.tragicfruit.kindweather.util.ViewHelper
+import com.tragicfruit.kindweather.util.setMargins
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

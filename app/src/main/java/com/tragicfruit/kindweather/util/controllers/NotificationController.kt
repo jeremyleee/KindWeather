@@ -1,4 +1,4 @@
-package com.tragicfruit.kindweather.utils.controllers
+package com.tragicfruit.kindweather.util.controllers
 
 import android.annotation.TargetApi
 import android.app.NotificationChannel

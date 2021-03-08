@@ -9,11 +9,11 @@ import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.data.WeatherAlertParam
-import com.tragicfruit.kindweather.utils.DisplayUtils
-import com.tragicfruit.kindweather.utils.ViewHelper
-import com.tragicfruit.kindweather.utils.getViewId
-import com.tragicfruit.kindweather.utils.setMargins
-import com.tragicfruit.kindweather.utils.setPadding
+import com.tragicfruit.kindweather.util.DisplayUtils
+import com.tragicfruit.kindweather.util.ViewHelper
+import com.tragicfruit.kindweather.util.getViewId
+import com.tragicfruit.kindweather.util.setMargins
+import com.tragicfruit.kindweather.util.setPadding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
