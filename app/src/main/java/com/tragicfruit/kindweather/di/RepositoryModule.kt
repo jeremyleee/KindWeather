@@ -2,7 +2,9 @@ package com.tragicfruit.kindweather.di
 
 import com.tragicfruit.kindweather.data.source.AlertRepository
 import com.tragicfruit.kindweather.data.source.DefaultAlertRepository
+import com.tragicfruit.kindweather.data.source.DefaultForecastRepository
 import com.tragicfruit.kindweather.data.source.DefaultNotificationRepository
+import com.tragicfruit.kindweather.data.source.ForecastRepository
 import com.tragicfruit.kindweather.data.source.NotificationRepository
 import dagger.Binds
 import dagger.Module
@@ -22,4 +24,9 @@ abstract class RepositoryModule {
     abstract fun bindNotificationRepository(
         repository: DefaultNotificationRepository
     ): NotificationRepository
+
+    @Binds
+    abstract fun bindForecastRepository(
+        repository: DefaultForecastRepository
+    ): ForecastRepository
 }
