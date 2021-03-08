@@ -73,13 +73,24 @@ class ForecastViewModelTest {
     }
 
     @Test
-    fun testGetAddressLabel_success() {
+    fun testGetAddressLabel_locality() {
         val mockedAddress: Address = mock()
         whenever(mockedAddress.locality).thenReturn("Test locality")
         whenever(geocoder.getFromLocation(any(), any(), any()))
             .thenReturn(listOf(mockedAddress))
 
         assertThat(viewModel.addressLabel.getOrAwaitValue()).isEqualTo("Test locality")
+    }
+
+    @Test
+    fun testGetAddressLabel_subAdminAreaFallback() {
+        val mockedAddress: Address = mock()
+        whenever(mockedAddress.locality).thenReturn(null)
+        whenever(mockedAddress.subAdminArea).thenReturn("Test subadmin area")
+        whenever(geocoder.getFromLocation(any(), any(), any()))
+            .thenReturn(listOf(mockedAddress))
+
+        assertThat(viewModel.addressLabel.getOrAwaitValue()).isEqualTo("Test subadmin area")
     }
 
     @Test
