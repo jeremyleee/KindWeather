@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tragicfruit.kindweather.ui.components.FeedCell
-import com.tragicfruit.kindweather.data.model.WeatherNotification
+import com.tragicfruit.kindweather.data.WeatherNotification
 
 class FeedAdapter(
     private val listener: FeedCell.Listener

@@ -1,9 +1,9 @@
-package com.tragicfruit.kindweather.data
+package com.tragicfruit.kindweather.data.source
 
 import androidx.annotation.ColorInt
-import com.tragicfruit.kindweather.data.db.dao.NotificationDao
-import com.tragicfruit.kindweather.data.model.ForecastIcon
-import com.tragicfruit.kindweather.data.model.WeatherNotification
+import com.tragicfruit.kindweather.data.source.local.NotificationDao
+import com.tragicfruit.kindweather.data.ForecastIcon
+import com.tragicfruit.kindweather.data.WeatherNotification
 import com.tragicfruit.kindweather.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

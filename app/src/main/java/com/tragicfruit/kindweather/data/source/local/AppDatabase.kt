@@ -1,10 +1,9 @@
-package com.tragicfruit.kindweather.data.db
+package com.tragicfruit.kindweather.data.source.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.tragicfruit.kindweather.data.db.dao.*
-import com.tragicfruit.kindweather.data.model.*
+import com.tragicfruit.kindweather.data.*
 
 @Database(
     entities = [

@@ -2,8 +2,8 @@ package com.tragicfruit.kindweather.di
 
 import android.content.Context
 import androidx.room.Room
-import com.tragicfruit.kindweather.data.db.AppDatabase
-import com.tragicfruit.kindweather.data.db.dao.*
+import com.tragicfruit.kindweather.data.source.local.AppDatabase
+import com.tragicfruit.kindweather.data.source.local.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

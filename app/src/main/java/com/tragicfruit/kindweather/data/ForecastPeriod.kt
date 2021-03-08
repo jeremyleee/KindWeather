@@ -1,4 +1,4 @@
-package com.tragicfruit.kindweather.data.model
+package com.tragicfruit.kindweather.data
 
 import androidx.annotation.DrawableRes
 import androidx.room.Entity

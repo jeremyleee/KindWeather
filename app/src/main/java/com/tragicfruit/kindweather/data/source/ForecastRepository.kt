@@ -1,11 +1,11 @@
-package com.tragicfruit.kindweather.data
+package com.tragicfruit.kindweather.data.source
 
-import com.tragicfruit.kindweather.data.api.DarkSkyAPIService
-import com.tragicfruit.kindweather.data.db.dao.ForecastDataPointDao
-import com.tragicfruit.kindweather.data.db.dao.ForecastPeriodDao
-import com.tragicfruit.kindweather.data.model.ForecastDataPoint
-import com.tragicfruit.kindweather.data.model.ForecastDataType
-import com.tragicfruit.kindweather.data.model.ForecastPeriod
+import com.tragicfruit.kindweather.data.source.remote.DarkSkyAPIService
+import com.tragicfruit.kindweather.data.source.local.ForecastDataPointDao
+import com.tragicfruit.kindweather.data.source.local.ForecastPeriodDao
+import com.tragicfruit.kindweather.data.ForecastDataPoint
+import com.tragicfruit.kindweather.data.ForecastDataType
+import com.tragicfruit.kindweather.data.ForecastPeriod
 import com.tragicfruit.kindweather.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

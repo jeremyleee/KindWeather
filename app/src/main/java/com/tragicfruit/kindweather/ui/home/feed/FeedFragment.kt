@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.tragicfruit.kindweather.R
 import com.tragicfruit.kindweather.ui.components.FeedCell
 import com.tragicfruit.kindweather.databinding.FragmentFeedBinding
-import com.tragicfruit.kindweather.data.model.WeatherNotification
+import com.tragicfruit.kindweather.data.WeatherNotification
 import com.tragicfruit.kindweather.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 

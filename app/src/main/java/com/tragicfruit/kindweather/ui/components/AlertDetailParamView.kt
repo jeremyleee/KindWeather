@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.data.model.WeatherAlertParam
+import com.tragicfruit.kindweather.data.WeatherAlertParam
 import com.tragicfruit.kindweather.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

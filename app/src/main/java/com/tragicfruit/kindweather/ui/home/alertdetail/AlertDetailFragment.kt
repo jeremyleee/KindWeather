@@ -16,8 +16,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.data.model.WeatherAlert
-import com.tragicfruit.kindweather.data.model.WeatherAlertParam
+import com.tragicfruit.kindweather.data.WeatherAlert
+import com.tragicfruit.kindweather.data.WeatherAlertParam
 import com.tragicfruit.kindweather.databinding.FragmentAlertDetailBinding
 import com.tragicfruit.kindweather.ui.BaseFragment
 import com.tragicfruit.kindweather.ui.components.AlertDetailParamView

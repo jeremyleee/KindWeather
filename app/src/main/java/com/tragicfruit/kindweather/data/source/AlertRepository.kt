@@ -1,9 +1,10 @@
-package com.tragicfruit.kindweather.data
+package com.tragicfruit.kindweather.data.source
 
-import com.tragicfruit.kindweather.data.db.dao.AlertDao
-import com.tragicfruit.kindweather.data.db.dao.AlertParamDao
-import com.tragicfruit.kindweather.data.model.*
+import com.tragicfruit.kindweather.data.*
+import com.tragicfruit.kindweather.data.source.local.AlertDao
+import com.tragicfruit.kindweather.data.source.local.AlertParamDao
 import com.tragicfruit.kindweather.di.IoDispatcher
+import com.tragicfruit.kindweather.utils.Mockable
 import com.tragicfruit.kindweather.utils.SharedPrefsHelper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -11,6 +12,7 @@ import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
+@Mockable
 class AlertRepository @Inject constructor(
     private val alertDao: AlertDao,
     private val paramDao: AlertParamDao,

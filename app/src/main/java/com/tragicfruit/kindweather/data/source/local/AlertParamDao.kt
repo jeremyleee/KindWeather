@@ -1,9 +1,9 @@
-package com.tragicfruit.kindweather.data.db.dao
+package com.tragicfruit.kindweather.data.source.local
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Update
-import com.tragicfruit.kindweather.data.model.WeatherAlertParam
+import com.tragicfruit.kindweather.data.WeatherAlertParam
 
 @Dao
 interface AlertParamDao {

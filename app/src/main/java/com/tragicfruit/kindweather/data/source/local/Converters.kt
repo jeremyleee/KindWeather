@@ -1,9 +1,9 @@
-package com.tragicfruit.kindweather.data.db
+package com.tragicfruit.kindweather.data.source.local
 
 import androidx.room.TypeConverter
-import com.tragicfruit.kindweather.data.model.ForecastDataType
-import com.tragicfruit.kindweather.data.model.ForecastIcon
-import com.tragicfruit.kindweather.data.model.WeatherAlertType
+import com.tragicfruit.kindweather.data.ForecastDataType
+import com.tragicfruit.kindweather.data.ForecastIcon
+import com.tragicfruit.kindweather.data.WeatherAlertType
 import java.util.*
 
 class Converters {

@@ -1,4 +1,4 @@
-package com.tragicfruit.kindweather.data.api
+package com.tragicfruit.kindweather.data.source.remote
 
 import com.tragicfruit.kindweather.BuildConfig
 import retrofit2.http.GET

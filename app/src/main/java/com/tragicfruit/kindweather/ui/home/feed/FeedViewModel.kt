@@ -3,8 +3,8 @@ package com.tragicfruit.kindweather.ui.home.feed
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.tragicfruit.kindweather.data.NotificationRepository
-import com.tragicfruit.kindweather.data.model.WeatherNotification
+import com.tragicfruit.kindweather.data.source.NotificationRepository
+import com.tragicfruit.kindweather.data.WeatherNotification
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

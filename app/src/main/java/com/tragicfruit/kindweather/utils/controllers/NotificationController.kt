@@ -15,7 +15,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavDeepLinkBuilder
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.data.model.WeatherNotification
+import com.tragicfruit.kindweather.data.WeatherNotification
 import com.tragicfruit.kindweather.ui.home.forecast.ForecastFragmentArgs
 import javax.inject.Inject
 

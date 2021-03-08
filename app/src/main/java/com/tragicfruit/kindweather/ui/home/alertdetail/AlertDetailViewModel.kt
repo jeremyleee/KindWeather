@@ -1,9 +1,9 @@
 package com.tragicfruit.kindweather.ui.home.alertdetail
 
 import androidx.lifecycle.*
-import com.tragicfruit.kindweather.data.AlertRepository
-import com.tragicfruit.kindweather.data.model.WeatherAlertParam
-import com.tragicfruit.kindweather.data.model.WeatherAlertWithParams
+import com.tragicfruit.kindweather.data.source.AlertRepository
+import com.tragicfruit.kindweather.data.WeatherAlertParam
+import com.tragicfruit.kindweather.data.WeatherAlertWithParams
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

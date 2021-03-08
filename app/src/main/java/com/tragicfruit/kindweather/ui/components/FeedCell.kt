@@ -12,7 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setMargins
 import androidx.core.view.setPadding
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.data.model.WeatherNotification
+import com.tragicfruit.kindweather.data.WeatherNotification
 import com.tragicfruit.kindweather.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

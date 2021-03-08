@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.data.model.WeatherAlert
+import com.tragicfruit.kindweather.data.WeatherAlert
 import com.tragicfruit.kindweather.utils.RoundRectOutlineProvider
 import com.tragicfruit.kindweather.utils.ViewHelper
 import com.tragicfruit.kindweather.utils.getViewId

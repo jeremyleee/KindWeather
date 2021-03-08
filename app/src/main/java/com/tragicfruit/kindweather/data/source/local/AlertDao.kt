@@ -1,8 +1,8 @@
-package com.tragicfruit.kindweather.data.db.dao
+package com.tragicfruit.kindweather.data.source.local
 
 import androidx.room.*
-import com.tragicfruit.kindweather.data.model.WeatherAlert
-import com.tragicfruit.kindweather.data.model.WeatherAlertWithParams
+import com.tragicfruit.kindweather.data.WeatherAlert
+import com.tragicfruit.kindweather.data.WeatherAlertWithParams
 import kotlinx.coroutines.flow.Flow
 
 @Dao

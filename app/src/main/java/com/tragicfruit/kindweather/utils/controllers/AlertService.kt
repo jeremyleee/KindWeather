@@ -6,10 +6,10 @@ import androidx.core.app.JobIntentService
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationResult
 import com.tragicfruit.kindweather.R
-import com.tragicfruit.kindweather.data.AlertRepository
-import com.tragicfruit.kindweather.data.ForecastRepository
-import com.tragicfruit.kindweather.data.NotificationRepository
-import com.tragicfruit.kindweather.data.model.ForecastDataType
+import com.tragicfruit.kindweather.data.source.AlertRepository
+import com.tragicfruit.kindweather.data.source.ForecastRepository
+import com.tragicfruit.kindweather.data.source.NotificationRepository
+import com.tragicfruit.kindweather.data.ForecastDataType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber

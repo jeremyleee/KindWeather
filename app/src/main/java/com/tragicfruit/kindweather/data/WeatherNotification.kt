@@ -1,4 +1,4 @@
-package com.tragicfruit.kindweather.data.model
+package com.tragicfruit.kindweather.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -27,7 +27,8 @@ data class WeatherNotification(
     }
 
     fun getPrecipProbabilityString(useImperial: Boolean): String {
-        return getDisplayString(rawPrecipProbability, ForecastDataType.PrecipProbability, useImperial)
+        return getDisplayString(rawPrecipProbability,
+            ForecastDataType.PrecipProbability, useImperial)
     }
 
     private fun getDisplayString(rawValue: Double?, type: ForecastDataType, useImperial: Boolean): String {
