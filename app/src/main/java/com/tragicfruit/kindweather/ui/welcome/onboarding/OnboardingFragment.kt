@@ -47,9 +47,9 @@ class OnboardingFragment : BaseFragment() {
     }
 
     companion object {
-        const val IMAGE_RES = "image-res"
-        const val TITLE_RES = "title-res"
-        const val DESC_RES = "desc-res"
+        const val KEY_IMAGE_RES = "image_res"
+        const val KEY_TITLE_RES = "title_res"
+        const val KEY_DESC_RES = "desc_res"
 
         fun newInstance(
             @DrawableRes imageRes: Int,
@@ -58,9 +58,9 @@ class OnboardingFragment : BaseFragment() {
         ): OnboardingFragment {
             return OnboardingFragment().also {
                 it.arguments = bundleOf(
-                    IMAGE_RES to imageRes,
-                    TITLE_RES to titleRes,
-                    DESC_RES to descRes
+                    KEY_IMAGE_RES to imageRes,
+                    KEY_TITLE_RES to titleRes,
+                    KEY_DESC_RES to descRes
                 )
             }
         }
